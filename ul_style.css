@@ -1,0 +1,67 @@
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 10px;
+  background-color: #2196F3;
+  padding: 10px;
+}
+
+.grid-container > div {
+  background-color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+  padding: 20px 0;
+  font-size: 30px;
+}
+
+.summary {
+  grid-row-start: 1;
+}
+
+.box {
+  grid-column-start: 2;
+}
+
+.publications {
+  grid-row: 2 / 5
+}
+
+.education {
+
+}
+
+.grants {
+  
+}
+
+.service {
+
+}
+
+.talks {
+  grid-row: 5/8;
+}
+.posters {
+  grid-row: 8/10;
+}  
+
+.prof-dev {
+  
+}
+
+.media {
+  
+}
+
+.work {
+  grid-column-start: 2;
+  grid-row-start: 7;
+  grid-row-end: 9;
+}
+
+.technical {
+  
+}
+
+p, li {
+  font-size: 10px;
+}

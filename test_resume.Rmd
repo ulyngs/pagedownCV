@@ -1,0 +1,99 @@
+---
+title: "Ulrik Lyngs <br> Curriculum vitae"
+#date: "`r Sys.Date()`"
+output:
+  pagedown::html_paged:
+    # change to true for a self-contained document, but it'll be a litte slower for Pandoc to render
+    self_contained: false
+    css: ul_style.css
+    template: ul_template.html
+    number_sections: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Personal summary {.summary}
+I am a cognitive psychologist-turned-computer scientist. I am passionate about applying insights from the behavioural neurosciences to design digital technology that is sensitive to human limitations and biases, particularly in relation to attention and self-regulation.
+
+# Summary box {.box}
+
+# Selected Publications {.publications}
+Lyngs, U., Lukoff, K., Slovak, P., Binns, R., Slack, A., Inzlicht, M., Kleek, M. V., Shadbolt, N. (2019). Self-Control in Cyberspace: Applying Dual Systems Theory to a Review of Digital Self-Control Tools. CHI Conference on Human Factors in Computing Systems Proceedings 
+(CHI 2019)
+Binns, R., Lyngs, U., van Kleek, M., Zhao, J., Shadbolt, N. (2018). Third party tracking in the mobile ecosystem. Proceedings of the 10th International ACM Web Science Conference 2018 (  Best Paper)
+Lyngs, U., Binns, R., van Kleek, M., Shadbolt, N. (2018). So, Tell Me What Users Want, What They Really, Really Want! CHI EA '18 (alt.chi): Proceedings of the 2018 CHI Conference Extended Abstracts on Human Factors in Computing Systems
+Binns, R., van Kleek, M., Veale, M., Lyngs, U., Zhao, J., Shadbolt, N. (2018). 'It's Reducing a Human Being to a Percentage': Perceptions of Justice in Algorithmic Decisions. CHI '18: Proceedings of the 2018 CHI Conference on Human Factors in Computing Systems
+Lyngs, U. (2018). A Cognitive Design Space for Supporting Self-Regulation of ICT Use. 
+CHI EA ’18: Proceedings of the 2018 CHI Conference Extended Abstracts on Human Factors in Computing Systems
+Lyngs, U., McKay, R. (2017). ‘It’s More Fun With My Phone’: A Replication Study of Cell Phone Presence and Task Performance. Proceedings of the 39th Annual Conference of the Cognitive Science Society
+Lyngs, U., Cohen, E., Hattori, W., Newson, M. & Levin, D. (2016). Hearing in Colour: How Expectations Distort Perception of Skin Tone. Journal of Experimental Psychology: Human Perception and Performance, 42 (12), 2068-2076
+
+# Education {.education}
+2016 – 2020(exp.) DPhil in Computer Science, University of Oxford
+2012 – 2013	MSc in Cognitive and Evolutionary Anthropology, University of Oxford
+2011 – 2016	MA in the Cognitive Science of Religion & Experimental Psychology, Aarhus University
+2007 – 2011	BA in the Study of Religion & Psychology, Aarhus University
+
+# Grants and Awards {.grants}
+2018	Best Paper Award (€500), 10th ACM Conference on Web Science, Amsterdam 
+2018	Student Research Competition Grant ($500), ACM CHI'18
+2017	DOMUS Prize for Outstanding Research Communication (£500), Linacre College, University of Oxford
+2017	Designing for Curiosity Workshop Grant (€400), ACM CHI'17
+2017	Student Research Competition Grant ($500), ACM CHI'17
+2013	Lienhard & Bagby Research Grant, Institute of Social & Cultural Anthropology, Uni. of Oxford (£1,000)
+
+# Service {.service}
+2018-	Steering group, Transparent Statistics in Human-Computer Interaction
+2017-	Ad-hoc reviewer, Computer-Supported Cooperative Work and Social Computing 
+2016-	Ad-hoc reviewer, ACM CHI Conference
+
+
+# Selected talks {.talks}
+## 2018
+So, Tell Me What Users Want, What They Really, Really Want! AI, Society, and the Media, conference organised by the BBC Academy, BBC Radio Theatre, New Broadcasting House, London
+Hacking the Attention Economy. Hackathon at CodeBase, Edinburgh, organised by the UnBias project, CS Dept., University of Oxford.
+Distraction, Self-Regulation and Online Affordances: Evaluating Anti-Distraction Browser Extensions for Facebook. Human Centred Computing research seminar, CS Dept., University of Oxford.
+
+## 2017
+Ulysses in Cyberspace: How Anti-Distraction Apps Can Guide Digital Design. DOMUS Research Prize talk, Linacre College, University of Oxford.
+ICTs and Attention Management: Evaluating the Emerging Anti-Distraction Market. 2017 Oxford Computer Science Conference, CS Dept., Uni. of Oxford.
+Battle of the Social Machines: Attention Management in the Information Age. Being Responsible in Research: Opportunities and Challenges, workshop held by the Human Centred Computing Group, Uni. of Oxford
+Ulysses in Cyberspace: Distraction and Self-Regulation in Social Machines. The Theory and Practice of Social Machines, Jesus College, University of Oxford
+
+
+# Selected poster presentations {.posters}
+## 2018
+What the ‘Anti-Distraction Market’ Tells Us About Digital Technology and Self-Regulation Connected Life 2018: Information Control, Oxford Internet Institute, University of Oxford
+A Cognitive Design Space for Supporting Self-Regulation of ICT Use  3rd Symposium on Computing and Mental Health, CHI’18, Montreal, Canada
+## 2017
+Curiosity, ICTs and Attention Management: Evaluating the Emerging Anti-Distraction Market Designing for Curiosity. Workshop at CHI’17, Denver, Colorado
+## 2014
+Wild Cooperation: Studying Real-World Reciprocity Using Couchsurfing.org. Morality: Evolutionary Origins and Cognitive Mechanisms, Central European University, Budapest.
+
+
+# Professional development {.prof-dev}
+2018	Invited participant at the Global Dialogue for Happiness, 
+World Government Summit, Dubai 
+2017	Leading for Impact fellowship, 4-month leadership training programme at Saïd Business School, University of Oxford
+
+
+# Media coverage {.media}
+2018	Our paper ‘Third Party Tracking in the Mobile Ecosystem’ covered in the Financial Times, BBC, The Times, Business Insider, and more 
+
+# Selected work experience {.work}
+2017 – present
+Web developer
+SOCIAM.org, Dept. of Computer Science, Oxford
+Built the current version of sociam.org (which archives the outputs of a 5.5 year EPSCR research endeavour involving 55+ researchers, 40+ independent projects, and 400+ publications) from scratch in Drupal 7, assisted by two summer interns. Ongoing maintenance, feature development, and content curation.
+
+2013 – 2016
+Editorial Producer and Manager
+Institute of Art and Ideas, London
+Generated ideas and wrote programme copy for 250+ panel debates for the internationally renowned philosophy and music festival HowTheLightGetsIn; interviewed (600+) and booked (150+) world-leading thinkers, including Cory Doctorow, Aubrey  de Grey, and Simon Baron-Cohen; led and managed a research team of two full-time and music team of three full-time staff.
+
+# Technical skills {.technical}
+-	Data analysis and programming in R (tidyverse) and Python; reproducible article and report writing in R Markdown + LaTeX
+-	Static and interactive data visualisation using R (ggplot2 and Shiny) and D3.js
+-	Web development (HTML, CSS, JavaScript, Drupal, Hugo, blogdown, Jekyll + GitHub)
