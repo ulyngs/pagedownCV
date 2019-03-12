@@ -1,67 +1,75 @@
-.grid-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 10px;
-  background-color: #2196F3;
-  padding: 10px;
+/* THIS CREATES BASIC PAGED LAYOUT IN COMBINATION WITH PAGED.HTML */
+@page{
+  size: letter portrait;
+  margin: 1in 0.5in 1in 0.25in;
 }
 
-.grid-container > div {
-  background-color: rgba(255, 255, 255, 0.8);
-  text-align: center;
-  padding: 20px 0;
-  font-size: 30px;
+*{
+  box-sizing: border-box;
 }
 
-.summary {
-  grid-row-start: 1;
+:root{
+  --page-width: 8.5in;
+  --margin-right: 0.5in;
+  --margin-left: 0.25in;
+  --content-width: calc(var(--page-width) - var(--margin-right) - var(--margin-left));
+  --root-font-size: 12pt;
+  --main-width: calc(var(--content-width) - var(--sidebar-width));
+  --decorator-horizontal-margin: 0.2in;
+  --viewer-pages-spacing: 12px;
+  --viewer-shadow-color: #313131; /* this marks the pages */
 }
 
-.box {
-  grid-column-start: 2;
+.pagedjs_page {
+  --content-area-height: calc(var(--height) - var(--margin-top) - var(--margin-bottom));
+  --sidebar-background-width: calc(var(--margin-right) + var(--sidebar-width));
 }
 
-.publications {
-  grid-row: 2 / 5
+
+
+/* Paged.js viewer */
+@media screen {
+  body {
+    margin: 0; /* for mobile */
+    width: calc(var(--width) + 2 * var(--viewer-pages-spacing)); /* for mobile */
+  }
+   .pagedjs_pages {
+    max-width: var(--width);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+  }
+   .pagedjs_page {
+    box-shadow: 0 0 calc(0.66667 * var(--viewer-pages-spacing)) var(--viewer-shadow-color);
+    margin: var(--viewer-pages-spacing) 0;
+  }
+}
+ @media screen and (min-width: 8.5in) {
+  /* not a mobile */
+  body {
+    margin: auto;
+    width: unset;
+  }
 }
 
-.education {
-
-}
-
-.grants {
-  
-}
-
-.service {
-
-}
-
-.talks {
-  grid-row: 5/8;
-}
-.posters {
-  grid-row: 8/10;
-}  
-
-.prof-dev {
-  
-}
-
-.media {
-  
-}
-
-.work {
-  grid-column-start: 2;
-  grid-row-start: 7;
-  grid-row-end: 9;
-}
-
-.technical {
-  
-}
 
 p, li {
   font-size: 10px;
+}
+
+.title {
+  text-align: center;
+}
+
+.row h1 {
+  color: #710C0C;
+  border-bottom: 1px solid black;
+}
+
+.box {
+  visibility: hidden;
+  margin-bottom: 0;
+}
+.info-box {
+  background-color: #F5DD9E;
 }

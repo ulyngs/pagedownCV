@@ -17,11 +17,29 @@ knitr::opts_chunk$set(echo = TRUE)
 
 <div class="row">
 
-
 ```{block type='col-6'}
 # Personal summary {.summary}
 I am a cognitive psychologist-turned-computer scientist. I am passionate about applying insights from the behavioural neurosciences to design digital technology that is sensitive to human limitations and biases, particularly in relation to attention and self-regulation.
+```
 
+```{block type='col-6'}
+# info box {.box}
+<div class="info-box">
+Department of Computer Science,\
+University of Oxford, Oxford, UK
+
++44 (0)7472 185588\
+ulrik.lyngs\@cs.ox.ac.uk\
+ulriklyngs.com
+</div>
+```
+
+</div>
+
+
+<div class="row">
+
+```{block type='col-6'}
 # Selected Publications {.publications}
 Lyngs, U., Lukoff, K., Slovak, P., Binns, R., Slack, A., Inzlicht, M., Kleek, M. V., Shadbolt, N. (2019). Self-Control in Cyberspace: Applying Dual Systems Theory to a Review of Digital Self-Control Tools. CHI Conference on Human Factors in Computing Systems Proceedings 
 (CHI 2019)
@@ -37,7 +55,6 @@ Lyngs, U., Cohen, E., Hattori, W., Newson, M. & Levin, D. (2016). Hearing in Col
 
 
 ```{block type='col-6'}
-# Summary box {.box}
 
 # Education {.education}
 2016 – 2020(exp.) DPhil in Computer Science, University of Oxford
