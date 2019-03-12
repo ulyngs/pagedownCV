@@ -5,8 +5,9 @@ output:
   pagedown::html_paged:
     # change to true for a self-contained document, but it'll be a litte slower for Pandoc to render
     self_contained: false
-    css: ul_style.css
-    template: ul_template.html
+    css: [ul_style.css, "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap-grid.min.css"]
+    #template: ul_template.html
+    template: paged.html
     number_sections: false
 ---
 
@@ -14,10 +15,12 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+<div class="row">
+
+
+```{block type='col-6'}
 # Personal summary {.summary}
 I am a cognitive psychologist-turned-computer scientist. I am passionate about applying insights from the behavioural neurosciences to design digital technology that is sensitive to human limitations and biases, particularly in relation to attention and self-regulation.
-
-# Summary box {.box}
 
 # Selected Publications {.publications}
 Lyngs, U., Lukoff, K., Slovak, P., Binns, R., Slack, A., Inzlicht, M., Kleek, M. V., Shadbolt, N. (2019). Self-Control in Cyberspace: Applying Dual Systems Theory to a Review of Digital Self-Control Tools. CHI Conference on Human Factors in Computing Systems Proceedings 
@@ -29,6 +32,12 @@ Lyngs, U. (2018). A Cognitive Design Space for Supporting Self-Regulation of ICT
 CHI EA ’18: Proceedings of the 2018 CHI Conference Extended Abstracts on Human Factors in Computing Systems
 Lyngs, U., McKay, R. (2017). ‘It’s More Fun With My Phone’: A Replication Study of Cell Phone Presence and Task Performance. Proceedings of the 39th Annual Conference of the Cognitive Science Society
 Lyngs, U., Cohen, E., Hattori, W., Newson, M. & Levin, D. (2016). Hearing in Colour: How Expectations Distort Perception of Skin Tone. Journal of Experimental Psychology: Human Perception and Performance, 42 (12), 2068-2076
+
+```
+
+
+```{block type='col-6'}
+# Summary box {.box}
 
 # Education {.education}
 2016 – 2020(exp.) DPhil in Computer Science, University of Oxford
@@ -48,8 +57,17 @@ Lyngs, U., Cohen, E., Hattori, W., Newson, M. & Levin, D. (2016). Hearing in Col
 2018-	Steering group, Transparent Statistics in Human-Computer Interaction
 2017-	Ad-hoc reviewer, Computer-Supported Cooperative Work and Social Computing 
 2016-	Ad-hoc reviewer, ACM CHI Conference
+```
 
 
+<!-- here ends the row i.e. the first page -->
+</div>
+
+
+<!-- here starts the news row i.e. the second page -->
+<div class="row">
+
+```{block type='col-6'}
 # Selected talks {.talks}
 ## 2018
 So, Tell Me What Users Want, What They Really, Really Want! AI, Society, and the Media, conference organised by the BBC Academy, BBC Radio Theatre, New Broadcasting House, London
@@ -71,8 +89,10 @@ A Cognitive Design Space for Supporting Self-Regulation of ICT Use  3rd Symposiu
 Curiosity, ICTs and Attention Management: Evaluating the Emerging Anti-Distraction Market Designing for Curiosity. Workshop at CHI’17, Denver, Colorado
 ## 2014
 Wild Cooperation: Studying Real-World Reciprocity Using Couchsurfing.org. Morality: Evolutionary Origins and Cognitive Mechanisms, Central European University, Budapest.
+```
 
 
+```{block type='col-6'}
 # Professional development {.prof-dev}
 2018	Invited participant at the Global Dialogue for Happiness, 
 World Government Summit, Dubai 
@@ -97,3 +117,8 @@ Generated ideas and wrote programme copy for 250+ panel debates for the internat
 -	Data analysis and programming in R (tidyverse) and Python; reproducible article and report writing in R Markdown + LaTeX
 -	Static and interactive data visualisation using R (ggplot2 and Shiny) and D3.js
 -	Web development (HTML, CSS, JavaScript, Drupal, Hugo, blogdown, Jekyll + GitHub)
+```
+
+
+<!-- here ends the second page -->
+</div>
