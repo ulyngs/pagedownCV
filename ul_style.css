@@ -89,6 +89,11 @@ br.pageBreak {
   font-size: 0.85em;
 }
 
+/* set the width of the first column in the tables */
 .col-6.right td:first-child {
-  width: 30%;
+  width: 20%;
+}
+
+.col-6.right td {
+  font-size: 0.9em;
 }
