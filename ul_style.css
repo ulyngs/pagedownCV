@@ -78,11 +78,12 @@ br.pageBreak {
     page-break-after: always;
 }
 
-.publications thead {
+.col-6 thead {
   display: none;
 }
 
 
-.publications td {
+.col-6 td {
   text-indent: 8%;
+  font-size: 0.85em;
 }
