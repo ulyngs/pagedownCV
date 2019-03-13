@@ -16,6 +16,8 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(knitr)
 
+
+#### create publications table #####
 publications <- readxl::read_xlsx("../cv_data/publications.xlsx")
 
 pub_table <- publications %>%
@@ -27,6 +29,14 @@ pub_table <- publications %>%
   mutate(citation = str_replace(citation, "Lyngs, U.", "__Lyngs, U.__")) %>% # make my name bold
   knitr::kable()
 
+
+#### create education table #####
+education <- readxl::read_xlsx("../cv_data/education.xlsx")
+
+edu_table <- education %>% 
+  mutate(degree = str_c(degree, ", ", location)) %>% 
+  select(year, degree) %>% 
+  kable()
 ```
 
 
@@ -59,7 +69,7 @@ ulriklyngs.com
 
 <div class="row">
 
-<div class='col-6'>
+<div class='col-6 left'>
 # Selected Publications {.publications}
 
 `r pub_table`
@@ -68,12 +78,10 @@ ulriklyngs.com
 
 
 
-<div class='col-6'>
+<div class='col-6 right'>
 # Education {.education}
-2016 – 2020(exp.) DPhil in Computer Science, University of Oxford
-2012 – 2013	MSc in Cognitive and Evolutionary Anthropology, University of Oxford
-2011 – 2016	MA in the Cognitive Science of Religion & Experimental Psychology, Aarhus University
-2007 – 2011	BA in the Study of Religion & Psychology, Aarhus University
+
+`r edu_table`
 
 # Grants and Awards {.grants}
 2018	Best Paper Award (€500), 10th ACM Conference on Web Science, Amsterdam

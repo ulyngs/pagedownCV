@@ -78,12 +78,17 @@ br.pageBreak {
     page-break-after: always;
 }
 
-.col-6 thead {
+.col-6.left thead,
+.col-6.right thead{
   display: none;
 }
 
 
-.col-6 td {
+.col-6.left td {
   text-indent: 8%;
   font-size: 0.85em;
+}
+
+.col-6.right td:first-child {
+  width: 30%;
 }
