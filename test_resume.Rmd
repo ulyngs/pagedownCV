@@ -38,6 +38,38 @@ ulriklyngs.com
 
 
 <div class="row">
+```{r, echo=FALSE, include=FALSE, eval=FALSE}
+library(scholar)
+library(tidyverse)
+
+# google scholar only shows first 5-6 author names by default
+grab_full <- function(pubid_string){
+  get_complete_authors(id = 'e8XDAzcAAAAJ', pubid = pubid_string)
+}
+
+
+# my id
+id <- 'e8XDAzcAAAAJ'
+
+my_publications <- get_publications(id)
+
+str_replace("U Lyngs, K Lukoff, P Slovak, R Binns, A Slack, M Inzlicht, M Van Kleek, ...", "\\.\\.\\.", "N Shadbolt")
+
+my_publications %>% 
+  filter(pubid = 'Y0pCki6q_DkC')
+
+?str_replace
+my_publications %>%
+  #mutate(full_author = map_chr(pubid, grab)) # seems this overloads the server and gets us blocked
+  arrange(desc(year)) %>% 
+  mutate(author = ifelse(pubid == 'Y0pCki6q_DkC', str_replace(author, "\\.\\.\\.", "N Shadbolt"), author))
+  mutate(citation = str_c(author, " (", year, "). ", title, " ", journal, " ", number)) %>% 
+  select(citation)
+```
+
+
+
+
 
 ```{block type='col-6'}
 # Selected Publications {.publications}
@@ -80,6 +112,7 @@ Lyngs, U., Cohen, E., Hattori, W., Newson, M. & Levin, D. (2016). Hearing in Col
 <!-- here ends the row i.e. the first page -->
 </div>
 
+<br class="pageBreak" />
 
 <!-- here starts the news row i.e. the second page -->
 <div class="row">

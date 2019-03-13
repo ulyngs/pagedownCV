@@ -73,3 +73,7 @@ p, li {
 .info-box {
   background-color: #F5DD9E;
 }
+
+br.pageBreak {
+    page-break-after: always;
+}
