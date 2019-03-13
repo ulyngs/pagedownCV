@@ -13,13 +13,16 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(knitr)
 ```
 
 <div class="row">
 
-```{block type='col-6'}
+```{block type="col-6"}
 # Personal summary {.summary}
 I am a cognitive psychologist-turned-computer scientist. I am passionate about applying insights from the behavioural neurosciences to design digital technology that is sensitive to human limitations and biases, particularly in relation to attention and self-regulation.
+
 ```
 
 ```{block type='col-6'}
@@ -32,62 +35,34 @@ University of Oxford, Oxford, UK
 ulrik.lyngs\@cs.ox.ac.uk\
 ulriklyngs.com
 </div>
+
 ```
 
 </div>
 
 
 <div class="row">
-```{r, echo=FALSE, include=FALSE, eval=FALSE}
-library(scholar)
-library(tidyverse)
 
-# google scholar only shows first 5-6 author names by default
-grab_full <- function(pubid_string){
-  get_complete_authors(id = 'e8XDAzcAAAAJ', pubid = pubid_string)
-}
-
-
-# my id
-id <- 'e8XDAzcAAAAJ'
-
-my_publications <- get_publications(id)
-
-str_replace("U Lyngs, K Lukoff, P Slovak, R Binns, A Slack, M Inzlicht, M Van Kleek, ...", "\\.\\.\\.", "N Shadbolt")
-
-my_publications %>% 
-  filter(pubid = 'Y0pCki6q_DkC')
-
-?str_replace
-my_publications %>%
-  #mutate(full_author = map_chr(pubid, grab)) # seems this overloads the server and gets us blocked
-  arrange(desc(year)) %>% 
-  mutate(author = ifelse(pubid == 'Y0pCki6q_DkC', str_replace(author, "\\.\\.\\.", "N Shadbolt"), author))
-  mutate(citation = str_c(author, " (", year, "). ", title, " ", journal, " ", number)) %>% 
-  select(citation)
-```
-
-
-
-
-
-```{block type='col-6'}
+<div class="col-6">
 # Selected Publications {.publications}
-Lyngs, U., Lukoff, K., Slovak, P., Binns, R., Slack, A., Inzlicht, M., Kleek, M. V., Shadbolt, N. (2019). Self-Control in Cyberspace: Applying Dual Systems Theory to a Review of Digital Self-Control Tools. CHI Conference on Human Factors in Computing Systems Proceedings 
-(CHI 2019)
-Binns, R., Lyngs, U., van Kleek, M., Zhao, J., Shadbolt, N. (2018). Third party tracking in the mobile ecosystem. Proceedings of the 10th International ACM Web Science Conference 2018 (  Best Paper)
-Lyngs, U., Binns, R., van Kleek, M., Shadbolt, N. (2018). So, Tell Me What Users Want, What They Really, Really Want! CHI EA '18 (alt.chi): Proceedings of the 2018 CHI Conference Extended Abstracts on Human Factors in Computing Systems
-Binns, R., van Kleek, M., Veale, M., Lyngs, U., Zhao, J., Shadbolt, N. (2018). 'It's Reducing a Human Being to a Percentage': Perceptions of Justice in Algorithmic Decisions. CHI '18: Proceedings of the 2018 CHI Conference on Human Factors in Computing Systems
-Lyngs, U. (2018). A Cognitive Design Space for Supporting Self-Regulation of ICT Use. 
-CHI EA ’18: Proceedings of the 2018 CHI Conference Extended Abstracts on Human Factors in Computing Systems
-Lyngs, U., McKay, R. (2017). ‘It’s More Fun With My Phone’: A Replication Study of Cell Phone Presence and Task Performance. Proceedings of the 39th Annual Conference of the Cognitive Science Society
-Lyngs, U., Cohen, E., Hattori, W., Newson, M. & Levin, D. (2016). Hearing in Colour: How Expectations Distort Perception of Skin Tone. Journal of Experimental Psychology: Human Perception and Performance, 42 (12), 2068-2076
+
+```{r, echo=FALSE}
+publications <- readxl::read_xlsx("../cv_data/publications.xlsx")
+
+publications %>%
+  mutate(other = replace_na(other, "")) %>% 
+  mutate(author_year = str_c("*", authors, " (", year, ")*. ")) %>%  #italicise authors and year
+  mutate(title = str_c("[", title, "](", url, ")")) %>% #turn title into link
+  mutate(citation = str_c(author_year, title, venue, other, sep = " ")) %>%
+  select(citation) %>% 
+  mutate(citation = str_replace(citation, "Lyngs, U.", "__Lyngs, U.__")) %>% # make my name bold
+  knitr::kable(format = "html")
 
 ```
 
+</div>
 
 ```{block type='col-6'}
-
 # Education {.education}
 2016 – 2020(exp.) DPhil in Computer Science, University of Oxford
 2012 – 2013	MSc in Cognitive and Evolutionary Anthropology, University of Oxford
@@ -95,7 +70,7 @@ Lyngs, U., Cohen, E., Hattori, W., Newson, M. & Levin, D. (2016). Hearing in Col
 2007 – 2011	BA in the Study of Religion & Psychology, Aarhus University
 
 # Grants and Awards {.grants}
-2018	Best Paper Award (€500), 10th ACM Conference on Web Science, Amsterdam 
+2018	Best Paper Award (€500), 10th ACM Conference on Web Science, Amsterdam
 2018	Student Research Competition Grant ($500), ACM CHI'18
 2017	DOMUS Prize for Outstanding Research Communication (£500), Linacre College, University of Oxford
 2017	Designing for Curiosity Workshop Grant (€400), ACM CHI'17
@@ -104,7 +79,7 @@ Lyngs, U., Cohen, E., Hattori, W., Newson, M. & Levin, D. (2016). Hearing in Col
 
 # Service {.service}
 2018-	Steering group, Transparent Statistics in Human-Computer Interaction
-2017-	Ad-hoc reviewer, Computer-Supported Cooperative Work and Social Computing 
+2017-	Ad-hoc reviewer, Computer-Supported Cooperative Work and Social Computing
 2016-	Ad-hoc reviewer, ACM CHI Conference
 ```
 
@@ -144,13 +119,13 @@ Wild Cooperation: Studying Real-World Reciprocity Using Couchsurfing.org. Morali
 
 ```{block type='col-6'}
 # Professional development {.prof-dev}
-2018	Invited participant at the Global Dialogue for Happiness, 
-World Government Summit, Dubai 
+2018	Invited participant at the Global Dialogue for Happiness,
+World Government Summit, Dubai
 2017	Leading for Impact fellowship, 4-month leadership training programme at Saïd Business School, University of Oxford
 
 
 # Media coverage {.media}
-2018	Our paper ‘Third Party Tracking in the Mobile Ecosystem’ covered in the Financial Times, BBC, The Times, Business Insider, and more 
+2018	Our paper ‘Third Party Tracking in the Mobile Ecosystem’ covered in the Financial Times, BBC, The Times, Business Insider, and more
 
 # Selected work experience {.work}
 2017 – present

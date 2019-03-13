@@ -77,3 +77,12 @@ p, li {
 br.pageBreak {
     page-break-after: always;
 }
+
+.publications thead {
+  display: none;
+}
+
+
+.publications td {
+  text-indent: 8%;
+}
