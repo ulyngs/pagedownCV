@@ -5,7 +5,7 @@ output:
   pagedown::html_paged:
     # change to true for a self-contained document, but it'll be a litte slower for Pandoc to render
     self_contained: false
-    css: [ul_style.css, "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap-grid.min.css", "https://use.fontawesome.com/releases/v5.7.2/css/all.css"]
+    css: [ul_style.css, default-page.css, "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap-grid.min.css", "https://use.fontawesome.com/releases/v5.7.2/css/all.css"]
     #template: ul_template.html
     template: paged.html
     number_sections: false
