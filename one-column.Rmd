@@ -5,14 +5,11 @@ output:
   pagedown::html_paged:
     # change to true for a self-contained document, but it'll be a litte slower for Pandoc to render
     self_contained: false
-    css: [one-column-paged.css, default-page.css, "https://use.fontawesome.com/releases/v5.7.2/css/all.css"]
-    #template: ul_template.html
-    #template: paged.html
+    css: [one-column-paged.css,  "https://use.fontawesome.com/releases/v5.7.2/css/all.css"]
     number_sections: false
   bookdown::html_document2:
     css: [one-column.css, "https://use.fontawesome.com/releases/v5.7.2/css/all.css"]
     number_sections: false
-    mathjax: null
     toc: true
     toc_float: true
 links-to-footnotes: true
@@ -63,7 +60,7 @@ University of Oxford, Oxford, UK|
 </div>
 
 ## Education {.education .nohead}
-```{r, cache=TRUE}
+```{r}
 cv_entries %>% 
   filter(type == 'education') %>% 
   mutate(what = str_c(what, ", ", where)) %>% 
@@ -74,7 +71,7 @@ cv_entries %>%
 
 
 ## Grants and Awards {.grants .nohead}
-```{r, cache=TRUE}
+```{r}
 cv_entries %>% 
   filter(type == 'grants_and_awards') %>% 
   mutate(what = str_c(what, ", ", where)) %>% 
@@ -84,7 +81,7 @@ cv_entries %>%
 
 `r ifelse(params$paged_output, "", "## Research output {.tabset .output-header}")`
 `r ifelse(params$paged_output, "## Publications {.nohead .publications}", "### Publications {.nohead .publications}")`
-```{r, cache=TRUE}
+```{r}
 publications_table <- publications %>%
   arrange(desc(year), type) %>%
   mutate(author_year = str_c(authors, " (", year, "). ")) %>%
@@ -97,6 +94,7 @@ publications_table <- publications %>%
   mutate(citation = str_replace(citation, "Lyngs, U.", "__Lyngs, U.__")) # make my name bold
 
 publications_table %>%
+  filter(type != "master's thesis") %>% 
   select(type, citation) %>%
   knitr::kable()
 
@@ -113,7 +111,7 @@ publications_table %>%
 ```
 
 `r ifelse(params$paged_output, "## Talks {.nohead .talks}", "### Talks {.nohead .talks}")`
-```{r, cache=TRUE}
+```{r}
 cv_entries %>% 
   filter(type == 'talk') %>% 
   mutate(what = str_c("*", what, "*, ", where)) %>% 
@@ -122,7 +120,7 @@ cv_entries %>%
 ```
 
 `r ifelse(params$paged_output, "## Poster presentations {.nohead .posters}", "### Poster presentations {.nohead .posters}")`
-```{r, cache=TRUE}
+```{r}
 cv_entries %>% 
   filter(type == 'poster') %>%
   mutate(what = str_c("*", what, "*, ", where)) %>% 
@@ -132,7 +130,7 @@ cv_entries %>%
 ```
 
 ## Media coverage {.media .nohead}
-```{r, cache=TRUE}
+```{r}
 cv_entries %>% 
   filter(type == 'media') %>%
   select(year_begin, what) %>% 
@@ -140,9 +138,10 @@ cv_entries %>%
 ```
 
 ## Service {.service .nohead}
-```{r, cache=TRUE}
+```{r}
 cv_entries %>% 
   filter(type == 'service') %>% 
+  mutate(year_end = ifelse(year_end == "present", "", year_end)) %>% 
   mutate(where = ifelse(!is.na(url), str_c("[", where, "](", url, ")"), where)) %>% 
   mutate(what = str_c(what, ", ", where)) %>%
   mutate(year = ifelse(!is.na(year_end), str_c(year_begin, " --- ", year_end))) %>% 
@@ -150,8 +149,10 @@ cv_entries %>%
   kable()
 ```
 
+<br class="pageBreak">
+
 ## Professional development {.prof-dev .nohead}
-```{r, cache=TRUE}
+```{r}
 cv_entries %>% 
   filter(type == 'prof-dev') %>% 
   mutate(what = str_c(what, ", ", where)) %>% 
@@ -159,10 +160,8 @@ cv_entries %>%
   kable()
 ```
 
-<br class='pageBreak'>
-
 ## Selected work experience {.work .nohead .vertical-top}
-```{r, cache=TRUE}
+```{r}
 cv_entries %>% 
   filter(type == 'work') %>% 
   mutate(what = str_c("<span class='work-title'>", what, "</span><br class='work-break'>", where, "<br>", additional_info)) %>% 
@@ -172,7 +171,7 @@ cv_entries %>%
 ```
 
 ## Technical skills {.technical .nohead}
-```{r, cache=TRUE}
+```{r}
 cv_entries %>% 
   filter(type == 'technical') %>% 
   mutate(what = str_c("- *", what, "* ", additional_info)) %>% 
@@ -181,30 +180,28 @@ cv_entries %>%
 ```
 
 ## Software development {.cv-table .nohead .vertical-top}
-```{r, cache=TRUE}
+```{r}
 cv_entries %>% 
   filter(type == 'programming') %>% 
   replace_na(list(where = "", additional_info = "")) %>% 
   mutate(what = str_c(what, ", ", where, "<br>", additional_info)) %>% 
   select(year_begin, what) %>% 
   arrange(desc(year_begin)) %>% 
-  kable()
+  kable(align = c('l', 'l'))
 ```
 
 
 
-## Volunteering and personal skills {.cv-table .nohead .vertical-top}
-```{r, cache=TRUE}
-cv_entries %>% 
-  filter(type == 'volunteering') %>% 
-  mutate(what = str_c("<span class='work-title'>", what, "</span><br class='work-break'>", where)) %>% 
-  mutate(what = ifelse(!is.na(additional_info), str_c(what, "<br>", additional_info), what)) %>% 
-  mutate(year = ifelse(!is.na(year_end), str_c(year_begin, " --- ", year_end), year_begin)) %>% 
-  arrange(order, desc(year_end), desc(year)) %>% 
-  select(year, what) %>% 
-  kable()
-```
-
-<br class='pageBreak'>
+<!-- ## Volunteering and personal skills {.cv-table .nohead .vertical-top} -->
+<!-- ```{r, cache=TRUE} -->
+<!-- cv_entries %>%  -->
+<!--   filter(type == 'volunteering') %>%  -->
+<!--   mutate(what = str_c("<span class='work-title'>", what, "</span><br class='work-break'>", where)) %>%  -->
+<!--   mutate(what = ifelse(!is.na(additional_info), str_c(what, "<br>", additional_info), what)) %>%  -->
+<!--   mutate(year = ifelse(!is.na(year_end), str_c(year_begin, " --- ", year_end), year_begin)) %>%  -->
+<!--   arrange(order, desc(year_end), desc(year)) %>%  -->
+<!--   select(year, what) %>%  -->
+<!--   kable() -->
+<!-- ``` -->
 
 `r ifelse(params$paged_output, '### Links', '')`

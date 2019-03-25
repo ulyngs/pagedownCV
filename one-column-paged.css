@@ -9,20 +9,14 @@ body {
 
 :root{
   --page-width: 8.5in;
-  --margin-right: 0.5in;
-  --margin-left: 0.5in;
-  --margin-top: 0.5in;
-  --margin-bottom: 0.5in;
+  --pagedjs-margin-right: 0.7in;
+  --pagedjs-margin-left: 0.7in;
+  --pagedjs-margin-top: 0.5in;
+  --pagedjs-margin-bottom: 0.5in;
   --root-font-size: 12pt;
   --viewer-pages-spacing: 12px;
   --viewer-shadow-color: #313131; /* this marks the pages */
 }
-
-.pagedjs_margin-top-left-corner-holder,
-.pagedjs_margin-top,
-.pagedjs_margin-top-right-corner-holder {}
-
-
 
 /* Paged.js viewer */
 @media screen {
@@ -44,7 +38,7 @@ body {
  @media screen and (min-width: 8.5in) {
   /* not a mobile */
   body {
-    margin-left: 10%;
+    margin-left: 3%;
   }
 }
 
@@ -104,12 +98,13 @@ h2.box {
 /* if you use links to footnotes*/
 .footnote-ref sup {
   vertical-align: top;
+  margin-left: 1px;
 }
 
 
 .grid-container {
   display: grid;
-  grid-template-columns: 47% 47%;
+  grid-template-columns: 50% 44%;
   grid-column-gap: 6%;
 }
 
@@ -173,4 +168,22 @@ td {
 }
 .work-break {
   height: 100px;
+}
+
+
+
+/****** Page numbers ******/
+@page {
+  @top-left {
+    content: none;
+  }
+  @top-right {
+    content: none;
+  }
+  @bottom-right {
+    content: counter(page);
+  }
+}
+.pagedjs_margin.pagedjs_margin-bottom-right.hasContent {
+  align-items: baseline;
 }
