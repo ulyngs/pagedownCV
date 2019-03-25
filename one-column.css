@@ -1,4 +1,5 @@
 body {
+  margin-top: 2em;
   font-family: "Latin Modern Roman", "Book Antiqua", Palatino, serif
 }
 
@@ -56,19 +57,13 @@ h2.box {
 }
 .info-box td:first-child{
   width: 12%;
+  text-align: center;
 }
 .info-box td {
   border-top: none !important;
 }
 
-
-
-/* if you use links to footnotes*/
-.footnote-ref sup {
-  vertical-align: top;
-}
-
-
+/* top columns */
 .grid-container {
   display: grid;
   grid-template-columns: 47% 47%;
