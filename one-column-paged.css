@@ -38,10 +38,10 @@ body {
  @media screen and (min-width: 8.5in) {
   /* not a mobile */
   body {
-    /*margin-left: 3%;*/
-    margin: auto;
+    margin-left: 10%;
   }
 }
+
 
 /* create ability to insert pagebreaks with br.pagebreak */
 br.pageBreak {
