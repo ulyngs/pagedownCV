@@ -47,6 +47,14 @@ br.pageBreak {
     page-break-after: always;
 }
 
+
+/* remove decoration on info-box */
+.info-box a {
+  color: black;
+  text-decoration: none;
+}
+
+
 p, li {
   font-size: var(--root-font-size);
   line-height: 125%;

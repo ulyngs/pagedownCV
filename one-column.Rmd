@@ -3,19 +3,13 @@ title: "Ulrik Lyngs <br> Curriculum vitae"
 #date: "`r Sys.Date()`"
 output:
   bookdown::html_document2:
-    css: [one-column.css, "fontawesome-free-5.8.1-web/css/all.css"]
+    #CDS
+    css: [one-column.css, "https://use.fontawesome.com/releases/v5.7.2/css/all.css"]
+    #offline
+    #css: [one-column.css, "fontawesome-free-5.8.1-web/css/all.css"]
     number_sections: false
     toc: true
     toc_float: true
-  pagedown::html_paged:
-    # change to true for a self-contained document, but it'll be a litte slower for Pandoc to render
-    self_contained: false
-    css: [one-column-paged.css,  "fontawesome-free-5.8.1-web/css/all.css"]
-    number_sections: false
-links-to-footnotes: true #set to false when not paged output
-params:
-  include_all: true #set to false for short 2-column version
-  paged_output: false #set to false when not paged output
 ---
 
 
@@ -24,39 +18,21 @@ knitr::opts_chunk$set(echo = FALSE)
 library(tidyverse)
 library(knitr)
 
-
-#### create publications table #####
+#### publications #####
 publications <- readxl::read_xlsx("../cv_data/publications.xlsx")
 
-#### create education table #####
+#### all other entries #####
 cv_entries <- readxl::read_xlsx("../cv_data/cv_entries.xlsx")
 
 ```
 
 <div class="grid-container">
-```{block type="col-6 grid-item", echo=TRUE}
-## Personal summary {.summary}
-I am a cognitive psychologist-turned-computer scientist. I am passionate about applying insights from the behavioural neurosciences to design digital technology that is sensitive to human limitations and biases, particularly in relation to attention and self-regulation.
-
+<!-- top row -->
+```{r summary, child = 'content/summary.Rmd'}
 ```
 
-```{block type='col-6 grid-item', echo=TRUE}
-## Contact information {.box}
-<div class="info-box">
-
-| Center | Left |
-|:------:|:-----|
-| <i class="fas fa-map-marker-alt"></i>|Department of Computer Science,\
-University of Oxford, Oxford, UK|
-| <i class="fas fa-mobile-alt"></i> | +44 (0)7472 185588 |
-| <i class="fas fa-envelope"></i> | ulrik.lyngs\@cs.ox.ac.uk |
-| <i class="fas fa-globe"></i> | [ulriklyngs.com](https://ulriklyngs.com) |
-
- 
-</div>
-
+```{r contact-info, child = 'content/contact-info.Rmd'}
 ```
-
 </div>
 
 ## Education {.education .nohead}
@@ -69,7 +45,6 @@ cv_entries %>%
   kable()
 ```
 
-
 ## Grants and Awards {.grants .nohead}
 ```{r}
 cv_entries %>% 
@@ -79,8 +54,8 @@ cv_entries %>%
   kable()
 ```
 
-`r ifelse(params$paged_output, "", "## Research output {.tabset .output-header}")`
-`r ifelse(params$paged_output, "## Publications {.nohead .publications}", "### Publications {.nohead .publications}")`
+## Research output {.tabset .output-header}
+### Publications {.nohead .publications}
 ```{r}
 publications_table <- publications %>%
   arrange(desc(year), type) %>%
@@ -98,19 +73,9 @@ publications_table %>%
   select(type, citation) %>%
   knitr::kable()
 
-# if (params$include_all) {
-#   publications_table %>%
-#     select(type, citation) %>%
-#     knitr::kable()
-# } else {
-#   publications_table %>%
-#     filter(!is.na(short_cv)) %>%
-#     select(citation) %>%
-#     knitr::kable()
-# }
 ```
 
-`r ifelse(params$paged_output, "## Talks {.nohead .talks}", "### Talks {.nohead .talks}")`
+### Talks {.nohead .talks}
 ```{r}
 cv_entries %>% 
   filter(type == 'talk') %>% 
@@ -119,7 +84,7 @@ cv_entries %>%
   kable()
 ```
 
-`r ifelse(params$paged_output, "## Poster presentations {.nohead .posters}", "### Poster presentations {.nohead .posters}")`
+### Poster presentations {.nohead .posters}
 ```{r}
 cv_entries %>% 
   filter(type == 'poster') %>%
@@ -148,8 +113,6 @@ cv_entries %>%
   select(year, what) %>% 
   kable()
 ```
-
-<br class="pageBreak">
 
 ## Teaching experience {.teaching .nohead}
 ```{r}
@@ -202,18 +165,16 @@ cv_entries %>%
   kable(align = c('l', 'l'))
 ```
 
+## Personal skills & volunteering {.personal .nohead}
+```{r}
+cv_entries %>%
+  filter(type == 'volunteering' & professional_2_page == 'y') %>%
+  mutate(what = str_c("<span class='work-title'>", what, "</span><br class='work-break'>", where)) %>%
+  mutate(what = ifelse(!is.na(additional_info), str_c(what, "<br>", additional_info), what)) %>%
+  mutate(year = ifelse(!is.na(year_end), str_c(year_begin, " --- ", year_end), year_begin)) %>%
+  arrange(order, desc(year_end), desc(year)) %>%
+  select(year, what) %>%
+  kable()
+```
 
 
-<!-- ## Volunteering and personal skills {.cv-table .nohead .vertical-top} -->
-<!-- ```{r, cache=TRUE} -->
-<!-- cv_entries %>%  -->
-<!--   filter(type == 'volunteering') %>%  -->
-<!--   mutate(what = str_c("<span class='work-title'>", what, "</span><br class='work-break'>", where)) %>%  -->
-<!--   mutate(what = ifelse(!is.na(additional_info), str_c(what, "<br>", additional_info), what)) %>%  -->
-<!--   mutate(year = ifelse(!is.na(year_end), str_c(year_begin, " --- ", year_end), year_begin)) %>%  -->
-<!--   arrange(order, desc(year_end), desc(year)) %>%  -->
-<!--   select(year, what) %>%  -->
-<!--   kable() -->
-<!-- ``` -->
-
-`r ifelse(params$paged_output, '### Links', '')`
