@@ -8,8 +8,8 @@ output: html_document
 This repository has three versions of my resume:
 
 1. [Short, 2-page professional resume](professional_cv.html)
-2. [Paged full resume](one-column.html)
-3. [One-paged full resume](one-column-paged.html)
+2. [Paged full resume](one-column-paged.html)
+3. [One-paged full resume](one-column.html)
 
 The resumés pull in subsets of cv entries that live in two Excel files (one for publications, one for all other cv entries).
 
