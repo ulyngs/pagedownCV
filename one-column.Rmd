@@ -2,20 +2,20 @@
 title: "Ulrik Lyngs <br> Curriculum vitae"
 #date: "`r Sys.Date()`"
 output:
-  pagedown::html_paged:
-    # change to true for a self-contained document, but it'll be a litte slower for Pandoc to render
-    self_contained: false
-    css: [one-column-paged.css,  "https://use.fontawesome.com/releases/v5.7.2/css/all.css"]
-    number_sections: false
   bookdown::html_document2:
-    css: [one-column.css, "https://use.fontawesome.com/releases/v5.7.2/css/all.css"]
+    css: [one-column.css, "fontawesome-free-5.8.1-web/css/all.css"]
     number_sections: false
     toc: true
     toc_float: true
-links-to-footnotes: true
+  pagedown::html_paged:
+    # change to true for a self-contained document, but it'll be a litte slower for Pandoc to render
+    self_contained: false
+    css: [one-column-paged.css,  "fontawesome-free-5.8.1-web/css/all.css"]
+    number_sections: false
+links-to-footnotes: true #set to false when not paged output
 params:
   include_all: true #set to false for short 2-column version
-  paged_output: true #set to false with single-page html
+  paged_output: false #set to false when not paged output
 ---
 
 
@@ -151,12 +151,15 @@ cv_entries %>%
 
 <br class="pageBreak">
 
-## Professional development {.prof-dev .nohead}
+## Teaching experience {.teaching .nohead}
 ```{r}
 cv_entries %>% 
-  filter(type == 'prof-dev') %>% 
-  mutate(what = str_c(what, ", ", where)) %>% 
-  select(year_begin, what) %>% 
+  filter(type == 'teaching') %>% 
+  mutate(what = ifelse(!is.na(additional_info), 
+    str_c("<span class='work-title'>", what, "</span><br class='work-break'>", where, "<br>", additional_info),
+    str_c("<span class='work-title'>", what, "</span><br class='work-break'>", where))) %>% 
+  mutate(year = ifelse(!is.na(year_end), str_c(year_begin, " --- ", year_end), year_begin)) %>% 
+  select(year, what) %>% 
   kable()
 ```
 
@@ -167,6 +170,15 @@ cv_entries %>%
   mutate(what = str_c("<span class='work-title'>", what, "</span><br class='work-break'>", where, "<br>", additional_info)) %>% 
   mutate(year = ifelse(!is.na(year_end), str_c(year_begin, " --- ", year_end), year_begin)) %>% 
   select(year, what) %>% 
+  kable()
+```
+
+## Professional development {.prof-dev .nohead}
+```{r}
+cv_entries %>% 
+  filter(type == 'prof-dev') %>% 
+  mutate(what = str_c(what, ", ", where)) %>% 
+  select(year_begin, what) %>% 
   kable()
 ```
 
