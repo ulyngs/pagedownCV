@@ -21,11 +21,12 @@ body {
 /* Paged.js viewer */
 @media screen {
   body {
+    background-color: var(--viewer-background-color);
     margin: 0; /* for mobile */
-    width: calc(var(--width) + 2 * var(--viewer-pages-spacing)); /* for mobile */
+    width: calc(var(--pagedjs-width) + 2 * var(--viewer-pages-spacing)); /* for mobile */
   }
    .pagedjs_pages {
-    max-width: var(--width);
+    max-width: var(--pagedjs-width);
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -38,7 +39,8 @@ body {
  @media screen and (min-width: 8.5in) {
   /* not a mobile */
   body {
-    margin-left: 10%;
+    margin: auto;
+    width: unset;
   }
 }
 
