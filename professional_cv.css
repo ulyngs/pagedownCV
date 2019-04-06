@@ -22,11 +22,12 @@ body {
 /* Paged.js viewer */
 @media screen {
   body {
+    background-color: var(--viewer-background-color);
     margin: 0; /* for mobile */
-    width: calc(var(--width) + 2 * var(--viewer-pages-spacing)); /* for mobile */
+    width: calc(var(--pagedjs-width) + 2 * var(--viewer-pages-spacing)); /* for mobile */
   }
    .pagedjs_pages {
-    max-width: var(--width);
+    max-width: var(--pagedjs-width);
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -39,10 +40,19 @@ body {
  @media screen and (min-width: 8.5in) {
   /* not a mobile */
   body {
-    /*margin-left: 3%;*/
-    margin-left: 10%;
+    margin: auto;
+    width: unset;
   }
 }
+
+/* 
+if we get the second page started already on the first page
+then make sure we ain't got a border showing up! 
+*/
+.pagedjs_first_page .pagetwo h1 {
+  border-bottom: none !important;
+}
+
 
 /* create ability to insert pagebreaks with br.pagebreak */
 br.pageBreak {
