@@ -124,7 +124,7 @@ cv_entries %>%
 <!-- here ends the row i.e. the first page -->
 </div>
 
-<br class="pageBreak" />
+<!-- <br class="pageBreak" /> -->
 
 <!-- here starts the second page -->
 <div class="row pagetwo">
