@@ -10,9 +10,7 @@ output:
     # offline
     #css: [one-column-paged.css,  "fontawesome-free-5.8.1-web/css/all.css"]
     number_sections: false
-links-to-footnotes: true #set to false when not paged output
-params:
-  paged_output: true #set to false when not paged output
+links-to-footnotes: true
 ---
 
 
@@ -58,8 +56,8 @@ cv_entries %>%
   kable()
 ```
 
-`r ifelse(params$paged_output, "", "## Research output {.tabset .output-header}")`
-`r ifelse(params$paged_output, "## Publications {.nohead .publications}", "### Publications {.nohead .publications}")`
+
+## Publications {.nohead .publications}
 ```{r}
 publications_table <- publications %>%
   arrange(desc(year), type) %>%
@@ -78,7 +76,7 @@ publications_table %>%
   knitr::kable()
 ```
 
-`r ifelse(params$paged_output, "## Talks {.nohead .talks}", "### Talks {.nohead .talks}")`
+## Talks {.nohead .talks}
 ```{r}
 cv_entries %>% 
   filter(type == 'talk') %>% 
@@ -87,7 +85,7 @@ cv_entries %>%
   kable()
 ```
 
-`r ifelse(params$paged_output, "## Poster presentations {.nohead .posters}", "### Poster presentations {.nohead .posters}")`
+## Poster presentations {.nohead .posters}
 ```{r}
 cv_entries %>% 
   filter(type == 'poster') %>%
@@ -184,4 +182,4 @@ cv_entries %>%
 
 <br class="pageBreak">
 
-`r ifelse(params$paged_output, '### Links', '')`
+### Links
