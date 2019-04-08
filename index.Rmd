@@ -2,10 +2,12 @@
 title: "Pagedown CVs"
 author: "Ulrik Lyngs"
 date: "05/04/2019"
-output: html_document
+output: 
+  html_document:
+    self_contained: false
 ---
 
-This repository has three different versions of my resume, with the paged versions created with [`pagedown`](https://github.com/rstudio/pagedown) (NOTE: 1 and 2 does *not* work in the Safari browser):
+This repository has three different versions of my resume, with the paged versions created with [`pagedown`](https://github.com/rstudio/pagedown) (NOTE: for now 1 and 2 only works properly in Chrome, as some aspects of CSS Paged Media are only supported by this browser):
 
 1. [Short, 2-page professional resume](professional_cv.html)
 2. [Paged full resume](one-column-paged.html)
