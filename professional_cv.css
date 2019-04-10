@@ -53,6 +53,10 @@ then make sure we ain't got a border showing up!
   border-bottom: none !important;
 }
 
+h1.work{
+  margin-top: 0.2em !important;
+}
+
 
 /* create ability to insert pagebreaks with br.pagebreak */
 br.pageBreak {
@@ -81,6 +85,7 @@ h1.title {
   font-size: 1.5em;
   font-weight: normal;
 }
+
 
 
 /* PAGE 1 */
