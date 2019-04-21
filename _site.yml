@@ -1,0 +1,16 @@
+name: "my-website"
+navbar:
+  title: "Ulrik Lyngs"
+  right:
+    - text: "CV"
+      href: cv.html
+      menu:
+        - text: "CV full"
+          href: cv.html
+        - text: "CV short paged"
+          href: professional_cv.html
+        - text: "CV long paged"
+          href: one-column-paged.html
+    - text: "Back to main site"
+      href: "https://ulriklyngs.com/"
+output_dir: "docs"

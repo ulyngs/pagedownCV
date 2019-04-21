@@ -1,0 +1,126 @@
+body {
+  margin-top: 2em;
+  font-family: "Latin Modern Roman", "Book Antiqua", Palatino, serif
+}
+
+:root{
+  --root-font-size: 1.1em;
+}
+
+/* remove decoration on info-box */
+.info-box a {
+  color: black;
+  text-decoration: none;
+}
+.info-box td {
+  margin-bottom: 0;
+  padding-top: 0 !important;
+}
+.info-box {
+  padding: 5px 5px 0px 5px !important;
+}
+
+
+p, li {
+  font-size: var(--root-font-size);
+  line-height: 125%;
+}
+
+td {
+  font-size: var(--root-font-size);
+}
+
+/* title */
+h1.title {
+  text-align: center;
+  font-weight: normal;
+  font-size: 2.5em;
+  line-height: 110%;
+}
+
+/* section headers */
+h2 {
+  color: #710C0C;
+  margin-top: 1em;
+  margin-bottom: 0.3em;
+  font-size: 1.7em;
+  font-weight: normal;
+}
+
+.education h2 {
+  margin-top: 0.2em;
+}
+
+/* PAGE 1 */
+h2.summary,
+h2.box {
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+  border-bottom: 1px solid black;
+}
+
+.box {
+  visibility: hidden;
+  margin-bottom: 0;
+}
+.info-box {
+  background-color: #F5DD9E;
+  margin: 0;
+  line-height: 125%;
+  border: none;
+}
+.info-box thead {
+  display: none;
+}
+.info-box td:first-child{
+  width: 12%;
+  text-align: center;
+}
+.info-box td {
+  border-top: none !important;
+}
+
+/* top columns */
+.grid-container {
+  display: grid;
+  grid-template-columns: 47% 47%;
+  grid-column-gap: 6%;
+}
+
+/* remove header in select table */
+.nohead thead{
+  display: none;
+}
+
+/* set width of first column in tables */
+.publications td:first-child,
+.grants td:first-child,
+.education td:first-child,
+.talks td:first-child,
+.prof-dev td:first-child,
+.media td:first-child,
+.work td:first-child,
+.posters td:first-child,
+.service td:first-child {
+  width: 13%;
+}
+
+.cv-table td:first-child {
+  width: 13%;
+}
+
+td {
+  vertical-align: top;
+  text-align: left;
+}
+
+/*.smaller-font {
+  font-size: 0.9em;
+}*/
+
+.work-title {
+  font-size: 1.2em;
+}
+.work-break {
+  height: 100px;
+}

@@ -1,0 +1,187 @@
+---
+title: "Ulrik Lyngs: CV"
+output:
+  html_document:
+    css: [make-cv-like-other.css, one-column-cv.css, "website-page.css", "style.css", "academicons-1.8-2.6/css/academicons.min.css"]
+    toc: true
+    toc_float: true
+
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+library(knitr)
+
+#### publications #####
+publications <- readxl::read_xlsx("cv_data/publications.xlsx")
+
+#### all other entries #####
+cv_entries <- readxl::read_xlsx("cv_data/cv_entries.xlsx")
+
+```
+
+I am passionate about using insights from the behavioural neurosciences to design digital technology that is sensitive to human limitations and biases, particularly in relation to attention and self-regulation.
+
+I have a highly interdisciplinary background and try to integrate best practices from many work spheres, such as using tools from large-scale event management to structure academic projects.
+
+**Technical skills**: Data analysis and programming (R, Python); static data visualisation (R, ggplot2), interactive visualisation (D3, shiny); web development (HTML, CSS, JavaScript, Drupal, Jekyll + GitHub).
+
+**Professional skills**: Event production and team leadership, public speaking, teaching.
+
+**Languages**: Danish (native level), English (native level), Spanish (intermediate), Arabic (beginner-intermediate), German (beginner-intermediate), French (beginner).
+
+**Personal interests**: Travelling & couchsurfing, samatha meditation, dancing (Cuban salsa and swing), playing music (whatever instruments I can get my hands on, and ideally with the Karaoke Collective)
+
+Download a brief version of [my CV as PDF](https://ulriklyngs.com/sites/default/files/lyngs_cv_2019_april.pdf).
+
+<br>
+
+# Academic experience
+## Education {.education .nohead}
+```{r}
+cv_entries %>% 
+  filter(type == 'education') %>% 
+  mutate(what = str_c(what, ", ", where)) %>% 
+  mutate(year = str_c(year_begin, " --- ", year_end)) %>% 
+  select(year, what) %>% 
+  kable()
+```
+
+## Grants and Awards {.grants .nohead}
+```{r}
+cv_entries %>% 
+  filter(type == 'grants_and_awards') %>% 
+  mutate(what = str_c(what, ", ", where)) %>% 
+  select(year_begin, what) %>% 
+  kable()
+```
+
+## Talks and poster presentations {.tabset .output-header}
+<!-- ### Publications {.nohead .publications} -->
+<!-- ```{r} -->
+<!-- publications_table <- publications %>% -->
+<!--   arrange(desc(year), type) %>% -->
+<!--   mutate(author_year = str_c(authors, " (", year, "). ")) %>% -->
+<!--   #mutate(author_year = str_c("*", authors, " (", year, ")*. ")) %>%  #italicise authors and year -->
+<!--   mutate(title = ifelse(!is.na(url), str_c("[", title, "](", url, ")"), title)) %>% #turn title into link -->
+<!--   #mutate(title = str_c("<span style='text-decoration: underline'>", title, "</span>")) %>% #underline title -->
+<!--   mutate(citation = ifelse(!is.na(award),  -->
+<!--                            str_c(author_year, title, venue, "<i class='fas fa-award'></i><em>", award, "</em>", sep = " "), -->
+<!--                            str_c(author_year, title, venue, sep = " "))) %>% -->
+<!--   mutate(citation = str_replace(citation, "Lyngs, U.", "__Lyngs, U.__")) # make my name bold -->
+
+<!-- publications_table %>% -->
+<!--   filter(type != "master's thesis") %>%  -->
+<!--   select(type, citation) %>% -->
+<!--   knitr::kable() -->
+
+<!-- ``` -->
+
+### Talks {.nohead .talks}
+```{r}
+cv_entries %>% 
+  filter(type == 'talk') %>% 
+  mutate(what = str_c("*", what, "*, ", where)) %>% 
+  select(year_begin, what) %>% 
+  kable()
+```
+
+### Posters {.nohead .posters}
+```{r}
+cv_entries %>% 
+  filter(type == 'poster') %>%
+  mutate(what = str_c("*", what, "*, ", where)) %>% 
+  select(year_begin, what) %>% 
+  arrange(desc(year_begin)) %>% 
+  kable()
+```
+
+## Media coverage {.media .nohead}
+```{r}
+cv_entries %>% 
+  filter(type == 'media') %>%
+  select(year_begin, what) %>% 
+  kable()
+```
+
+## Service {.service .nohead}
+```{r}
+cv_entries %>% 
+  filter(type == 'service') %>% 
+  mutate(year_end = ifelse(year_end == "present", "", year_end)) %>% 
+  mutate(where = ifelse(!is.na(url), str_c("[", where, "](", url, ")"), where)) %>% 
+  mutate(what = str_c(what, ", ", where)) %>%
+  mutate(year = ifelse(!is.na(year_end), str_c(year_begin, " --- ", year_end))) %>% 
+  select(year, what) %>% 
+  kable()
+```
+
+## Teaching experience {.teaching .service .nohead}
+```{r}
+cv_entries %>% 
+  filter(type == 'teaching') %>% 
+  mutate(what = ifelse(!is.na(additional_info), 
+    str_c("<span class='work-title'>", what, "</span><br class='work-break'>", where, "<br>", additional_info),
+    str_c("<span class='work-title'>", what, "</span><br class='work-break'>", where))) %>% 
+  mutate(year = ifelse(!is.na(year_end), str_c(year_begin, " --- ", year_end), year_begin)) %>% 
+  select(year, what) %>% 
+  kable()
+```
+
+# Work experience
+## Selected work experience {.work .nohead .vertical-top}
+```{r}
+cv_entries %>% 
+  filter(type == 'work') %>% 
+  mutate(what = str_c("<span class='work-title'>", what, "</span><br class='work-break'>", where, "<br>", additional_info)) %>% 
+  mutate(year = ifelse(!is.na(year_end), str_c(year_begin, " --- ", year_end), year_begin)) %>% 
+  select(year, what) %>% 
+  kable()
+```
+
+## Professional development {.prof-dev .nohead}
+```{r}
+cv_entries %>% 
+  filter(type == 'prof-dev') %>% 
+  mutate(what = str_c(what, ", ", where)) %>% 
+  select(year_begin, what) %>% 
+  kable()
+```
+
+# Technical
+## Skills {.technical .nohead}
+```{r}
+cv_entries %>% 
+  filter(type == 'technical') %>% 
+  mutate(what = str_c("- *", what, "* ", additional_info)) %>% 
+  select(what) %>% 
+  kable()
+```
+
+## Software development {.cv-table .nohead .vertical-top}
+```{r}
+cv_entries %>% 
+  filter(type == 'programming') %>% 
+  replace_na(list(where = "", additional_info = "")) %>% 
+  mutate(what = str_c(what, ", ", where, "<br>", additional_info)) %>% 
+  select(year_begin, what) %>% 
+  arrange(desc(year_begin)) %>% 
+  kable(align = c('l', 'l'))
+```
+
+# Personal
+## Skills & volunteering {.personal .service .nohead}
+```{r}
+cv_entries %>%
+  filter(type == 'volunteering' & professional_2_page == 'y') %>%
+  mutate(what = str_c("<span class='work-title'>", what, "</span><br class='work-break'>", where)) %>%
+  mutate(what = ifelse(!is.na(additional_info), str_c(what, "<br>", additional_info), what)) %>%
+  mutate(year = ifelse(!is.na(year_end), str_c(year_begin, " --- ", year_end), year_begin)) %>%
+  arrange(order, desc(year_end), desc(year)) %>%
+  select(year, what) %>%
+  kable()
+```
+
+

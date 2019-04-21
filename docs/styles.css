@@ -1,0 +1,60 @@
+/*hide title*/
+.posts-list-caption {
+  display: none;
+}
+
+.radix-site-header {
+  background-color: white;
+  border-bottom: 2px #e7e7e7 solid;
+}
+
+.radix-site-footer {
+  background-color: white;
+  border-top: 2px #e7e7e7 solid;
+  text-align: right;
+}
+.radix-site-footer p{
+  margin-right: 10%;
+  color: #777;
+}
+
+.nav-left {
+  color: #777;
+  margin-left: 10% !important;
+}
+
+.nav-right {
+  color: #777;
+  margin-right: 10% !important;
+}
+.nav-right a:hover,
+.radix-site-footer a:hover{
+  color: #5e5e5e;
+}
+
+.nav-left .title {
+  font-size: 2.75em;
+  text-transform: uppercase;
+}
+.nav-left .title:hover {
+  color: #5e5e5e;
+}
+
+.posts-with-sidebar {
+  margin-left: 10%;
+  margin-right: 10%;
+  padding-right: 0 !important;
+  padding-left: 18px !important;
+}
+
+d-appendix {
+  padding-top: 24px !important;
+  padding-bottom: 0px !important;
+}
+
+/* make code sections scroll rather than overflow, and give them a grey background */
+/* UL: 19 Nov 2018, this should've been fixed in source code now - https://github.com/rstudio/radix/commit/abbfd67146e44eb873c561cbb1fc11065788f7f8 */
+d-code {
+  overflow-x: auto !important;
+  background: #f8f8f8;
+}
