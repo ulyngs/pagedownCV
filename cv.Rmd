@@ -22,6 +22,8 @@ cv_entries <- readxl::read_xlsx("cv_data/cv_entries.xlsx")
 
 ```
 
+<br>
+
 I am passionate about using insights from the behavioural neurosciences to design digital technology that is sensitive to human limitations and biases, particularly in relation to attention and self-regulation.
 
 I have a highly interdisciplinary background and try to integrate best practices from many work spheres, such as using tools from large-scale event management to structure academic projects.
