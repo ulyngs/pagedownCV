@@ -24,19 +24,15 @@ cv_entries <- readxl::read_xlsx("cv_data/cv_entries.xlsx")
 
 <br>
 
-I am passionate about using insights from the behavioural neurosciences to design digital technology that is sensitive to human limitations and biases, particularly in relation to attention and self-regulation.
+# Summary
 
-I have a highly interdisciplinary background and try to integrate best practices from many work spheres, such as using tools from large-scale event management to structure academic projects.
+I am passionate about using insights from the behavioural neurosciences to **design digital technology that is sensitive to human limitations and biases**, particularly in relation to attention and self-regulation.
 
-**Technical skills**: Data analysis and programming (R, Python); static data visualisation (R, ggplot2), interactive visualisation (D3, shiny); web development (HTML, CSS, JavaScript, Drupal, Jekyll + GitHub).
+My **academic and professional background** is highly interdisciplinary, and I try to integrate best practices from many work spheres, such as using tools from large-scale event management to structure academic projects.
 
-**Professional skills**: Event production and team leadership, public speaking, teaching.
+My **personal interests** include travelling & couchsurfing, samatha meditation, dancing (Cuban salsa and swing), and playing music (whatever instruments I can get my hands on, and ideally with the [Karaoke Collective](https://karaokecollective.com))
 
-**Languages**: Danish (native level), English (native level), Spanish (intermediate), Arabic (beginner-intermediate), German (beginner-intermediate), French (beginner).
-
-**Personal interests**: Travelling & couchsurfing, samatha meditation, dancing (Cuban salsa and swing), playing music (whatever instruments I can get my hands on, and ideally with the Karaoke Collective)
-
-Download a brief version of [my CV as PDF](https://ulriklyngs.com/sites/default/files/lyngs_cv_2019_april.pdf).
+Download a brief version of [my CV as PDF](https://github.com/ulyngs/pagedown-cv/raw/master/_pdfs/lyngs_cv_2019_april.pdf).
 
 <br>
 
