@@ -36,7 +36,7 @@ Download a brief version of [my CV as PDF](https://github.com/ulyngs/pagedown-cv
 
 <br>
 
-# Academic experience
+# Academic
 ## Education {.education .nohead}
 ```{r}
 cv_entries %>% 
@@ -128,7 +128,7 @@ cv_entries %>%
   kable()
 ```
 
-# Work experience
+# Work (non-academia)
 ## Selected work experience {.work .nohead .vertical-top}
 ```{r}
 cv_entries %>% 
