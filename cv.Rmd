@@ -15,10 +15,10 @@ library(tidyverse)
 library(knitr)
 
 #### publications #####
-publications <- readxl::read_xlsx("cv_data/publications.xlsx")
+publications <- readxl::read_xlsx("_cv_data/publications.xlsx")
 
 #### all other entries #####
-cv_entries <- readxl::read_xlsx("cv_data/cv_entries.xlsx")
+cv_entries <- readxl::read_xlsx("_cv_data/cv_entries.xlsx")
 
 ```
 
@@ -134,6 +134,7 @@ cv_entries %>%
 cv_entries %>% 
   filter(type == 'work') %>% 
   mutate(what = str_c("<span class='work-title'>", what, "</span><br class='work-break'>", where, "<br>", additional_info)) %>% 
+  arrange(desc(year_begin)) %>% 
   mutate(year = ifelse(!is.na(year_end), str_c(year_begin, " --- ", year_end), year_begin)) %>% 
   select(year, what) %>% 
   kable()
