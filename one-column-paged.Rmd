@@ -110,12 +110,12 @@ cv_entries %>%
   mutate(year_end = ifelse(year_end == "present", "", year_end)) %>% 
   mutate(where = ifelse(!is.na(url), str_c("[", where, "](", url, ")"), where)) %>% 
   mutate(what = str_c(what, ", ", where)) %>%
-  mutate(year = ifelse(!is.na(year_end), str_c(year_begin, " --- ", year_end))) %>% 
+  mutate(year = ifelse(!is.na(year_end), 
+                       str_c(year_begin, " --- ", year_end), 
+                       year_begin)) %>% 
   select(year, what) %>% 
   kable()
 ```
-
-<br class="pageBreak">
 
 ## Teaching experience {.teaching .nohead .set-width}
 ```{r}
@@ -174,7 +174,9 @@ cv_entries %>%
   filter(type == 'volunteering' & professional_2_page == 'y') %>%
   mutate(what = str_c("<span class='work-title'>", what, "</span><br class='work-break'>", where)) %>%
   mutate(what = ifelse(!is.na(additional_info), str_c(what, "<br>", additional_info), what)) %>%
-  mutate(year = ifelse(!is.na(year_end), str_c(year_begin, " --- ", year_end), year_begin)) %>%
+  mutate(year = ifelse(!is.na(year_end), 
+                       str_c(year_begin, " --- ", year_end), 
+                       year_begin)) %>%
   arrange(order, desc(year_end), desc(year)) %>%
   select(year, what) %>%
   kable()
