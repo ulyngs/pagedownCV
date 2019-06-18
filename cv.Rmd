@@ -32,7 +32,7 @@ My **academic and professional background** is highly interdisciplinary, and I t
 
 My **personal interests** include travelling & couchsurfing, samatha meditation, dancing (Cuban salsa and swing), and playing music (whatever instruments I can get my hands on, and ideally with the [Karaoke Collective](https://karaokecollective.com))
 
-Download a brief version of [my CV as PDF](https://github.com/ulyngs/pagedown-cv/raw/master/_pdfs/lyngs_cv_2019_april.pdf).
+Download a brief version of [my CV as PDF](https://github.com/ulyngs/pagedown-cv/raw/master/_pdfs/lyngs_cv_2019_june.pdf).
 
 <br>
 
@@ -126,15 +126,11 @@ cv_entries %>%
   mutate(year_end = ifelse(year_end == "present", "", year_end)) %>%
   mutate(where = ifelse(!is.na(url), str_c("[", where, "](", url, ")"), where)) %>% 
   mutate(what = ifelse(!is.na(additional_info),
-                       str_c("<span class='work-title'>", 
-                      what,
-                      "</span><br class='work-break'>", 
-                      where,
-                      "<br>",
-                      additional_info),
-                      str_c("<span class='work-title'>", 
-                      what,
-                      "</span><br class='work-break'>", 
+                       str_c(what,
+                      "<br class='work-break'>", 
+                      where),
+                      str_c(what,
+                      "<br class='work-break'>", 
                       where))) %>% 
   mutate(year = ifelse(!is.na(year_end), 
                        str_c(year_begin, " --- ", year_end),
