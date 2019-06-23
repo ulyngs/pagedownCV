@@ -30,7 +30,7 @@ I am passionate about using insights from the behavioural neurosciences to **des
 
 My **academic and professional background** is highly interdisciplinary, and I try to integrate best practices from many work spheres, such as using tools from large-scale event management to structure academic projects.
 
-My **personal interests** include travelling & couchsurfing, samatha meditation, dancing (Cuban salsa and swing), and playing music (whatever instruments I can get my hands on, and ideally with the [Karaoke Collective](https://karaokecollective.com))
+My **personal interests** include travelling & couchsurfing, samatha meditation, dancing (Cuban salsa and swing), and playing music (whatever instruments I can get my hands on, and ideally with the [Karaoke Collective](https://karaokecollective.com)).
 
 Download a brief version of [my CV as PDF](https://github.com/ulyngs/pagedown-cv/raw/master/_pdfs/lyngs_cv_2019_june.pdf).
 
