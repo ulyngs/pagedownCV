@@ -145,7 +145,8 @@ cv_entries %>%
 ## Selected work experience {.work .nohead .vertical-top}
 ```{r}
 cv_entries %>% 
-  filter(type == 'work') %>% 
+  filter(type == 'work', is.na(website)) %>% 
+  mutate(additional_info = replace_na(additional_info, "")) %>% 
   mutate(what = str_c("<span class='work-title'>", what, "</span><br class='work-break'>", where, "<br>", additional_info)) %>% 
   arrange(desc(year_begin)) %>% 
   mutate(year = ifelse(!is.na(year_end), str_c(year_begin, " --- ", year_end), year_begin)) %>% 
