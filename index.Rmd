@@ -17,5 +17,10 @@ This repository has different versions of my resume, with the paged versions cre
 The resumés pull in different subsets of cv entries that live in two separate Excel files on my machine (one for publications, one for all other cv entries).
 
 Here is the original resume layout (made in Microsoft Word) that I wanted to recreate with `pagedown`:
-![](word-cv/page1_new.png){ width=49% } ![](word-cv/page2.png){ width=49% }
 
+![](examples/page1_new.png){ width=49% } ![](examples/page2.png){ width=49% }
+
+
+And here are two screenshots that illustrate what the Excel files with cv entries and publications look like:
+
+![](examples/cv-entries.png){ width=49% } ![](examples/publications.png){ width=49% }
