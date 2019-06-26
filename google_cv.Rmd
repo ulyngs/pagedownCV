@@ -44,8 +44,8 @@ I am a computer scientist, cognitive psychologist, and musician. I am passionate
 | <i class="fas fa-map-marker-alt"></i>|Department of Computer Science,\
 University of Oxford, Oxford, UK|
 | <i class="fas fa-envelope"></i> | ulrik.lyngs\@cs.ox.ac.uk |
-| <i class="fas fa-globe"></i> | ulriklyngs.com |
-| <i class="fab fa-github"></i> | ulyngs |
+| <i class="fas fa-globe"></i> | [ulriklyngs.com](https://ulriklyngs.com) |
+| <i class="fab fa-github"></i> | [ulyngs](https://github.com/ulyngs) |
  
 </div>
 

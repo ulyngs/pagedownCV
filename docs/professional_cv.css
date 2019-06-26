@@ -115,7 +115,10 @@ h1.box {
   width: 12%;
   text-align: center;
 }
-
+.info-box a {
+  text-decoration: none;
+  color: black;
+}
 
 .col-6.left thead,
 .col-6.right thead{
