@@ -12,7 +12,7 @@ body {
   --pagedjs-margin-right: 0.6in;
   --pagedjs-margin-left: 0.6in;
   --pagedjs-margin-top: 0.4in;
-  --pagedjs-margin-bottom: 0.4in;
+  --pagedjs-margin-bottom: 0.3in;
   --root-font-size: 12pt;
   --viewer-pages-spacing: 12px;
   --viewer-shadow-color: #313131; /* this marks the pages */
@@ -183,7 +183,7 @@ h1.box {
 
 .col-6.right-pagetwo tr {
   display: block;
-  margin-bottom: 3px;
+  margin-bottom: 1px;
 }
 
 
