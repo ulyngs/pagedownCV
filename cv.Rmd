@@ -68,13 +68,22 @@ publications_table %>%
 
 ```
 
-### Talks {.nohead .talks}
+### Talks {}
 ```{r}
+library(DT)
 cv_entries %>% 
   filter(type == 'talk') %>% 
-  mutate(what = str_c("*", what, "*, ", where)) %>% 
-  select(year_begin, what) %>% 
-  kable()
+  mutate(what = str_c("<em>", what, "</em>, ", where)) %>% 
+  select(Year = year_begin, Talk = what) %>% 
+  datatable(rownames = FALSE, escape = FALSE, class = 'row-border', options = list(
+  pageLength = 10
+))
+
+# cv_entries %>% 
+#   filter(type == 'talk') %>% 
+#   mutate(what = str_c("*", what, "*, ", where)) %>% 
+#   select(year_begin, what) %>% 
+#   kable()
   
 ```
 

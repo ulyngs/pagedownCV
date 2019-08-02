@@ -75,3 +75,23 @@ d-code {
   background: #f8f8f8;
 }
 
+
+/* hide the page length and search field on talks */
+.dataTables_filter,
+.dataTables_length {
+  display: none;
+}
+
+
+.dataTables_wrapper .dt-right {
+  text-align: left !important;
+  width: 13%;
+}
+
+.tab-content tr:first-child td {
+  border-top: none !important;
+}
+
+.media {
+  margin-top: 0;
+}
