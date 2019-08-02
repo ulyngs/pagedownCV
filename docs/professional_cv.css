@@ -204,3 +204,9 @@ td {
   text-decoration: none;
   
 }
+
+/*links at the bottom */
+.footnotes p {
+  margin-block-start: 0.8em;
+  margin-block-end: 0.8em;
+}
