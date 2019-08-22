@@ -1,0 +1,4 @@
+```{block type="col-6 grid-item", echo=TRUE}
+## Personal summary {.summary}
+I am a computer scientist and cognitive psychologist. I am passionate about applying insights from the behavioural neurosciences to design digital technology that is sensitive to human limitations and biases, particularly in relation to attention and self-regulation.
+```
