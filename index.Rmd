@@ -16,6 +16,8 @@ This repository has different versions of my resume, with the paged versions cre
 
 The resumés pull in different subsets of cv entries that live in two separate Excel files on my machine (one for publications, one for all other cv entries).
 
+To use this for your own CV, download or clone the GitHub repo: https://github.com/ulyngs/pagedown-cv/ 
+
 Here is the original resume layout (made in Microsoft Word) that I wanted to recreate with `pagedown`:
 
 ![](examples/page1_new.png){ width=49% } ![](examples/page2.png){ width=49% }
