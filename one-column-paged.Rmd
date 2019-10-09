@@ -6,9 +6,9 @@ output:
     # change to true for a self-contained document, but it'll be a litte slower for Pandoc to render
     self_contained: false
     # CDS
-    #css: [one-column-paged.css, "https://use.fontawesome.com/releases/v5.7.2/css/all.css"]
+    css: [css/one-column-paged.css, "https://use.fontawesome.com/releases/v5.7.2/css/all.css"]
     # offline
-    css: [one-column-paged.css,  "fontawesome-free-5.8.1-web/css/all.css"]
+    #css: ["css/one-column-paged.css",  "fontawesome-free-5.8.1-web/css/all.css"]
     number_sections: false
 links-to-footnotes: true
 ---
@@ -68,7 +68,7 @@ publications_table <- publications %>%
   mutate(citation = ifelse(!is.na(award), 
                            str_c(author_year, title, venue, "<i class='fas fa-award'></i><em>", award, "</em>", sep = " "),
                            str_c(author_year, title, venue, sep = " "))) %>%
-  mutate(citation = str_replace(citation, "Lyngs, U.", "__Lyngs, U.__")) # make my name bold
+  mutate(citation = str_replace(citation, "Ulrik Lyngs", "__Ulrik Lyngs__")) # make my name bold
 
 publications_table %>%
   filter(type != "master's thesis") %>% 
@@ -94,8 +94,6 @@ cv_entries %>%
   arrange(desc(year_begin)) %>% 
   kable()
 ```
-
-<br class="pageBreak">
 
 ## Media coverage {.media .nohead .set-width}
 ```{r}
@@ -173,8 +171,6 @@ cv_entries %>%
   kable(align = c('l', 'l'))
 ```
 
-<br class="pageBreak">
-
 ## Personal skills & volunteering {.personal .nohead .set-width}
 ```{r}
 cv_entries %>%
@@ -188,5 +184,7 @@ cv_entries %>%
   select(year, what) %>%
   kable()
 ```
+
+<br class="pageBreak">
 
 ### Links

@@ -7,6 +7,7 @@
 <meta charset="utf-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 <meta name="author" content="Ulrik Lyngs" />
@@ -85,7 +86,6 @@ code {
 }
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -246,18 +246,6 @@ $(document).ready(function () {
 }
 </style>
 
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
-
 <!-- code folding -->
 
 
@@ -320,10 +308,10 @@ $(document).ready(function () {
 
 <p>This repository has different versions of my resume, with the paged versions created with <a href="https://github.com/rstudio/pagedown"><code>pagedown</code></a> (NOTE: for now 1 and 2 only works properly in Chrome, as some aspects of CSS Paged Media are only supported by this browser):</p>
 <ol style="list-style-type: decimal">
-<li><a href="google_cv.html">Short, 2-page professional resume</a></li>
-<li><a href="one-column-paged.html">Paged full resume</a></li>
+<li><a href="two-column-paged-brief.html">Paged, 2-column brief resume</a></li>
+<li><a href="one-column-paged.html">Paged, 1-column resume</a></li>
 <li><a href="one-column.html">Ordinary scrolling HTML resume</a></li>
-<li><a href="cv.html">Ordinary scrolling HTML resume, formatted in the style of my personal website</a></li>
+<li><a href="website-cv.html">Ordinary scrolling HTML resume, formatted in the style of my personal website</a></li>
 </ol>
 <p>The resumés pull in different subsets of cv entries that live in two separate Excel files on my machine (one for publications, one for all other cv entries).</p>
 <p>Here is the original resume layout (made in Microsoft Word) that I wanted to recreate with <code>pagedown</code>:</p>
@@ -348,6 +336,23 @@ $(document).ready(function () {
 
 
 </script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

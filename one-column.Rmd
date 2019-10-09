@@ -4,7 +4,7 @@ title: "Ulrik Lyngs <br> Curriculum vitae"
 output:
   bookdown::html_document2:
     #CDS
-    css: [one-column.css, "https://use.fontawesome.com/releases/v5.7.2/css/all.css"]
+    css: [css/one-column.css, "https://use.fontawesome.com/releases/v5.7.2/css/all.css"]
     #offline
     #css: [one-column.css, "fontawesome-free-5.8.1-web/css/all.css"]
     number_sections: false
