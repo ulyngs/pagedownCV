@@ -18,7 +18,7 @@ library(knitr)
 publications <- readxl::read_xlsx("_cv_data/publications.xlsx")
 
 #### all other entries #####
-cv_entries <- readxl::read_xlsx("_cv_data/cv_entries.xlsx")
+cv_entries <- read_csv("_cv_data/cv_entries.csv")
 
 ```
 
@@ -59,7 +59,7 @@ publications_table <- publications %>%
   mutate(citation = ifelse(!is.na(award),
                            str_c(author_year, title, venue, "<i class='fas fa-award'></i><em>", award, "</em>", sep = " "),
                            str_c(author_year, title, venue, sep = " "))) %>%
-  mutate(citation = str_replace(citation, "Lyngs, U.", "__Lyngs, U.__")) # make my name bold
+  mutate(citation = str_replace(citation, "Ulrik Lyngs", "_Ulrik Lyngs_")) # make my name italicised
 
 publications_table %>%
   filter(type != "master's thesis") %>%
