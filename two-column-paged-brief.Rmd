@@ -18,12 +18,13 @@ links-to-footnotes: true
 knitr::opts_chunk$set(echo = FALSE)
 library(tidyverse)
 library(knitr)
+library(here)
 
 #### create publications table #####
-publications <- readxl::read_xlsx("_cv_data/publications.xlsx")
+publications <- readxl::read_xlsx(here("_cv_data", "publications.xlsx"))
 
 #### create education table #####
-cv_entries <- readxl::read_xlsx("_cv_data/cv_entries.xlsx")
+cv_entries <- readxl::read_xlsx(here("_cv_data", "cv_entries.xlsx"))
 
 ```
 
@@ -99,7 +100,7 @@ cv_entries %>%
 ```{r}
 cv_entries %>% 
   filter(type == 'grants_and_awards') %>% 
-  mutate(what = str_c(what, ", ", where)) %>% 
+  mutate(what = str_c(what, " (", additional_info, "), ", where)) %>% 
   select(year_begin, what) %>% 
   kable()
 ```
@@ -117,7 +118,7 @@ cv_entries %>%
 <!-- here ends the row i.e. the first page -->
 </div>
 
-<br class="pageBreak" />
+<!-- <br class="pageBreak" /> -->
 
 <!-- here starts the second page -->
 <div class="row pagetwo">
