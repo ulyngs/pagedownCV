@@ -13,12 +13,13 @@ output:
 knitr::opts_chunk$set(echo = FALSE)
 library(tidyverse)
 library(knitr)
+library(here)
 
 #### publications #####
-publications <- readxl::read_xlsx("_cv_data/publications.xlsx")
+publications <- readxl::read_xlsx(here("_cv_data", "publications.xlsx"))
 
 #### all other entries #####
-cv_entries <- read_csv("_cv_data/cv_entries.csv")
+cv_entries <- readxl::read_xlsx(here("_cv_data", "cv_entries.xlsx"))
 
 ```
 
