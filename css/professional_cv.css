@@ -107,6 +107,7 @@ h1.box {
   padding: 10px 2px;
   margin: 0.2em 0 0 0;
   line-height: 125%;
+  border-radius: 2px;
 }
 .info-box thead {
   display: none;

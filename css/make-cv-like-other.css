@@ -95,3 +95,7 @@ d-code {
 .media {
   margin-top: 0;
 }
+
+#talks thead {
+  display: none;
+}
