@@ -9,7 +9,7 @@ output:
        in_header: GA_Script.html
 ---
 
-This repository has different versions of my resume, with the paged versions created with [`pagedown`](https://github.com/rstudio/pagedown) (NOTE: for now 1 and 2 only works properly in Chrome, as some aspects of CSS Paged Media are only supported by this browser):
+This repository has different versions of my resume, with the paged versions created with [`rmarkdown`](https://rmarkdown.rstudio.com) + [`pagedown`](https://github.com/rstudio/pagedown) (NOTE: for now 1 and 2 only works properly in Chrome, as some aspects of CSS Paged Media are only supported by this browser):
 
 1. [Paged, 2-column brief resume](two-column-paged-brief.html)
 2. [Paged, 1-column resume](one-column-paged.html)
