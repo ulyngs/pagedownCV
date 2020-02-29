@@ -60,23 +60,37 @@ publications_table <- publications %>%
   mutate(citation = ifelse(!is.na(award),
                            str_c(author_year, title, venue, "<i class='fas fa-award'></i><em>", award, "</em>", sep = " "),
                            str_c(author_year, title, venue, sep = " "))) %>%
-  mutate(citation = str_replace(citation, "Ulrik Lyngs", "_Ulrik Lyngs_")) # make my name italicised
+  mutate(citation = str_replace(citation, "Ulrik Lyngs", "_Ulrik Lyngs_")) %>%  # make my name italicised
+  filter(type != "master's thesis") %>%
+  select(type, citation)
+
 
 publications_table %>%
-  filter(type != "master's thesis") %>%
-  select(type, citation) %>%
   knitr::kable()
+
+# library(DT)
+# publications_table %>% 
+#   datatable(rownames = FALSE, escape = FALSE, class = 'row-border', options = list(
+#   pageLength = 10
+# ))
 
 ```
 
 ### Talks {}
-```{r}
+```{r, message=FALSE, warning=FALSE}
+library(lubridate)
 library(DT)
 cv_entries %>% 
   filter(type == 'talk') %>% 
   mutate(where = str_replace(where, "\\[([^]]*)\\]\\(([^\\s^\\)]*)[\\s\\)]", "<a href='\\2'>\\1</a>")) %>% 
   mutate(what = str_c("<em>", what, "</em>, ", where)) %>% 
-  select(Year = year_begin, Talk = what) %>% 
+  #select(Year = year_begin, Talk = what) %>%
+  select(Date = date, Talk = what) %>% 
+  mutate(Date = as_date(Date)) %>% 
+  arrange(desc(Date)) %>% 
+  mutate(Date = str_c(year(Date),
+                      ", ",
+                      month(Date, label = TRUE))) %>% 
   datatable(rownames = FALSE, escape = FALSE, class = 'row-border', options = list(
   pageLength = 10
 ))
@@ -87,6 +101,7 @@ cv_entries %>%
 #   mutate(what = str_c("*", what, "*, ", where)) %>% 
 #   select(year_begin, what) %>% 
 #   kable()
+  
   
 ```
 
@@ -120,6 +135,7 @@ cv_entries %>%
   mutate(what = str_c(what, ", ", where)) %>% 
   select(year_begin, what) %>% 
   kable()
+
 ```
 
 

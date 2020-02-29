@@ -85,6 +85,8 @@ cv_entries %>%
   kable()
 ```
 
+<br class="pageBreak">
+
 ## Poster presentations {.nohead .posters .set-width}
 ```{r}
 cv_entries %>% 
@@ -129,7 +131,7 @@ cv_entries %>%
   kable()
 ```
 
-<br class="pageBreak">
+
 
 ## Selected work experience {.work .nohead .vertical-top .set-width}
 ```{r}
@@ -141,6 +143,8 @@ cv_entries %>%
   select(year, what) %>% 
   kable()
 ```
+
+<br class="pageBreak">
 
 ## Professional development {.prof-dev .nohead .set-width}
 ```{r}
