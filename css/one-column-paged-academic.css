@@ -16,6 +16,7 @@ body {
   --root-font-size: 11pt;
   --viewer-pages-spacing: 12px;
   --viewer-shadow-color: #313131; /* this marks the pages */
+  --my-darkgray: #929598
 }
 
 /* Paged.js viewer */
@@ -96,40 +97,40 @@ h3 {
 .cv-entries .education td:first-child {
   width: 18%;
   text-align: left;
-  color: darkgray;
+  color: var(--my-darkgray);
 }
 .cv-entries .three-split td:first-child {
   width: 9%;
   text-align: left;
-  color: darkgray;
+  color: var(--my-darkgray);
 }
 .cv-entries .three-split td:nth-child(2) {
   width: 9%;
   text-align: left;
-  color: darkgray;
+  color: var(--my-darkgray);
 }
 
 /* style publication entries */
 .publication-title,
-.education-what, .award-what, .talk-location, .poster-location, .work-title {
+.education-what, .award-what, .talk-location, .poster-location, .work-title, .service-what {
   font-weight: bold;
 }
 .publication-award {
-  color: darkgray;
+  color: #E5001C;
 }
 .review-note {
-  color: darkgray;
+  color: var(--my-darkgray);
   font-size: 0.8em;
 }
 .conference-publication-heading h3 {
   margin-block-start: 0 !important;
   margin-top: 15px !important;
-  margin-left: 30%;
+  margin-left: 37%;
 }
 .conference-note h3 {
   margin-block-start: 0 !important;
   margin-top: 21px !important;
-  color: darkgray;
+  color: var(--my-darkgray);
   font-size: 0.8em;
 }
 
@@ -187,7 +188,7 @@ h2.box {
 }
 .grid-container-publications {
   display: grid;
-  grid-template-columns: 60% 40%;
+  grid-template-columns: 49% 51%;
 }
 
 
@@ -290,7 +291,7 @@ sup {
 /* research interests */
 .research-interests {
   display: grid;
-  grid-template-columns: 18% 82%;
+  grid-template-columns: 18.5% 81.5%;
 }
 
 hr {

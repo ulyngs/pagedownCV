@@ -56,7 +56,11 @@ https://ulriklyngs.com
 :::
 
 :::
-<!-- # ADD SECTION W/ 'Publicly available research code & data' like Matt Kay -->
+<!-- TODO
+1. write the opening research interests
+2. ADD SECTION W/ 'Publicly available research code & data' like Matt Kay
+3. reduce code redundancy
+-->
 
 ## Research interests
 ::: {.research-interests}
@@ -104,34 +108,35 @@ cv_entries %>%
 
 ## Grants {.three-split}
 ```{r}
-cv_entries %>% 
-  filter(type == 'minor_grants' | type == 'major_grants') %>% 
+cv_entries %>%
+  filter(type == 'minor_grants' | type == 'major_grants') %>%
   mutate(what = case_when(
     is.na(additional_info) ~ str_c("<span class='award-what'>", what, "</span> (", amount, ")<br>", where),
-    !is.na(additional_info) ~ str_c("<span class='award-what'>", what, "</span> (", amount, ")<br>", where, "<br>", additional_info),
+    !is.na(additional_info) ~ str_c("<span class='award-what'>", what, "</span> (", amount, ")<br>", where, ". ", additional_info),
   )) %>%
-  mutate(row_number = row_number()) %>% 
+  mutate(row_number = row_number()) %>%
   mutate(year_begin = as.character(year_begin),
          year_begin = case_when(
            row_number == 1 ~ year_begin,
            year_begin == lag(year_begin) ~ "",
            year_begin != lag(year_begin) ~ year_begin
-         )) %>% 
-  mutate(spacer = "") %>% 
-  select(year_begin, spacer, what) %>% 
-  kable() 
+         )) %>%
+  mutate(spacer = "") %>%
+  select(year_begin, spacer, what) %>%
+  kable()
 ```
 
 <!-- <br class="pageBreak"> -->
 
+
 ## Publications {.three-split}
 
 ::: {.grid-container-publications}
-<div class="grid-item conference-publication-heading">
+<div class="conference-publication-heading">
 <h3>Conference publications <br><span class="review-note">(fully reviewed, archival)</span></h3>
 </div>
-<div class="grid-item conference-note">
-<h3>In computer science, top-tier conferences (<30% acceptance rate) are as, or more impactful than journals, see http://doi.org/fgjt2h</h3>
+<div class="conference-note">
+<h3>In computer science, top-tier conferences (<30% acceptance rate) are as, or more impactful than journals, see doi.org/fgjt2h</h3>
 </div>
 :::
 ```{r}
@@ -160,6 +165,10 @@ publications_table <- publications %>%
   mutate(citation = str_replace(citation, "U\\. Lyngs", "*U\\. Lyngs*"))  # make my name italic
 
 publications_table %>%
+  arrange(date) %>% 
+  mutate(number = str_pad(row_number(), width = 1, side = "left", pad = "0"),
+         number = str_c("C", number)) %>%
+  arrange(desc(date)) %>% 
   mutate(row_number = row_number()) %>% 
   mutate(year = as.character(year),
          year = case_when(
@@ -185,6 +194,10 @@ publications_table <- publications %>%
   mutate(citation = str_replace(citation, "U\\. Lyngs", "*U\\. Lyngs*"))  # make my name italic
 
 publications_table %>%
+  arrange(date) %>% 
+  mutate(number = str_pad(row_number(), width = 1, side = "left", pad = "0"),
+         number = str_c("J", number)) %>%
+  arrange(desc(date)) %>% 
   mutate(row_number = row_number()) %>% 
   mutate(year = as.character(year),
          year = case_when(
@@ -211,6 +224,10 @@ publications_table <- publications %>%
   mutate(citation = str_replace(citation, "U\\. Lyngs", "*U\\. Lyngs*"))  # make my name italic
 
 publications_table %>%
+  arrange(date) %>% 
+  mutate(number = str_pad(row_number(), width = 1, side = "left", pad = "0"),
+         number = str_c("A", number)) %>% 
+  arrange(desc(date)) %>% 
   mutate(row_number = row_number()) %>% 
   mutate(year = as.character(year),
          year = case_when(
@@ -230,7 +247,8 @@ cv_entries %>%
   filter(type == 'poster') %>%
   mutate(what = str_c("<span class='poster-location'>", where, "</span>, ", what)) %>% 
   arrange(date_begin) %>% 
-  mutate(number = str_c("P", row_number())) %>% 
+  mutate(number = str_pad(row_number(), width = 1, side = "left", pad = "0"),
+         number = str_c("P", number)) %>% 
   arrange(desc(date_begin)) %>% 
   mutate(row_number = row_number()) %>% 
   mutate(year_begin = as.character(year_begin),
@@ -256,7 +274,8 @@ cv_entries %>%
   mutate(additional_info = if_else(is.na(additional_info), "", str_c(", ", additional_info))) %>% 
   mutate(what = str_c("<span class='talk-location'>", where, "</span>, ", what, additional_info)) %>% 
   arrange(date_begin) %>% 
-  mutate(number = str_c("T", row_number())) %>% 
+  mutate(number = str_pad(row_number(), width = 2, side = "left", pad = "0"),
+         number = str_c("T", number)) %>% 
   arrange(desc(date_begin)) %>% 
   mutate(row_number = row_number()) %>% 
   mutate(year_begin = as.character(year_begin),
@@ -277,7 +296,8 @@ cv_entries %>%
   mutate(additional_info = if_else(is.na(additional_info), "", additional_info)) %>% 
   mutate(what = str_c("<span class='talk-location'>", where, "</span>, ", what, ", ",  additional_info)) %>% 
   arrange(date_begin) %>% 
-  mutate(number = str_c("T", row_number())) %>% 
+  mutate(number = str_pad(row_number(), width = 1, side = "left", pad = "0"),
+         number = str_c("D", number)) %>% 
   arrange(desc(date_begin)) %>% 
   mutate(row_number = row_number()) %>% 
   mutate(year_begin = as.character(year_begin),
@@ -297,7 +317,8 @@ cv_entries %>%
   filter(type == 'talk-podcast') %>% 
   mutate(what = str_c("<span class='talk-location'>", where, "</span>, ", what)) %>% 
   arrange(date_begin) %>% 
-  mutate(number = str_c("T", row_number())) %>% 
+  mutate(number = str_pad(row_number(), width = 1, side = "left", pad = "0"),
+         number = str_c("Pod", number)) %>% 
   arrange(desc(date_begin)) %>% 
   select(year_begin, number, what) %>% 
   kable()
@@ -332,7 +353,7 @@ cv_entries %>%
   filter(type == 'service') %>% 
   mutate(year_end = ifelse(year_end == "present", "", year_end)) %>% 
   mutate(where = ifelse(!is.na(url), str_c("[", where, "](", url, ")"), where)) %>% 
-  mutate(what = str_c(what, ", ", where)) %>%
+  mutate(what = str_c("<span class='service-what'>", what, "</span>, ", where)) %>%
   mutate(year = ifelse(!(year_end == year_begin), 
                        str_c(year_begin, " --- ", year_end), 
                        year_begin)) %>% 
@@ -361,6 +382,7 @@ cv_entries %>%
   kable()
 ```
 
+<br class="pageBreak">
 
 ## R packages {.education}
 ```{r}
