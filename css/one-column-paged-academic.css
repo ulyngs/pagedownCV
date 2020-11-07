@@ -97,20 +97,22 @@ h2 {
 .cv-entries .education td:first-child {
   width: 18%;
   text-align: left;
+  color: darkgray;
 }
 .cv-entries .three-split td:first-child {
-  width: 8%;
+  width: 9%;
   text-align: left;
   color: darkgray;
 }
 .cv-entries .three-split td:nth-child(2) {
-  width: 8%;
+  width: 9%;
   text-align: left;
   color: darkgray;
 }
 
 /* style publication entries */
-.publication-title {
+.publication-title,
+.education-what, .award-what, .talk-location, .poster-location, .work-title {
   font-weight: bold;
 }
 .publication-award {
@@ -120,10 +122,27 @@ h2 {
   color: darkgray;
   font-size: 0.8em;
 }
+.conference-publication-heading h3 {
+  margin-block-start: 0 !important;
+  margin-top: 15px !important;
+}
+.conference-note h3 {
+  margin-block-start: 0 !important;
+  margin-top: 21px !important;
+  color: darkgray;
+  font-size: 0.8em;
+}
+
 .cv-entries td {
   line-height: 125%;
   padding-bottom: 0.5em;
 }
+
+.cv-entries a {
+  text-decoration: none;
+  color: black;
+}
+
 
 /* PAGE 1 */
 .personal-summary p {
@@ -146,6 +165,7 @@ h2.box {
   padding: 10px 2px;
   margin: 0;
   line-height: 125%;
+  border-radius: 2px;
 }
 .info-box thead {
   display: none;
@@ -165,6 +185,12 @@ h2.box {
   grid-template-columns: 50% 44%;
   grid-column-gap: 6%;
 }
+.grid-container-publications {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-column-gap: 0%;
+}
+
 
 /* remove header in select table */
 .nohead thead{
@@ -210,9 +236,6 @@ td {
   
 }
 
-.work-title {
-  font-size: 1.2em;
-}
 .work-break {
   height: 100px;
 }
@@ -233,4 +256,9 @@ td {
 }
 .pagedjs_margin.pagedjs_margin-bottom-right.hasContent {
   align-items: baseline;
+}
+
+
+sup {
+  color: blue;
 }
