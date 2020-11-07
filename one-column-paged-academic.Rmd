@@ -1,5 +1,4 @@
 ---
-title: "Ulrik Lyngs"
 #date: "`r Sys.Date()`"
 output:
   pagedown::html_paged:
@@ -13,6 +12,7 @@ output:
     number_sections: false
 links-to-footnotes: true
 ---
+
 
 
 ```{r setup, include=FALSE}
@@ -44,30 +44,34 @@ publications <- read_csv("content/publications.csv")
 cv_entries <- read_csv("content/cv_entries.csv")
 ```
 
-<div class="grid-container"> 
-<!-- top row -->
-::: {.grid-item .personal-summary}
-## Personal summary {.summary}
-I am a computer scientist and cognitive psychologist, researching design strategies for supporting self-control over digital device use.
-I am passionate about creating impact through rigorous open science and action research.
+::: {.title-and-contact}
+
+::: {.title}
+<h1 class="title">Ulrik Lyngs</h1>
 :::
 
-```{block type='grid-item', echo=TRUE}
-## Contact information {.box}
-<div class="info-box">
+::: {.contact-info}
+ulrik.lyngs@cs.ox.ac.uk  \
+https://ulriklyngs.com
+:::
 
-| Center | Left |
-|:------:|:-----|
-| <i class="fas fa-map-marker-alt"></i>|Department of Computer Science,\
-University of Oxford, UK|
-| <i class="fas fa-envelope"></i> | ulrik.lyngs\@cs.ox.ac.uk |
-| <i class="fas fa-globe"></i> | [ulriklyngs.com](https://ulriklyngs.com) |
-| <i class="fab fa-github"></i> | [ulyngs](https://github.com/ulyngs) |
- 
-</div>
-```
+:::
+<!-- # ADD SECTION W/ 'Publicly available research code & data' like Matt Kay -->
 
-</div>
+## Research interests
+::: {.research-interests}
+
+::: {.spacer}
+:::
+
+::: {.interests}
+**Broadly---**something about design strategies for supporting self-control over digital device use
+<br>
+**How I do this---**something about the Reducing Digital Distraction workshop
+
+**I am excited** when something - it's about the limits of psychology and the capabilities of technology. 
+:::
+:::
 
 <div class="cv-entries">
 ## Education {.education}
@@ -87,6 +91,13 @@ cv_entries %>%
          is.na(one_column_paged)) %>% 
   mutate(what = str_c("<span class='award-what'>", what, "</span>, ", where)) %>%  
   mutate(spacer = "") %>% 
+  mutate(row_number = row_number()) %>% 
+  mutate(year_begin = as.character(year_begin),
+         year_begin = case_when(
+           row_number == 1 ~ year_begin,
+           year_begin == lag(year_begin) ~ "",
+           year_begin != lag(year_begin) ~ year_begin
+         )) %>% 
   select(year_begin, spacer, what) %>% 
   kable()
 ```
@@ -99,6 +110,13 @@ cv_entries %>%
     is.na(additional_info) ~ str_c("<span class='award-what'>", what, "</span> (", amount, ")<br>", where),
     !is.na(additional_info) ~ str_c("<span class='award-what'>", what, "</span> (", amount, ")<br>", where, "<br>", additional_info),
   )) %>%
+  mutate(row_number = row_number()) %>% 
+  mutate(year_begin = as.character(year_begin),
+         year_begin = case_when(
+           row_number == 1 ~ year_begin,
+           year_begin == lag(year_begin) ~ "",
+           year_begin != lag(year_begin) ~ year_begin
+         )) %>% 
   mutate(spacer = "") %>% 
   select(year_begin, spacer, what) %>% 
   kable() 
@@ -108,14 +126,14 @@ cv_entries %>%
 
 ## Publications {.three-split}
 
-<div class="grid-container-publications"> 
+::: {.grid-container-publications}
 <div class="grid-item conference-publication-heading">
 <h3>Conference publications <br><span class="review-note">(fully reviewed, archival)</span></h3>
 </div>
 <div class="grid-item conference-note">
-<h3>In computer science, top-tier conference (<30% acceptance rate) are as, or more impactful than journals, see http://doi.org/fgjt2h</h3>
+<h3>In computer science, top-tier conferences (<30% acceptance rate) are as, or more impactful than journals, see http://doi.org/fgjt2h</h3>
 </div>
-</div>
+:::
 ```{r}
 # create helper function for taking one name and replacing the first name with initial and dot
 replace_first_name_with_initial_and_dot <- function(author_name) {
@@ -142,6 +160,13 @@ publications_table <- publications %>%
   mutate(citation = str_replace(citation, "U\\. Lyngs", "*U\\. Lyngs*"))  # make my name italic
 
 publications_table %>%
+  mutate(row_number = row_number()) %>% 
+  mutate(year = as.character(year),
+         year = case_when(
+           row_number == 1 ~ year,
+           year == lag(year) ~ "",
+           year != lag(year) ~ year
+         )) %>% 
   select(year, number, citation) %>%
   knitr::kable() 
 ```
@@ -160,6 +185,13 @@ publications_table <- publications %>%
   mutate(citation = str_replace(citation, "U\\. Lyngs", "*U\\. Lyngs*"))  # make my name italic
 
 publications_table %>%
+  mutate(row_number = row_number()) %>% 
+  mutate(year = as.character(year),
+         year = case_when(
+           row_number == 1 ~ year,
+           year == lag(year) ~ "",
+           year != lag(year) ~ year
+         )) %>% 
   select(year, number, citation) %>%
   knitr::kable() 
 ```
@@ -179,6 +211,13 @@ publications_table <- publications %>%
   mutate(citation = str_replace(citation, "U\\. Lyngs", "*U\\. Lyngs*"))  # make my name italic
 
 publications_table %>%
+  mutate(row_number = row_number()) %>% 
+  mutate(year = as.character(year),
+         year = case_when(
+           row_number == 1 ~ year,
+           year == lag(year) ~ "",
+           year != lag(year) ~ year
+         )) %>% 
   select(year, number, citation) %>%
   knitr::kable() 
 ```
@@ -193,13 +232,22 @@ cv_entries %>%
   arrange(date_begin) %>% 
   mutate(number = str_c("P", row_number())) %>% 
   arrange(desc(date_begin)) %>% 
+  mutate(row_number = row_number()) %>% 
+  mutate(year_begin = as.character(year_begin),
+         year_begin = case_when(
+           row_number == 1 ~ year_begin,
+           year_begin == lag(year_begin) ~ "",
+           year_begin != lag(year_begin) ~ year_begin
+         )) %>% 
   select(year_begin, number, what) %>% 
-  arrange(desc(year_begin)) %>% 
+  
   kable()
 ```
 
 ## Talks and panels {.three-split}
+::: {.conference-presentations-omitted}
 All first-author conference papers listed above were also given as presentations at their respective conferences and are not listed again in this section.
+:::
 
 ### Talks
 ```{r}
@@ -210,6 +258,13 @@ cv_entries %>%
   arrange(date_begin) %>% 
   mutate(number = str_c("T", row_number())) %>% 
   arrange(desc(date_begin)) %>% 
+  mutate(row_number = row_number()) %>% 
+  mutate(year_begin = as.character(year_begin),
+         year_begin = case_when(
+           row_number == 1 ~ year_begin,
+           year_begin == lag(year_begin) ~ "",
+           year_begin != lag(year_begin) ~ year_begin
+         )) %>% 
   select(year_begin, number, what) %>% 
   kable()
 
@@ -224,6 +279,13 @@ cv_entries %>%
   arrange(date_begin) %>% 
   mutate(number = str_c("T", row_number())) %>% 
   arrange(desc(date_begin)) %>% 
+  mutate(row_number = row_number()) %>% 
+  mutate(year_begin = as.character(year_begin),
+         year_begin = case_when(
+           row_number == 1 ~ year_begin,
+           year_begin == lag(year_begin) ~ "",
+           year_begin != lag(year_begin) ~ year_begin
+         )) %>% 
   select(year_begin, number, what) %>% 
   kable()
 
@@ -306,8 +368,16 @@ cv_entries %>%
   filter(type == 'programming' & is.na(exclude)) %>% 
   replace_na(list(where = "", additional_info = "")) %>% 
   mutate(what = str_c(what, ", ", where, "<br>", additional_info)) %>% 
-  select(year_begin, what) %>% 
   arrange(desc(year_begin)) %>% 
+  mutate(year = ifelse(!is.na(year_end), str_c(year_begin, " --- ", year_end), year_begin)) %>% 
+  mutate(row_number = row_number()) %>% 
+  mutate(year = as.character(year),
+         year = case_when(
+           row_number == 1 ~ year,
+           year_begin == lag(year) ~ "",
+           year_begin != lag(year) ~ year
+         )) %>% 
+  select(year, what) %>% 
   kable(align = c('l', 'l'))
 ```
 
@@ -327,7 +397,8 @@ cv_entries %>%
   kable()
 ```
 
-<!-- <br class="pageBreak"> -->
+<br class="pageBreak">
 
+<!-- close 'cv-entries' div -->
 </div>
-### Links
+# Links
