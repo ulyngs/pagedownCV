@@ -62,18 +62,19 @@ https://ulriklyngs.com
 3. reduce code redundancy
 -->
 
-## Research interests
+## Research summary
 ::: {.research-interests}
 
 ::: {.spacer}
 :::
 
 ::: {.interests}
-**Broadly---**something about design strategies for supporting self-control over digital device use
+**Aims---**to design, build, and evaluate design strategies that help people exercise self-control over use of smartphones and laptops.
 <br>
-**How I do this---**something about the Reducing Digital Distraction workshop
+**Methods---**controlled studies, user surveys, interviews, co-design workshops, web scraping, behaviour logging.
 
-**I am excited** when something - it's about the limits of psychology and the capabilities of technology. 
+**I am passionate about** open and transparent research. 
+Since 2016, I have shared materials, analysis scripts, and data for all my work, and written my papers as reproducible documents in [R Markdown](https://rmarkdown.rstudio.com).
 :::
 :::
 
@@ -111,8 +112,8 @@ cv_entries %>%
 cv_entries %>%
   filter(type == 'minor_grants' | type == 'major_grants') %>%
   mutate(what = case_when(
-    is.na(additional_info) ~ str_c("<span class='award-what'>", what, "</span> (", amount, ")<br>", where),
-    !is.na(additional_info) ~ str_c("<span class='award-what'>", what, "</span> (", amount, ")<br>", where, ". ", additional_info),
+    is.na(additional_info) ~ str_c("<span class='award-what'>", what, "</span> (", amount, "), ", where),
+    !is.na(additional_info) ~ str_c("<span class='award-what'>", what, "</span> (", amount, "), ", where, ".<br> ", additional_info),
   )) %>%
   mutate(row_number = row_number()) %>%
   mutate(year_begin = as.character(year_begin),
@@ -180,6 +181,7 @@ publications_table %>%
   knitr::kable() 
 ```
 
+<br class="pageBreak">
 <h3>Journal publications</h3>
 
 ```{r}
@@ -311,7 +313,7 @@ cv_entries %>%
 
 ```
 
-### Podcasts
+## Podcasts {.podcasts}
 ```{r}
 cv_entries %>% 
   filter(type == 'talk-podcast') %>% 
@@ -325,17 +327,18 @@ cv_entries %>%
 
 ```
 
-## Media coverage {.education}
+## Media coverage {.three-split}
 ```{r}
 cv_entries %>% 
   filter(type == 'media') %>%
-  select(year_begin, what) %>% 
+  mutate(spacer = "") %>% 
+  select(year_begin, spacer, what) %>% 
   kable()
 ```
 
 <!-- <br class="pageBreak"> -->
 
-## Teaching experience {.education}
+## Teaching experience {.teaching}
 ```{r}
 cv_entries %>% 
   filter(type == 'teaching') %>% 
@@ -347,7 +350,7 @@ cv_entries %>%
   kable()
 ```
 
-## Service {.education}
+## Service {.teaching}
 ```{r}
 cv_entries %>% 
   filter(type == 'service') %>% 
@@ -361,7 +364,7 @@ cv_entries %>%
   kable()
 ```
 
-## Selected work experience {.education}
+## Selected work experience {.teaching}
 ```{r}
 cv_entries %>% 
   filter(type == 'work', is.na(one_column_paged)) %>% 
@@ -373,7 +376,7 @@ cv_entries %>%
 ```
 
 
-## Professional development {.education}
+## Professional development {.teaching}
 ```{r}
 cv_entries %>% 
   filter(type == 'prof-dev') %>% 
@@ -382,9 +385,9 @@ cv_entries %>%
   kable()
 ```
 
-<br class="pageBreak">
+<!-- <br class="pageBreak"> -->
 
-## R packages {.education}
+## R packages {.packages}
 ```{r}
 cv_entries %>% 
   filter(type == 'programming' & is.na(exclude)) %>% 
@@ -405,7 +408,7 @@ cv_entries %>%
 
 <!-- <br class="pageBreak"> -->
 
-## Personal skills & volunteering {.education}
+## Personal skills & volunteering {.packages}
 ```{r}
 cv_entries %>%
   filter(type == 'volunteering' & professional_2_page == 'y') %>%

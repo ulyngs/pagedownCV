@@ -4,7 +4,8 @@
 }
 
 body {
-  font-family: "Latin Modern Roman", "Book Antiqua", Palatino, serif
+  font-family: "Avenir";
+  font-weight: 100;
 }
 
 :root{
@@ -95,7 +96,17 @@ h3 {
   text-align: left;
 }
 .cv-entries .education td:first-child {
+  width: 21.2%;
+  text-align: left;
+  color: var(--my-darkgray);
+}
+.cv-entries .teaching td:first-child {
   width: 18%;
+  text-align: left;
+  color: var(--my-darkgray);
+}
+.cv-entries .packages td:first-child {
+  width: 18.2%;
   text-align: left;
   color: var(--my-darkgray);
 }
@@ -109,6 +120,17 @@ h3 {
   text-align: left;
   color: var(--my-darkgray);
 }
+.cv-entries .podcasts td:first-child {
+  width: 11%;
+  text-align: left;
+  color: var(--my-darkgray);
+}
+.cv-entries .podcasts td:nth-child(2) {
+  width: 10%;
+  text-align: left;
+  color: var(--my-darkgray);
+}
+
 
 /* style publication entries */
 .publication-title,
@@ -179,6 +201,11 @@ h2.box {
 .footnote-ref sup {
   vertical-align: top;
   margin-left: 1px;
+  color: blue;
+  font-weight: normal;
+}
+.interests a {
+  text-decoration: none;
 }
 
 .grid-container {
@@ -204,19 +231,6 @@ h2.box {
   display: block;
 }
 
-.set-width td:first-child {
-  width: 18%;
-  text-align: left;
-}
-
-.publications td,
-.talks td {
-  vertical-align: top;
-  font-size: 0.9em;
-  text-align: left;
-}
-
-
 
 /* don't make page breaks inside an entry */
 tr {
@@ -233,7 +247,7 @@ tr {
 
 td {
   vertical-align: top;
-  
+  font-size: var(--root-font-size);
 }
 
 .work-break {
@@ -256,11 +270,6 @@ td {
 }
 .pagedjs_margin.pagedjs_margin-bottom-right.hasContent {
   align-items: baseline;
-}
-
-
-sup {
-  color: blue;
 }
 
 
@@ -292,6 +301,9 @@ sup {
 .research-interests {
   display: grid;
   grid-template-columns: 18.5% 81.5%;
+}
+.interests p {
+  line-height: 130%;
 }
 
 hr {
