@@ -19,6 +19,52 @@ library(googlesheets4)
 library(lubridate)
 gs4_deauth()
 
+######## CREATE HELPER FUNCTIONS
+# create helper function for taking one name and replacing the first name with initial and dot
+replace_first_name_with_initial_and_dot <- function(author_name) {
+  str_replace(author_name, "(?<=\\S)\\S+", "\\.")
+}
+
+# create function for doing this for an entry of authors
+replace_first_names_in_list_with_initial_and_dot <- function(authors){
+  authors_split <- str_split(authors, ",") %>% 
+    map(str_trim)
+  
+  authors_split[[1]] %>% map_chr(replace_first_name_with_initial_and_dot) %>% 
+    paste0(collapse = ", ")
+}
+
+# function for adding leading zero's when there's more than 10 entries
+padding_function <- function(cv_entries_tibble, letter_to_pad){
+  if(nrow(cv_entries_tibble) > 9){
+    cv_entries_tibble %>% 
+      arrange(date) %>%
+  mutate(number = str_pad(row_number(), width = 2, side = "left", pad = "0"),
+         number = str_c(letter_to_pad, number)) %>%
+  arrange(desc(date))
+  } else {
+    cv_entries_tibble %>% 
+      arrange(date) %>%
+  mutate(number = str_pad(row_number(), width = 1, side = "left", pad = "0"),
+         number = str_c(letter_to_pad, number)) %>%
+  arrange(desc(date))
+  }
+}
+
+# function for making a year blank when it's the same as the one preceding it
+blank_year_when_repeated <- function(cv_entry_tibble){
+  cv_entry_tibble %>% 
+    mutate(row_number = row_number()) %>% 
+    mutate(year_begin = as.character(year_begin),
+           year_begin = case_when(
+             row_number == 1 ~ year_begin,
+             year_begin == lag(year_begin) ~ "",
+             year_begin != lag(year_begin) ~ year_begin
+           ))
+}
+
+
+####### READ IN DATA
 #### publications #####
 # publications <- read_sheet("https://docs.google.com/spreadsheets/d/1ta71CAGkcLqm-W1UdVRA_JJSddWV2TsrRZsCnQlmOis/edit?usp=sharing",
 #            sheet = "publications",
@@ -39,21 +85,12 @@ publications <- read_csv("content/publications.csv") %>%
 #     date_end == "present" ~ date_end,
 #     is.na(date_end) ~ "",
 #     TRUE ~ str_sub(date_end, 1, 4)
-#   ))
+#   )) %>% 
+#   mutate(year = ifelse((is.na(year_end) | year_begin == year_end), 
+#                       year_begin, 
+#                       str_c(year_begin, " --- ", year_end)))
 # cv_entries %>% write_csv("content/cv_entries.csv")
 cv_entries <- read_csv("content/cv_entries.csv")
-
-blank_year_when_repeated <- function(cv_entry_tibble){
-  cv_entry_tibble %>% 
-    mutate(row_number = row_number()) %>% 
-    mutate(year_begin = as.character(year_begin),
-           year_begin = case_when(
-             row_number == 1 ~ year_begin,
-             year_begin == lag(year_begin) ~ "",
-             year_begin != lag(year_begin) ~ year_begin
-           ))
-}
-
 ```
 
 ::: {.title-and-contact}
@@ -96,7 +133,6 @@ Since 2018, I have shared materials, analysis scripts, and data for all my work,
 cv_entries %>% 
   filter(type == 'education') %>% 
   mutate(what = str_c("<span class='cv-entry-title'>", what, "</span>, ", where)) %>% 
-  mutate(year = str_c(year_begin, " --- ", year_end)) %>% 
   select(year, what) %>% 
   kable()
 ```
@@ -137,39 +173,6 @@ cv_entries %>%
 <h3>In computer science, top-tier conferences (<30% acceptance rate) are as, or more impactful than journals, see doi.org/fgjt2h</h3>
 </div>
 :::
-
-```{r, include=FALSE}
-# create helper function for taking one name and replacing the first name with initial and dot
-replace_first_name_with_initial_and_dot <- function(author_name) {
-  str_replace(author_name, "(?<=\\S)\\S+", "\\.")
-}
-
-# create function for doing this for an entry of authors
-replace_first_names_in_list_with_initial_and_dot <- function(authors){
-  authors_split <- str_split(authors, ",") %>% 
-    map(str_trim)
-  
-  authors_split[[1]] %>% map_chr(replace_first_name_with_initial_and_dot) %>% 
-    paste0(collapse = ", ")
-}
-
-# create function for adding leading zero's when there's more than 10 entries
-padding_function <- function(cv_entries_tibble, letter_to_pad){
-  if(nrow(cv_entries_tibble) > 9){
-    cv_entries_tibble %>% 
-      arrange(date) %>%
-  mutate(number = str_pad(row_number(), width = 2, side = "left", pad = "0"),
-         number = str_c(letter_to_pad, number)) %>%
-  arrange(desc(date))
-  } else {
-    cv_entries_tibble %>% 
-      arrange(date) %>%
-  mutate(number = str_pad(row_number(), width = 1, side = "left", pad = "0"),
-         number = str_c(letter_to_pad, number)) %>%
-  arrange(desc(date))
-  }
-}
-```
 
 
 ```{r}
@@ -296,9 +299,6 @@ cv_entries %>%
   mutate(what = ifelse(!is.na(additional_info), 
     str_c("<span class='cv-entry-title'>", what, "</span>, ", where, "<br>", additional_info),
     str_c("<span class='cv-entry-title'>", what, "</span><br>", where))) %>% 
-  mutate(year = ifelse((is.na(year_end) | year_begin == year_end), 
-                       year_begin, 
-                       str_c(year_begin, " --- ", year_end))) %>% 
   select(year, what) %>% 
   kable()
 ```
@@ -307,12 +307,8 @@ cv_entries %>%
 ```{r}
 cv_entries %>% 
   filter(type == 'service') %>% 
-  mutate(year_end = ifelse(year_end == "present", "", year_end)) %>% 
   mutate(where = ifelse(!is.na(url), str_c("[", where, "](", url, ")"), where)) %>% 
   mutate(what = str_c("<span class='cv-entry-title'>", what, "</span>, ", where)) %>%
-  mutate(year = ifelse(!(year_end == year_begin), 
-                       str_c(year_begin, " --- ", year_end), 
-                       year_begin)) %>% 
   select(year, what) %>% 
   kable()
 ```
@@ -325,9 +321,6 @@ cv_entries %>%
   filter(type == 'work', is.na(one_column_paged)) %>% 
   mutate(additional_info = replace_na(additional_info, "")) %>% 
   mutate(what = str_c("<span class='cv-entry-title'>", what, "</span>, ", where, "<br>", additional_info)) %>% 
-  mutate(year = ifelse(!is.na(year_end), 
-                       str_c(year_begin, " --- ", year_end), 
-                       year_begin)) %>% 
   select(year, what) %>% 
   kable()
 ```
@@ -351,9 +344,6 @@ cv_entries %>%
   replace_na(list(where = "", additional_info = "")) %>% 
   mutate(what = str_c(what, ", ", where, "<br>", additional_info)) %>% 
   arrange(desc(year_begin)) %>% 
-  mutate(year = ifelse(!is.na(year_end), 
-                       str_c(year_begin, " --- ", year_end), 
-                       year_begin)) %>% 
   mutate(row_number = row_number()) %>% 
   mutate(year = as.character(year),
          year = case_when(
@@ -370,12 +360,9 @@ cv_entries %>%
 ## Personal skills & volunteering {.packages}
 ```{r}
 cv_entries %>%
-  filter(type == 'volunteering' & professional_2_page == 'y') %>%
+  filter(type == 'volunteering') %>%
   mutate(what = str_c("<span class='cv-entry-title'>", what, "</span>, ", where)) %>%
   mutate(what = ifelse(!is.na(additional_info), str_c(what, "<br>", additional_info), what)) %>%
-  mutate(year = ifelse(!is.na(year_end), 
-                       str_c(year_begin, " --- ", year_end), 
-                       year_begin)) %>%
   arrange(order, desc(year_end), desc(year)) %>%
   select(year, what) %>%
   kable()
