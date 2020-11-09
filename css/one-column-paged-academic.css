@@ -5,7 +5,6 @@
 
 body {
   font-family: "Avenir";
-  font-weight: 100;
 }
 
 :root{
@@ -46,19 +45,10 @@ body {
   }
 }
 
-
 /* create ability to insert pagebreaks with br.pagebreak */
 br.pageBreak {
     page-break-after: always;
 }
-
-
-/* remove decoration on info-box */
-.info-box a {
-  color: black;
-  text-decoration: none;
-}
-
 
 p, li {
   font-size: var(--root-font-size);
@@ -67,8 +57,6 @@ p, li {
 
 /* section headers */
 h2 {
-  /*color: #710C0C;*/
-  /*border-bottom: 1px solid black;*/ 
   margin-top: 0.6em;
   margin-bottom: 0.2em;
   font-size: 1.5em;
@@ -168,35 +156,6 @@ h3 {
 
 
 /* PAGE 1 */
-.personal-summary p {
-  padding: 0;
-  margin-top: 0.1em;
-}
-
-h2.summary,
-h2.box {
-  margin-top: 0.1em;
-  margin-bottom: 0;
-}
-
-.box {
-  visibility: hidden;
-  margin-bottom: 0;
-}
-.info-box {
-  background-color: #F5DD9E;
-  padding: 10px 2px;
-  margin: 0;
-  line-height: 125%;
-  border-radius: 2px;
-}
-.info-box thead {
-  display: none;
-}
-.info-box td:first-child{
-  width: 12%;
-}
-
 /* if you use links to footnotes*/
 .footnote-ref sup {
   vertical-align: top;
@@ -254,8 +213,6 @@ td {
   height: 100px;
 }
 
-
-
 /****** Page numbers ******/
 @page {
   @top-left {
@@ -265,13 +222,19 @@ td {
     content: none;
   }
   @bottom-right {
-    content: counter(page);
+    content: counter(page) " \00a0 \00a0 \00a0 \00a0 Last updated: November 2020";
   }
 }
 .pagedjs_margin.pagedjs_margin-bottom-right.hasContent {
   align-items: baseline;
 }
 
+.pagedjs_margin-bottom-right {
+  text-align: left !important;
+  margin-left: 18%;
+  color: var(--my-darkgray);
+  font-size: 0.8em;
+}
 
 .title-and-contact {
   display: grid;
