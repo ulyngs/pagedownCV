@@ -89,7 +89,7 @@ cv_entries %>%
   kable()
 ```
 
-## Awards and honours {.three-split}
+## Awards & honours {.three-split}
 ```{r}
 cv_entries %>% 
   filter(type == 'awards',
@@ -160,9 +160,11 @@ publications_table <- publications %>%
   mutate(authors_full = map_chr(authors_full, replace_first_names_in_list_with_initial_and_dot)) %>% 
   arrange(desc(date)) %>%
   mutate(year = year(date)) %>% 
-  mutate(citation = ifelse(!is.na(award), 
-                           str_c("<span class='publication-title'>", title, "</span><br><span class='publication-authors'>", authors_full, "</span><br><span class='publication-venue'>", venue_abbrev, ": ", venue, "</span><br><i class='fas fa-award'></i> <span class='publication-award'>", award, "</span>"),
-                           str_c("<span class='publication-title'>", title, "</span><br><span class='publication-authors'>", authors_full, "</span><br><span class='publication-venue'>", venue_abbrev, ": ", venue, "</span>"))) %>%
+  mutate(citation = case_when(
+    !is.na(award) & str_detect(award, "honourable") ~ str_c("<span class='publication-title'>", title, "</span><br><span class='publication-authors'>", authors_full, "</span><br><span class='publication-venue'>", venue_abbrev, ": ", venue, "</span><br><i class='fas fa-award'></i> <span class='publication-award'>", award, "</span>"),
+    !is.na(award) ~ str_c("<span class='publication-title'>", title, "</span><br><span class='publication-authors'>", authors_full, "</span><br><span class='publication-venue'>", venue_abbrev, ": ", venue, "</span><br><i class='fa fa-trophy'></i> <span class='publication-award'>", award, "</span>"),
+    TRUE ~ str_c("<span class='publication-title'>", title, "</span><br><span class='publication-authors'>", authors_full, "</span><br><span class='publication-venue'>", venue_abbrev, ": ", venue, "</span>")
+    )) %>% 
   mutate(citation = str_replace(citation, "U\\. Lyngs", "*U\\. Lyngs*"))  # make my name italic
 
 publications_table %>%
@@ -181,8 +183,8 @@ publications_table %>%
   knitr::kable() 
 ```
 
-<br class="pageBreak">
-<h3>Journal publications</h3>
+<!-- <br class="pageBreak"> -->
+<h3>Journal articles <span class="review-note">(fully reviewed, archival)</span></h3>
 
 ```{r}
 publications_table <- publications %>%
@@ -266,7 +268,7 @@ cv_entries %>%
 
 ## Talks and panels {.three-split}
 ::: {.conference-presentations-omitted}
-All first-author conference papers listed above were also given as presentations at their respective conferences and are not listed again in this section.
+All first-author conference publications listed above were also given as presentations at their respective conferences and are not listed again in this section.
 :::
 
 ### Talks
@@ -313,6 +315,8 @@ cv_entries %>%
 
 ```
 
+<!-- <br class="pageBreak"> -->
+
 ## Podcasts {.podcasts}
 ```{r}
 cv_entries %>% 
@@ -327,7 +331,7 @@ cv_entries %>%
 
 ```
 
-## Media coverage {.three-split}
+## Press {.three-split}
 ```{r}
 cv_entries %>% 
   filter(type == 'media') %>%
@@ -363,6 +367,8 @@ cv_entries %>%
   select(year, what) %>% 
   kable()
 ```
+
+<br class="pageBreak">
 
 ## Selected work experience {.teaching}
 ```{r}
@@ -422,7 +428,7 @@ cv_entries %>%
   kable()
 ```
 
-<br class="pageBreak">
+<!-- <br class="pageBreak"> -->
 
 <!-- close 'cv-entries' div -->
 </div>
