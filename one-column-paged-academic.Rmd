@@ -4,10 +4,6 @@ output:
   pagedown::html_paged:
     # change to true for a self-contained document, but it'll be a litte slower for Pandoc to render
     self_contained: false
-    # CDS
-    #css: [css/one-column-paged.css, "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"]
-    # offline
-    #css: ["css/one-column-paged.css", "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"]
     css: ["css/one-column-paged-academic.css",  "fontawesome-free-5.8.1-web/css/all.css"]
     number_sections: false
 links-to-footnotes: true
@@ -26,9 +22,13 @@ gs4_deauth()
 #### publications #####
 # publications <- read_sheet("https://docs.google.com/spreadsheets/d/1ta71CAGkcLqm-W1UdVRA_JJSddWV2TsrRZsCnQlmOis/edit?usp=sharing",
 #            sheet = "publications",
-#            col_types = "c")
+#            col_types = "c") %>% 
+#           mutate(year_begin = year(date))
 # publications %>% write_csv("content/publications.csv")
-publications <- read_csv("content/publications.csv")
+publications <- read_csv("content/publications.csv") %>% 
+  mutate(authors_full = map_chr(authors_full, replace_first_names_in_list_with_initial_and_dot)) %>% 
+  mutate(authors_full = str_replace(authors_full, "U\\. Lyngs", "*U\\. Lyngs*"))  # make my name italic
+  
 
 #### cv entries #####
 # cv_entries <- read_sheet("https://docs.google.com/spreadsheets/d/1ta71CAGkcLqm-W1UdVRA_JJSddWV2TsrRZsCnQlmOis/edit?usp=sharing",
@@ -42,6 +42,18 @@ publications <- read_csv("content/publications.csv")
 #   ))
 # cv_entries %>% write_csv("content/cv_entries.csv")
 cv_entries <- read_csv("content/cv_entries.csv")
+
+blank_year_when_repeated <- function(cv_entry_tibble){
+  cv_entry_tibble %>% 
+    mutate(row_number = row_number()) %>% 
+    mutate(year_begin = as.character(year_begin),
+           year_begin = case_when(
+             row_number == 1 ~ year_begin,
+             year_begin == lag(year_begin) ~ "",
+             year_begin != lag(year_begin) ~ year_begin
+           ))
+}
+
 ```
 
 ::: {.title-and-contact}
@@ -92,16 +104,9 @@ cv_entries %>%
 ## Awards & honours
 ```{r}
 cv_entries %>% 
-  filter(type == 'awards',
-         is.na(one_column_paged)) %>% 
+  filter(type == 'awards') %>% 
   mutate(what = str_c("<span class='cv-entry-title'>", what, "</span>, ", where)) %>%  
-  mutate(row_number = row_number()) %>% 
-  mutate(year_begin = as.character(year_begin),
-         year_begin = case_when(
-           row_number == 1 ~ year_begin,
-           year_begin == lag(year_begin) ~ "",
-           year_begin != lag(year_begin) ~ year_begin
-         )) %>% 
+  blank_year_when_repeated() %>% 
   select(year_begin, what) %>% 
   kable()
 ```
@@ -114,13 +119,7 @@ cv_entries %>%
     is.na(additional_info) ~ str_c("<span class='cv-entry-title'>", what, "</span> (", amount, "), ", where),
     !is.na(additional_info) ~ str_c("<span class='cv-entry-title'>", what, "</span> (", amount, "), ", where, ".<br> ", additional_info),
   )) %>%
-  mutate(row_number = row_number()) %>%
-  mutate(year_begin = as.character(year_begin),
-         year_begin = case_when(
-           row_number == 1 ~ year_begin,
-           year_begin == lag(year_begin) ~ "",
-           year_begin != lag(year_begin) ~ year_begin
-         )) %>%
+  blank_year_when_repeated() %>% 
   select(year_begin, what) %>%
   kable()
 ```
@@ -138,7 +137,8 @@ cv_entries %>%
 <h3>In computer science, top-tier conferences (<30% acceptance rate) are as, or more impactful than journals, see doi.org/fgjt2h</h3>
 </div>
 :::
-```{r}
+
+```{r, include=FALSE}
 # create helper function for taking one name and replacing the first name with initial and dot
 replace_first_name_with_initial_and_dot <- function(author_name) {
   str_replace(author_name, "(?<=\\S)\\S+", "\\.")
@@ -153,92 +153,68 @@ replace_first_names_in_list_with_initial_and_dot <- function(authors){
     paste0(collapse = ", ")
 }
 
-publications_table <- publications %>%
+# create function for adding leading zero's when there's more than 10 entries
+padding_function <- function(cv_entries_tibble, letter_to_pad){
+  if(nrow(cv_entries_tibble) > 9){
+    cv_entries_tibble %>% 
+      arrange(date) %>%
+  mutate(number = str_pad(row_number(), width = 2, side = "left", pad = "0"),
+         number = str_c(letter_to_pad, number)) %>%
+  arrange(desc(date))
+  } else {
+    cv_entries_tibble %>% 
+      arrange(date) %>%
+  mutate(number = str_pad(row_number(), width = 1, side = "left", pad = "0"),
+         number = str_c(letter_to_pad, number)) %>%
+  arrange(desc(date))
+  }
+}
+```
+
+
+```{r}
+publications %>%
   filter(type == "conference paper") %>% 
-  mutate(authors_full = map_chr(authors_full, replace_first_names_in_list_with_initial_and_dot)) %>% 
-  arrange(desc(date)) %>%
-  mutate(year = year(date)) %>% 
   mutate(citation = case_when(
     !is.na(award) & str_detect(award, "honourable") ~ str_c("<span class='cv-entry-title'>", title, "</span><br><span class='publication-authors'>", authors_full, "</span><br><span class='publication-venue'>", venue_abbrev, ": ", venue, "</span><br><i class='fas fa-award'></i> <span class='publication-award'>", award, "</span>"),
     !is.na(award) ~ str_c("<span class='cv-entry-title'>", title, "</span><br><span class='publication-authors'>", authors_full, "</span><br><span class='publication-venue'>", venue_abbrev, ": ", venue, "</span><br><i class='fa fa-trophy'></i> <span class='publication-award'>", award, "</span>"),
     TRUE ~ str_c("<span class='cv-entry-title'>", title, "</span><br><span class='publication-authors'>", authors_full, "</span><br><span class='publication-venue'>", venue_abbrev, ": ", venue, "</span>")
     )) %>% 
-  mutate(citation = str_replace(citation, "U\\. Lyngs", "*U\\. Lyngs*"))  # make my name italic
+  padding_function(., "C") %>% 
+  blank_year_when_repeated() %>%
+  select(year_begin, number, citation) %>%
+  knitr::kable()
 
-publications_table %>%
-  arrange(date) %>% 
-  mutate(number = str_pad(row_number(), width = 1, side = "left", pad = "0"),
-         number = str_c("C", number)) %>%
-  arrange(desc(date)) %>% 
-  mutate(row_number = row_number()) %>% 
-  mutate(year = as.character(year),
-         year = case_when(
-           row_number == 1 ~ year,
-           year == lag(year) ~ "",
-           year != lag(year) ~ year
-         )) %>% 
-  select(year, number, citation) %>%
-  knitr::kable() 
 ```
 
 <!-- <br class="pageBreak"> -->
 <h3>Journal articles <span class="review-note">(fully reviewed, archival)</span></h3>
 
 ```{r}
-publications_table <- publications %>%
+publications %>%
   filter(type == "journal article") %>% 
-  mutate(authors_full = map_chr(authors_full, replace_first_names_in_list_with_initial_and_dot)) %>% 
-  arrange(desc(date)) %>%
-  mutate(year = year(date)) %>% 
   mutate(citation = ifelse(!is.na(award), 
                            str_c("<span class='cv-entry-title'>", title, "</span><br><span class='publication-authors'>", authors_full, "</span><br><span class='publication-venue'>", venue_abbrev, ": ", venue, "</span><br><i class='fas fa-award'></i> <span class='publication-award'>", award, "</span>"),
-                           str_c("<span class='cv-entry-title'>", title, "</span><br><span class='publication-authors'>", authors_full, "</span><br><span class='publication-venue'>", venue_abbrev, ": ", venue, "</span>"))) %>%
-  mutate(citation = str_replace(citation, "U\\. Lyngs", "*U\\. Lyngs*"))  # make my name italic
-
-publications_table %>%
-  arrange(date) %>% 
-  mutate(number = str_pad(row_number(), width = 1, side = "left", pad = "0"),
-         number = str_c("J", number)) %>%
-  arrange(desc(date)) %>% 
-  mutate(row_number = row_number()) %>% 
-  mutate(year = as.character(year),
-         year = case_when(
-           row_number == 1 ~ year,
-           year == lag(year) ~ "",
-           year != lag(year) ~ year
-         )) %>% 
-  select(year, number, citation) %>%
-  knitr::kable() 
+                           str_c("<span class='cv-entry-title'>", title, "</span><br><span class='publication-authors'>", authors_full, "</span><br><span class='publication-venue'>", venue_abbrev, ": ", venue, "</span>"))) %>% 
+  padding_function(., "J") %>% 
+  blank_year_when_repeated() %>%
+  select(year_begin, number, citation) %>%
+  knitr::kable()
 ```
 
 
 <h3>Extended abstracts and workshop papers <br><span class="review-note">(lightly reviewed)</span></h3>
 
 ```{r}
-publications_table <- publications %>%
+publications %>%
   filter(type == "extended abstract" | type == "workshop paper") %>% 
-  mutate(authors_full = map_chr(authors_full, replace_first_names_in_list_with_initial_and_dot)) %>% 
-  arrange(desc(date)) %>%
-  mutate(year = year(date)) %>% 
   mutate(citation = ifelse(!is.na(award), 
                            str_c("<span class='cv-entry-title'>", title, "</span><br><span class='publication-authors'>", authors_full, "</span><br><span class='publication-venue'>", venue_abbrev, ": ", venue, "</span><br><i class='fas fa-award'></i> <span class='publication-award'>", award, "</span>"),
                            str_c("<span class='cv-entry-title'>", title, "</span><br><span class='publication-authors'>", authors_full, "</span><br><span class='publication-venue'>", venue_abbrev, ": ", venue, "</span>"))) %>%
-  mutate(citation = str_replace(citation, "U\\. Lyngs", "*U\\. Lyngs*"))  # make my name italic
-
-publications_table %>%
-  arrange(date) %>% 
-  mutate(number = str_pad(row_number(), width = 1, side = "left", pad = "0"),
-         number = str_c("A", number)) %>% 
-  arrange(desc(date)) %>% 
-  mutate(row_number = row_number()) %>% 
-  mutate(year = as.character(year),
-         year = case_when(
-           row_number == 1 ~ year,
-           year == lag(year) ~ "",
-           year != lag(year) ~ year
-         )) %>% 
-  select(year, number, citation) %>%
-  knitr::kable() 
+  padding_function(., "A") %>% 
+  blank_year_when_repeated() %>%
+  select(year_begin, number, citation) %>%
+  knitr::kable()
 ```
 
 <!-- <br class="pageBreak"> -->
@@ -248,20 +224,11 @@ publications_table %>%
 cv_entries %>% 
   filter(type == 'poster') %>%
   mutate(what = str_c("<span class='cv-entry-title'>", where, "</span>, ", what)) %>% 
-  arrange(date_begin) %>% 
-  mutate(number = str_pad(row_number(), width = 1, side = "left", pad = "0"),
-         number = str_c("P", number)) %>% 
-  arrange(desc(date_begin)) %>% 
-  mutate(row_number = row_number()) %>% 
-  mutate(year_begin = as.character(year_begin),
-         year_begin = case_when(
-           row_number == 1 ~ year_begin,
-           year_begin == lag(year_begin) ~ "",
-           year_begin != lag(year_begin) ~ year_begin
-         )) %>% 
+  mutate(date = date_begin) %>% 
+  padding_function(., "P") %>% 
+  blank_year_when_repeated() %>% 
   select(year_begin, number, what) %>% 
-  
-  kable()
+  knitr::kable()
 ```
 
 ## Talks and panels {.three-split}
@@ -275,19 +242,11 @@ cv_entries %>%
   filter(type == 'talk', is.na(exclude)) %>% 
   mutate(additional_info = if_else(is.na(additional_info), "", str_c(", ", additional_info))) %>% 
   mutate(what = str_c("<span class='cv-entry-title'>", where, "</span>, ", what, additional_info)) %>% 
-  arrange(date_begin) %>% 
-  mutate(number = str_pad(row_number(), width = 2, side = "left", pad = "0"),
-         number = str_c("T", number)) %>% 
-  arrange(desc(date_begin)) %>% 
-  mutate(row_number = row_number()) %>% 
-  mutate(year_begin = as.character(year_begin),
-         year_begin = case_when(
-           row_number == 1 ~ year_begin,
-           year_begin == lag(year_begin) ~ "",
-           year_begin != lag(year_begin) ~ year_begin
-         )) %>% 
+  mutate(date = date_begin) %>% 
+  padding_function(., "T") %>% 
+  blank_year_when_repeated() %>% 
   select(year_begin, number, what) %>% 
-  kable()
+  knitr::kable()
 
 ```
 
@@ -297,19 +256,11 @@ cv_entries %>%
   filter(type == 'talk-panel') %>% 
   mutate(additional_info = if_else(is.na(additional_info), "", additional_info)) %>% 
   mutate(what = str_c("<span class='cv-entry-title'>", where, "</span>, ", what, ", ",  additional_info)) %>% 
-  arrange(date_begin) %>% 
-  mutate(number = str_pad(row_number(), width = 1, side = "left", pad = "0"),
-         number = str_c("D", number)) %>% 
-  arrange(desc(date_begin)) %>% 
-  mutate(row_number = row_number()) %>% 
-  mutate(year_begin = as.character(year_begin),
-         year_begin = case_when(
-           row_number == 1 ~ year_begin,
-           year_begin == lag(year_begin) ~ "",
-           year_begin != lag(year_begin) ~ year_begin
-         )) %>% 
+  mutate(date = date_begin) %>% 
+  padding_function(., "D") %>% 
+  blank_year_when_repeated() %>% 
   select(year_begin, number, what) %>% 
-  kable()
+  knitr::kable()
 
 ```
 
@@ -320,21 +271,19 @@ cv_entries %>%
 cv_entries %>% 
   filter(type == 'talk-podcast') %>% 
   mutate(what = str_c("<span class='cv-entry-title'>", where, "</span>, ", what)) %>% 
-  arrange(date_begin) %>% 
-  mutate(number = str_pad(row_number(), width = 1, side = "left", pad = "0"),
-         number = str_c("Pod", number)) %>% 
-  arrange(desc(date_begin)) %>% 
+  mutate(date = date_begin) %>% 
+  padding_function(., "Pod") %>% 
+  blank_year_when_repeated() %>% 
   select(year_begin, number, what) %>% 
-  kable()
+  knitr::kable()
 
 ```
 
-## Press {.three-split}
+## Press
 ```{r}
 cv_entries %>% 
   filter(type == 'media') %>%
-  mutate(spacer = "") %>% 
-  select(year_begin, spacer, what) %>% 
+  select(year_begin, what) %>% 
   kable()
 ```
 
@@ -346,8 +295,10 @@ cv_entries %>%
   filter(type == 'teaching') %>% 
   mutate(what = ifelse(!is.na(additional_info), 
     str_c("<span class='cv-entry-title'>", what, "</span>, ", where, "<br>", additional_info),
-    str_c("<span class='cv-entry-title'>", what, "</span><br class='work-break'>", where))) %>% 
-  mutate(year = ifelse((is.na(year_end) | year_begin == year_end), year_begin, str_c(year_begin, " --- ", year_end))) %>% 
+    str_c("<span class='cv-entry-title'>", what, "</span><br>", where))) %>% 
+  mutate(year = ifelse((is.na(year_end) | year_begin == year_end), 
+                       year_begin, 
+                       str_c(year_begin, " --- ", year_end))) %>% 
   select(year, what) %>% 
   kable()
 ```
@@ -374,7 +325,9 @@ cv_entries %>%
   filter(type == 'work', is.na(one_column_paged)) %>% 
   mutate(additional_info = replace_na(additional_info, "")) %>% 
   mutate(what = str_c("<span class='cv-entry-title'>", what, "</span>, ", where, "<br>", additional_info)) %>% 
-  mutate(year = ifelse(!is.na(year_end), str_c(year_begin, " --- ", year_end), year_begin)) %>% 
+  mutate(year = ifelse(!is.na(year_end), 
+                       str_c(year_begin, " --- ", year_end), 
+                       year_begin)) %>% 
   select(year, what) %>% 
   kable()
 ```
@@ -398,7 +351,9 @@ cv_entries %>%
   replace_na(list(where = "", additional_info = "")) %>% 
   mutate(what = str_c(what, ", ", where, "<br>", additional_info)) %>% 
   arrange(desc(year_begin)) %>% 
-  mutate(year = ifelse(!is.na(year_end), str_c(year_begin, " --- ", year_end), year_begin)) %>% 
+  mutate(year = ifelse(!is.na(year_end), 
+                       str_c(year_begin, " --- ", year_end), 
+                       year_begin)) %>% 
   mutate(row_number = row_number()) %>% 
   mutate(year = as.character(year),
          year = case_when(
@@ -407,7 +362,7 @@ cv_entries %>%
            year_begin != lag(year) ~ year
          )) %>% 
   select(year, what) %>% 
-  kable(align = c('l', 'l'))
+  kable()
 ```
 
 <br class="pageBreak">
