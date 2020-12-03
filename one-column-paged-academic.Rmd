@@ -7,6 +7,8 @@ output:
     css: ["css/one-column-paged-academic.css",  "fontawesome-free-5.8.1-web/css/all.css"]
     number_sections: false
 links-to-footnotes: true
+editor_options: 
+  chunk_output_type: console
 ---
 
 
@@ -20,12 +22,12 @@ library(lubridate)
 gs4_deauth()
 
 ######## CREATE HELPER FUNCTIONS
-# create helper function for taking one name and replacing the first name with initial and dot
+# function which takes a name and replaces the first name with initial and dot
 replace_first_name_with_initial_and_dot <- function(author_name) {
   str_replace(author_name, "(?<=\\S)\\S+", "\\.")
 }
 
-# create function for doing this for an entry of authors
+# function for doing this for an entry with a number of authors
 replace_first_names_in_list_with_initial_and_dot <- function(authors){
   authors_split <- str_split(authors, ",") %>% 
     map(str_trim)
@@ -73,9 +75,9 @@ blank_year_when_repeated <- function(cv_entry_tibble){
 # publications %>% write_csv("content/publications.csv")
 publications <- read_csv("content/publications.csv") %>% 
   mutate(authors_full = map_chr(authors_full, replace_first_names_in_list_with_initial_and_dot)) %>% 
-  mutate(authors_full = str_replace(authors_full, "U\\. Lyngs", "*U\\. Lyngs*"))  # make my name italic
+  mutate(authors_full = str_replace(authors_full, "U\\. Lyngs", "*U\\. Lyngs*")) %>%   # make my name italic
+  mutate(year_begin = year(date))
   
-
 #### cv entries #####
 # cv_entries <- read_sheet("https://docs.google.com/spreadsheets/d/1ta71CAGkcLqm-W1UdVRA_JJSddWV2TsrRZsCnQlmOis/edit?usp=sharing",
 #            sheet = "cv_entries",
@@ -85,12 +87,13 @@ publications <- read_csv("content/publications.csv") %>%
 #     date_end == "present" ~ date_end,
 #     is.na(date_end) ~ "",
 #     TRUE ~ str_sub(date_end, 1, 4)
-#   )) %>% 
-#   mutate(year = ifelse((is.na(year_end) | year_begin == year_end), 
-#                       year_begin, 
+#   )) %>%
+#   mutate(year = ifelse((is.na(year_end) | year_begin == year_end),
+#                       year_begin,
 #                       str_c(year_begin, " --- ", year_end)))
 # cv_entries %>% write_csv("content/cv_entries.csv")
 cv_entries <- read_csv("content/cv_entries.csv")
+
 ```
 
 ::: {.title-and-contact}
@@ -112,7 +115,7 @@ https://ulriklyngs.com
 -->
 
 ## Research summary
-::: {.research-interests}
+:::::: {.research-interests}
 
 ::: {.spacer}
 :::
@@ -125,7 +128,7 @@ https://ulriklyngs.com
 **I am passionate about** open and transparent research. 
 Since 2018, I have shared materials, analysis scripts, and data for all my work, and written my papers as reproducible documents in [R Markdown](https://rmarkdown.rstudio.com).
 :::
-:::
+::::::
 
 <div class="cv-entries">
 ## Education
@@ -165,14 +168,14 @@ cv_entries %>%
 
 ## Publications {.three-split}
 
-::: {.grid-container-publications}
-<div class="conference-publication-heading">
+:::::: {.grid-container-publications}
+::: {.conference-publication-heading}
 <h3>Conference publications <br><span class="review-note">(fully reviewed, archival)</span></h3>
-</div>
-<div class="conference-note">
-<h3>In computer science, top-tier conferences (<30% acceptance rate) are as, or more impactful than journals, see doi.org/fgjt2h</h3>
-</div>
 :::
+::: {.conference-note}
+<h3>In computer science, top-tier conferences (<30% acceptance rate) are as, or more impactful than journals, see doi.org/fgjt2h</h3>
+:::
+::::::
 
 
 ```{r}
@@ -187,7 +190,6 @@ publications %>%
   blank_year_when_repeated() %>%
   select(year_begin, number, citation) %>%
   knitr::kable()
-
 ```
 
 <!-- <br class="pageBreak"> -->
@@ -236,7 +238,7 @@ cv_entries %>%
 
 ## Talks and panels {.three-split}
 ::: {.conference-presentations-omitted}
-All first-author conference publications listed above were also given as presentations at their respective conferences and are not listed again in this section.
+All first-authored conference publications listed above were also given as presentations at their respective conferences and are not listed again in this section.
 :::
 
 ### Talks
