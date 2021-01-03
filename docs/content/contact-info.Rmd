@@ -5,10 +5,12 @@
 | Center | Left |
 |:------:|:-----|
 | <i class="fas fa-map-marker-alt"></i>|Department of Computer Science,\
-University of Oxford, Oxford, UK|
+University of Oxford, UK|
 | <i class="fas fa-envelope"></i> | ulrik.lyngs\@cs.ox.ac.uk |
 | <i class="fas fa-globe"></i> | [ulriklyngs.com](https://ulriklyngs.com) |
-| <i class="fab fa-github"></i> | [ulyngs](https://github.com/ulyngs/) |
-
+| <i class="fab fa-github"></i> | [ulyngs](https://github.com/ulyngs) |
+ 
 </div>
 ```
+
+<!--<img src="https://ulriklyngs.com/images/headshot_small.jpg" class="img-fluid">-->

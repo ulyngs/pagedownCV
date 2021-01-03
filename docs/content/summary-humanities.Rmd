@@ -1,0 +1,5 @@
+```{block type="col-6 grid-item", echo=TRUE}
+## Personal summary {.summary}
+I am a cognitive psychologist and human-computer interaction researcher, working on design strategies for supporting self-control over digital device use.
+I run the 'Reducing Digital Distraction' Workshop, which helps students reflect on their digital life.
+```

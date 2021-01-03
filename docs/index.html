@@ -15,6 +15,7 @@
 
 <title>Pagedown CVs</title>
 
+<script src="site_libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
@@ -33,6 +34,15 @@
 
   gtag('config', 'UA-84972342-6');
 </script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -78,6 +88,7 @@ h6 {
   text-align: left;
 }
 </style>
+
 
 
 
@@ -317,6 +328,7 @@ $(document).ready(function () {
 
 <p>This repository has different versions of my resume, with the paged versions created with <a href="https://rmarkdown.rstudio.com"><code>rmarkdown</code></a> + <a href="https://github.com/rstudio/pagedown"><code>pagedown</code></a> (NOTE: for now 1 and 2 only works properly in Chrome, as some aspects of CSS Paged Media are only supported by this browser):</p>
 <ol style="list-style-type: decimal">
+<li><a href="one-column-paged-academic.html">Paged, academic resume</a></li>
 <li><a href="two-column-paged-brief.html">Paged, 2-column brief resume</a></li>
 <li><a href="one-column-paged.html">Paged, 1-column resume</a></li>
 <li><a href="one-column.html">Ordinary scrolling HTML resume</a></li>
@@ -336,7 +348,7 @@ $(document).ready(function () {
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();

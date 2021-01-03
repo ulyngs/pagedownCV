@@ -68,19 +68,31 @@ h1.title {
   text-align: center;
   font-weight: normal;
   font-size: 2.3em;
-  line-height: 110%;
+  line-height: 105%;
 }
 
 /* section headers */
-h2 {
+/* 2020-07-27 ADJUSTMENTS FOR PUBLICATION LIST */
+h2,
+table caption {
+  text-align: center;
   color: #710C0C;
-  border-bottom: 1px solid black;
-  margin-top: 0.6em;
+  margin-top: 1em;
   margin-bottom: 0.3em;
   font-size: 1.5em;
   font-weight: normal;
+  page-break-after: avoid !important;
 }
 
+table caption span,
+table th {
+  display: none;
+}
+
+td:first-child {
+  width: 21%;
+  text-align: left;
+}
 
 /* PAGE 1 */
 h2.summary,
@@ -132,7 +144,7 @@ h2.box {
 }
 
 .set-width td:first-child {
-  width: 20%;
+  width: 21%;
   text-align: left;
 }
 
@@ -160,7 +172,7 @@ tr {
 
 td {
   vertical-align: top;
-  
+  font-size: 15.5px !important;
 }
 
 .work-title {

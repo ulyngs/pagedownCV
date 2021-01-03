@@ -1,0 +1,229 @@
+/* THIS CREATES BASIC PAGED LAYOUT IN COMBINATION WITH PAGED.HTML */
+@page{
+  size: A4 portrait;
+}
+
+:root{
+  --page-width: 8.5in;
+  --pagedjs-margin-right: 0.7in;
+  --pagedjs-margin-left: 0.7in;
+  --pagedjs-margin-top: 0.5in;
+  --pagedjs-margin-bottom: 0.5in;
+  --root-font-size: 11pt;
+  --viewer-pages-spacing: 12px;
+  --viewer-shadow-color: #313131; /* this marks the pages */
+  --my-darkgray: #929598;
+  --indentation: 18%;
+}
+
+/* Paged.js viewer */
+@media screen {
+  body {
+    background-color: var(--viewer-background-color);
+    margin: 0; /* for mobile */
+    width: calc(var(--pagedjs-width) + 2 * var(--viewer-pages-spacing)); /* for mobile */
+  }
+   .pagedjs_pages {
+    max-width: var(--pagedjs-width);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+  }
+   .pagedjs_page {
+    box-shadow: 0 0 calc(0.66667 * var(--viewer-pages-spacing)) var(--viewer-shadow-color);
+    margin: var(--viewer-pages-spacing) 0;
+  }
+}
+ @media screen and (min-width: 8.5in) {
+  /* not a mobile */
+  body {
+    margin: auto;
+    width: unset;
+  }
+}
+
+/* create ability to insert pagebreaks with br.pagebreak */
+br.pageBreak {
+    page-break-after: always;
+}
+
+body {
+  font-family: "Avenir";
+}
+
+p, li {
+  font-size: var(--root-font-size);
+  line-height: 125%;
+}
+
+/* section headers */
+h2 {
+  margin-top: 0.6em;
+  margin-bottom: 1em;
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-left: var(--indentation);
+}
+h3 {
+  margin-left: var(--indentation);
+}
+.conference-presentations-omitted {
+  margin-left: var(--indentation);
+  font-style: italic;
+}
+
+/****** Page numbers ******/
+@page {
+  @top-left {
+    content: none;
+  }
+  @top-right {
+    content: none;
+  }
+  @bottom-right {
+    content: none;
+  }
+}
+
+.pagedjs_margin-bottom-right {
+  text-align: left !important;
+  margin-left: var(--indentation);
+  color: var(--my-darkgray);
+  font-size: 0.8em;
+  margin-bottom: 20px;
+}
+
+/***** STYLE HEADING    *******/
+.title-and-contact {
+  display: grid;
+  grid-template-columns: 70% 30%;
+  border-style: none none double none;
+  margin-bottom: 1.8em;
+  padding-bottom: 0.5em;
+}
+
+.title h1 {
+  text-align: left;
+  font-size: 2.5em;
+  padding: 0;
+  margin: 0% 0% 0% 24.5%;
+}
+
+.contact-info a {
+  color: black;
+  text-decoration: none;
+}
+.contact-info {
+  font-size: 0.5em;
+  text-align: right;
+}
+
+/***** STYLE INTERESTS STATEMENT    *******/
+/* research interests */
+.research-interests {
+  display: grid;
+  grid-template-columns: 18.5% 81.5%;
+}
+.interests p {
+  line-height: 135%;
+}
+.interests a {
+  text-decoration: none;
+}
+
+
+/***** STYLE CV ENTRIES    *******/
+/* overall styling for cv-entries within a table */
+/* don't make page breaks inside an entry */
+.cv-entries table {
+  border-spacing: 0;
+  margin: 0.1em 0 1.5em 0;
+  width: 100%;
+}
+
+.cv-entries thead {
+  display: none;
+}
+
+.cv-entries td {
+  vertical-align: top;
+  line-height: 125%;
+  padding-bottom: 0.5em;
+  font-size: var(--root-font-size);
+}
+
+.cv-entries tr {
+  break-inside: avoid;
+}
+
+.cv-entries a {
+  text-decoration: none;
+  color: black;
+}
+
+/* make titles bold */
+.cv-entry-title {
+  font-weight: bold;
+}
+
+/* footnote links */
+.footnote-ref sup {
+  vertical-align: top;
+  margin-left: 1px;
+  color: blue;
+  font-weight: normal;
+}
+
+/* basic styling for first column in two-column cv entries */
+.cv-entries td:first-child {
+  width: var(--indentation);
+  text-align: left;
+  color: var(--my-darkgray);
+}
+
+/* basic styling for two first columns in three-column cv entries */
+.three-split td:first-child {
+  width: 9%;
+  text-align: left;
+  color: var(--my-darkgray);
+}
+.three-split td:nth-child(2) {
+  width: 12%;
+  text-align: left;
+  color: var(--my-darkgray);
+  padding-right: 1.5em;
+}
+
+/*** style the publication entries ***/
+/* set width for the publication info statement */
+.grid-container-publications {
+  display: grid;
+  grid-template-columns: 49% 51%;
+}
+.conference-publication-heading h3 {
+  margin-block-start: 0 !important;
+  margin-top: 15px !important;
+  margin-left: 37%;
+}
+.conference-note h3 {
+  margin-block-start: 0 !important;
+  margin-top: 21px !important;
+  color: var(--my-darkgray);
+  font-size: 0.8em;
+}
+
+.review-note {
+  color: var(--my-darkgray);
+  font-size: 0.8em;
+}
+
+/* make award texts red */
+.publication-award {
+  color: #E5001C;
+}
+
+
+/* don't show a horizontal rule before the final links */
+hr {
+  display: none;
+}
