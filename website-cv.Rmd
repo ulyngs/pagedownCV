@@ -2,7 +2,7 @@
 title: "Ulrik Lyngs: CV"
 output:
   html_document:
-    css: ["css/make-cv-like-other.css", "css/one-column-cv.css", "css/website-page.css", "css/style.css", "fontawesome-free-5.8.1-web/css/all.css"]
+    css: ["css/make-cv-like-other.css", "css/one-column-cv.css", "css/website-page.css", "css/style.css", "https://use.fontawesome.com/releases/v5.7.2/css/all.css"]
     toc: true
     toc_float: true
 
@@ -15,19 +15,22 @@ library(tidyverse)
 library(knitr)
 library(here)
 library(DT)
-library(googlesheets4)
 library(lubridate)
-gs4_deauth()
 
 #### publications #####
-publications <- read_sheet("https://docs.google.com/spreadsheets/d/1ta71CAGkcLqm-W1UdVRA_JJSddWV2TsrRZsCnQlmOis/edit?usp=sharing",
-           sheet = "publications",
-           col_types = "c")
+publications <- read_csv("content/publications.csv")
 
 #### cv entries #####
-cv_entries <- read_sheet("https://docs.google.com/spreadsheets/d/1ta71CAGkcLqm-W1UdVRA_JJSddWV2TsrRZsCnQlmOis/edit?usp=sharing",
-           sheet = "cv_entries",
-           col_types = "c")
+cv_entries <- read_csv("content/cv_entries.csv") %>% 
+  mutate(year_begin = year(date_begin)) %>%
+  mutate(year_end = case_when(
+    date_end == "present" ~ date_end,
+    !is.na(date_end) ~ str_sub(date_end, 1, 4),
+    is.na(date_end) ~ date_end
+  )) %>%
+  mutate(year = ifelse((is.na(year_end) | year_begin == year_end),
+                      year_begin,
+                      str_c(year_begin, " --- ", year_end)))
 
 ```
 
@@ -51,7 +54,6 @@ Download a brief version of [my CV as PDF](https://github.com/ulyngs/pagedown-cv
 cv_entries %>% 
   filter(type == 'education') %>% 
   mutate(what = str_c(what, ", ", where)) %>% 
-  mutate(year = str_c(year_begin, " --- ", year_end)) %>% 
   select(year, what) %>% 
   kable()
 ```
@@ -62,9 +64,7 @@ cv_entries %>%
 publications_table <- publications %>%
   arrange(desc(date), type) %>%
   mutate(author_year = str_c(authors_full, " (", year(date), "). ")) %>%
-  #mutate(author_year = str_c("*", authors, " (", year, ")*. ")) %>%  #italicise authors and year
   mutate(title = ifelse(!is.na(url), str_c("[", title, "](", url, ")"), title)) %>% #turn title into link
-  #mutate(title = str_c("<span style='text-decoration: underline'>", title, "</span>")) %>% #underline title
   mutate(citation = ifelse(!is.na(award),
                            str_c(author_year, title, venue, "<i class='fas fa-award'></i><em>", award, "</em>", sep = " "),
                            str_c(author_year, title, venue, sep = " "))) %>%
@@ -84,8 +84,7 @@ cv_entries %>%
   filter(type == 'talk') %>% 
   mutate(where = str_replace(where, "\\[([^]]*)\\]\\(([^\\s^\\)]*)[\\s\\)]", "<a href='\\2'>\\1</a>")) %>% 
   mutate(what = str_c("<em>", what, "</em>, ", where)) %>% 
-  #select(Year = year_begin, Talk = what) %>%
-  select(Date = date, Talk = what) %>% 
+  select(Date = date_begin, Talk = what) %>% 
   mutate(Date = as_date(Date)) %>% 
   arrange(desc(Date)) %>% 
   mutate(Date = str_c(year(Date),
@@ -115,7 +114,6 @@ cv_entries %>%
   mutate(what = ifelse(!is.na(additional_info), 
     str_c("<span class='work-title'>", what, "</span><br class='work-break'>", where, "<br>", additional_info),
     str_c("<span class='work-title'>", what, "</span><br class='work-break'>", where))) %>% 
-  mutate(year = ifelse(!is.na(year_end), str_c(year_begin, " --- ", year_end), year_begin)) %>% 
   select(year, what) %>% 
   kable()
 ```
@@ -147,15 +145,8 @@ cv_entries %>%
   mutate(year_end = ifelse(year_end == "present", "", year_end)) %>%
   mutate(where = ifelse(!is.na(url), str_c("[", where, "](", url, ")"), where)) %>% 
   mutate(what = ifelse(!is.na(additional_info),
-                       str_c(what,
-                      "<br class='work-break'>", 
-                      where),
-                      str_c(what,
-                      "<br class='work-break'>", 
-                      where))) %>% 
-  mutate(year = ifelse(!is.na(year_end), 
-                       str_c(year_begin, " --- ", year_end),
-                       year_begin)) %>% 
+                       str_c(what, "<br class='work-break'>", where),
+                      str_c(what, "<br class='work-break'>", where))) %>% 
   select(year, what) %>% 
   kable()
 
@@ -170,7 +161,6 @@ cv_entries %>%
   mutate(additional_info = replace_na(additional_info, "")) %>% 
   mutate(what = str_c("<span class='work-title'>", what, "</span><br class='work-break'>", where, "<br>", additional_info)) %>% 
   arrange(desc(year_begin)) %>% 
-  mutate(year = ifelse(!is.na(year_end), str_c(year_begin, " --- ", year_end), year_begin)) %>% 
   select(year, what) %>% 
   kable()
 ```
@@ -213,7 +203,6 @@ cv_entries %>%
   filter(type == 'volunteering') %>%
   mutate(what = str_c("<span class='work-title'>", what, "</span><br class='work-break'>", where)) %>%
   mutate(what = ifelse(!is.na(additional_info), str_c(what, "<br>", additional_info), what)) %>%
-  mutate(year = ifelse(!is.na(year_end), str_c(year_begin, " --- ", year_end), year_begin)) %>%
   arrange(desc(year), desc(year_end)) %>%
   select(year, what) %>%
   kable()

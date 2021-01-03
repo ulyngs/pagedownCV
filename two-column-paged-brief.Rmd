@@ -3,12 +3,8 @@ title: "Ulrik Lyngs <br> Curriculum vitae"
 #date: "`r Sys.Date()`"
 output:
   pagedown::html_paged:
-    # change to true for a self-contained document, but it'll be a litte slower for Pandoc to render
-    self_contained: false
     # CDN:
-    #css: [professional_cv.css, "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap-grid.min.css", "https://use.fontawesome.com/releases/v5.7.2/css/all.css"]
-    # offline:
-    css: ["css/professional_cv.css", "bootstrap-4.0.0-dist/css/bootstrap-grid.min.css", "fontawesome-free-5.8.1-web/css/all.css"]
+    css: [css/professional_cv.css, "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap-grid.min.css", "https://use.fontawesome.com/releases/v5.7.2/css/all.css"]
     number_sections: false
 links-to-footnotes: true
 
@@ -19,19 +15,37 @@ knitr::opts_chunk$set(echo = FALSE)
 library(tidyverse)
 library(knitr)
 library(here)
-library(googlesheets4)
 library(lubridate)
-gs4_deauth()
 
 #### publications #####
-publications <- read_sheet("https://docs.google.com/spreadsheets/d/1ta71CAGkcLqm-W1UdVRA_JJSddWV2TsrRZsCnQlmOis/edit?usp=sharing",
-           sheet = "publications",
-           col_types = "c")
+publications <- read_csv("content/publications.csv")
 
 #### cv entries #####
-cv_entries <- read_sheet("https://docs.google.com/spreadsheets/d/1ta71CAGkcLqm-W1UdVRA_JJSddWV2TsrRZsCnQlmOis/edit?usp=sharing",
-           sheet = "cv_entries",
-           col_types = "c")
+cv_entries <- read_csv("content/cv_entries.csv") %>% 
+  mutate(year_begin = year(date_begin)) %>%
+  mutate(year_end = case_when(
+    date_end == "present" ~ date_end,
+    !is.na(date_end) ~ str_sub(date_end, 1, 4),
+    is.na(date_end) ~ date_end
+  )) %>%
+  mutate(year = ifelse((is.na(year_end) | year_begin == year_end),
+                      year_begin,
+                      str_c(year_begin, " --- ", year_end)))
+
+
+# create helper function for taking one name and replacing the first name with initial and dot
+replace_first_name_with_initial_and_dot <- function(author_name) {
+  str_replace(author_name, "(?<=\\S)\\S+", "\\.")
+}
+
+# create function for doing this for an entry of authors
+replace_first_names_in_list_with_initial_and_dot <- function(authors){
+  authors_split <- str_split(authors, ",") %>% 
+    map(str_trim)
+  
+  authors_split[[1]] %>% map_chr(replace_first_name_with_initial_and_dot) %>% 
+    paste0(collapse = ", ")
+}
 
 ```
 
@@ -68,21 +82,8 @@ University of Oxford, UK|
 <div class='col-6 left'>
 
 # Selected publications {.publications}
+<div class='publications-table'>
 ```{r}
-# create helper function for taking one name and replacing the first name with initial and dot
-replace_first_name_with_initial_and_dot <- function(author_name) {
-  str_replace(author_name, "(?<=\\S)\\S+", "\\.")
-}
-
-# create function for doing this for an entry of authors
-replace_first_names_in_list_with_initial_and_dot <- function(authors){
-  authors_split <- str_split(authors, ",") %>% 
-    map(str_trim)
-  
-  authors_split[[1]] %>% map_chr(replace_first_name_with_initial_and_dot) %>% 
-    paste0(collapse = ", ")
-}
-
 # create table
 publications %>% 
   filter(professional_2_page == 'y') %>% 
@@ -96,10 +97,12 @@ publications %>%
                            str_c(author_year, title, prof_venue, "<i class='fas fa-award'></i><em>", award, "</em>", sep = " "),
                            str_c(author_year, title, prof_venue, sep = " "))) %>%
   mutate(citation = str_replace(citation, "U\\. Lyngs", "**U\\. Lyngs**")) %>%  # make my name bold
-  select(citation) %>%
+  select(citation) %>% 
   knitr::kable()
 
 ```
+</div>
+
 
 </div>
 
@@ -112,7 +115,6 @@ publications %>%
 cv_entries %>% 
   filter(type == 'education') %>% 
   mutate(what = str_c(what, ", ", where)) %>% 
-  mutate(year = str_c(year_begin, " --- ", year_end)) %>% 
   select(year, what) %>% 
   kable()
 ```
@@ -143,7 +145,6 @@ cv_entries %>%
 </div>
 
 <!-- <br class="pageBreak" /> -->
-<br> 
 
 <!-- here starts the second page -->
 <div class="row pagetwo">
@@ -151,12 +152,20 @@ cv_entries %>%
 
 <!-- here starts the first column -->
 <div class="col-6 left-pagetwo">
+# Professional development {.prof-dev}
+```{r}
+cv_entries %>% 
+  filter(type == 'prof-dev') %>% 
+  mutate(what = str_c(what, ", ", where)) %>% 
+  select(year_begin, what) %>% 
+  kable()
+```
+
 # Selected work experience {.work}
 ```{r}
 cv_entries %>% 
   filter(type == 'work' & professional_2_page == 'y') %>% 
   mutate(what = str_c("<span class='work-title'>", what, "</span><br class='work-break'>", where, "<br>", additional_info)) %>% 
-  mutate(year = ifelse(!is.na(year_end), str_c(year_begin, " --- ", year_end), year_begin)) %>% 
   select(year, what) %>% 
   kable()
 ```
@@ -166,19 +175,9 @@ cv_entries %>%
  
 ```{r}
 cv_entries %>% 
-  filter(type == 'grants_and_awards') %>%
+  filter(type == 'minor_grants' | type == 'major_grants') %>%
   filter(short_cv == 'y') %>%
   mutate(where = if_else(is.na(where), "", where)) %>%
-  mutate(what = str_c(what, ", ", where)) %>% 
-  #mutate(what = str_c(what, " (", additional_info, "), ", where)) %>% 
-  select(year_begin, what) %>% 
-  kable()
-```
-
-# Professional development {.prof-dev}
-```{r}
-cv_entries %>% 
-  filter(type == 'prof-dev') %>% 
   mutate(what = str_c(what, ", ", where)) %>% 
   select(year_begin, what) %>% 
   kable()
@@ -216,7 +215,6 @@ cv_entries %>%
   filter(type == 'volunteering' & professional_2_page == 'y') %>%
   mutate(what = str_c("<span class='work-title'>", what, "</span><br class='work-break'>", where)) %>%
   mutate(what = ifelse(!is.na(additional_info), str_c(what, "<br>", additional_info), what)) %>%
-  mutate(year = ifelse(!is.na(year_end), str_c(year_begin, " --- ", year_end), year_begin)) %>%
   arrange(order) %>%
   select(year, what) %>%
   kable()
@@ -233,6 +231,6 @@ cv_entries %>%
 <!-- here ends the second page -->
 </div>
 
-<!-- <br class='pageBreak'> -->
+<br class='pageBreak'>
 
 ### Links
