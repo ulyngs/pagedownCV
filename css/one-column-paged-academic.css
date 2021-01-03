@@ -81,7 +81,7 @@ h3 {
     content: none;
   }
   @bottom-right {
-    content: counter(page) " \00a0 \00a0 \00a0 \00a0 Last updated: November 2020";
+    content: counter(page) " \00a0 \00a0 \00a0 \00a0 Last updated: December 2020";
   }
 }
 
@@ -97,7 +97,7 @@ h3 {
 .title-and-contact {
   display: grid;
   grid-template-columns: 70% 30%;
-  border-style: none none double none;
+  border-style: none none groove none;
   margin-bottom: 1.8em;
   padding-bottom: 0.5em;
 }
