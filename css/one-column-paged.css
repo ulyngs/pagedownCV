@@ -124,21 +124,16 @@ h2.box {
   display: none;
 }
 /* set the width of the first column in the tables */
-.education td:first-child {
-  width: 18%;
+/* this will make td column resizing work */
+.technical tbody,
+.education tbody,
+.set-width tbody {
+  display: block;
 }
 
 .set-width td:first-child {
-  width: 16%;
+  width: 20%;
   text-align: left;
-}
-
-.service td:first-child {
-  width: 16.5%;
-}
-
-.cv-table td:first-child {
-  width: 16%;
 }
 
 .publications td,
