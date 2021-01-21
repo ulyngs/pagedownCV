@@ -100,7 +100,7 @@ https://ulriklyngs.com
 :::
 
 ::: {.interests}
-**Aims---**develop and evaluate design patterns that help people exercise self-control over their use of smartphones and laptops.
+**Aims---**to develop and evaluate design patterns that help people exercise self-control over their use of smartphones and laptops.
 <br>
 **Methods---**controlled studies, user surveys, interviews, co-design workshops, web scraping, behaviour logging.
 
@@ -114,7 +114,12 @@ Since 2018, I have shared materials, analysis scripts, and data for all my work,
 ```{r}
 cv_entries %>% 
   filter(type == 'education') %>% 
-  mutate(what = str_c("<span class='cv-entry-title'>", what, "</span>, ", where)) %>% 
+  mutate(additional_info = ifelse(str_detect(additional_info, "and"), 
+                                  str_c("<span class='supervisor'>Supervisors: </span>", additional_info),
+                                  str_c("<span class='supervisor'>Supervisor: </span>", additional_info))) %>% 
+  mutate(what = str_c("<span class='cv-entry-title'>", what, "</span>, ", 
+                      where, "<br>", additional_info,
+                      "<br><span class='thesis-title'>Thesis: </span>", additional_info2)) %>% 
   select(year, what) %>% 
   kable()
 ```
@@ -129,20 +134,20 @@ cv_entries %>%
   kable()
 ```
 
+<br class="pageBreak">
+
 ## Grants
 ```{r}
 cv_entries %>%
   filter(type == 'minor_grants' | type == 'major_grants') %>%
   mutate(what = case_when(
-    is.na(additional_info) ~ str_c("<span class='cv-entry-title'>", what, "</span> (", amount, "), ", where),
-    !is.na(additional_info) ~ str_c("<span class='cv-entry-title'>", what, "</span> (", amount, "), ", where, ".<br> ", additional_info),
+    is.na(additional_info) ~ str_c("<span class='cv-entry-title'>", what, "</span> (", additional_info2, "), ", where),
+    !is.na(additional_info) ~ str_c("<span class='cv-entry-title'>", what, "</span> (", additional_info2, "), ", where, ".<br> ", additional_info),
   )) %>%
   blank_year_when_repeated() %>% 
   select(year, what) %>%
   kable()
 ```
-
-<!-- <br class="pageBreak"> -->
 
 
 ## Publications {.three-split}
@@ -173,7 +178,7 @@ publications %>%
   knitr::kable()
 ```
 
-<br class="pageBreak">
+<!-- <br class="pageBreak"> -->
 <h3>Journal articles <span class="review-note">(fully reviewed, archival)</span></h3>
 
 ```{r}
@@ -199,7 +204,7 @@ publications %>%
   knitr::kable()
 ```
 
-<br class="pageBreak">
+<!-- <br class="pageBreak"> -->
 
 ## Poster presentations {.three-split}
 ```{r}
@@ -341,7 +346,7 @@ cv_entries %>%
   kable()
 ```
 
-<!-- <br class="pageBreak"> -->
+<br class="pageBreak">
 
 <!-- close 'cv-entries' div -->
 </div>
