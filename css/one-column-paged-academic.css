@@ -81,7 +81,7 @@ h3 {
     content: none;
   }
   @bottom-right {
-    content: counter(page) " \00a0 \00a0 \00a0 \00a0 Last updated: December 2020";
+    content: counter(page) " \00a0 \00a0 \00a0 \00a0 Last updated: January 2021";
   }
 }
 
