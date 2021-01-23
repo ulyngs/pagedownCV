@@ -17,10 +17,10 @@ library(knitr)
 library(lubridate)
 
 #### publications #####
-publications <- read_csv("content/publications.csv")
+publications <- read_csv("_content/publications.csv")
 
 #### cv entries #####
-cv_entries <- read_csv("content/cv_entries.csv") %>% 
+cv_entries <- read_csv("_content/cv_entries.csv") %>% 
   mutate(year_begin = year(date_begin)) %>%
   mutate(year_end = case_when(
     date_end == "present" ~ date_end,
