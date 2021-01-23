@@ -70,19 +70,25 @@
 
   const tocEntriesInfos = ul => {
     let result = []; // where we store the results
-    // if there is no element, return an empty array 
+    // if there is no element, return an empty array
     if (!ul) {
       return result;
     }
     const tocEntries = ul.children; // tocEntries are 'li' elements
 
     for (const li of tocEntries) {
+      // Since parts entries in TOC have no anchor,
+      // do not use them in the PDF outline.
+      if (li.classList.contains('part')) {
+        continue;
+      }
+
       // get the title and encode it in UTF16BE (pdfmark is encoded in UTF16BE with BOM)
       const title = toUTF16BE(li.querySelector('a').textContent);
 
       // get the page number
       const href = li.querySelector('a').getAttribute('href');
-      const el = document.querySelector(href);
+      const el = document.getElementById(href.substring(1));
       const page = findPage(el);
 
       // get the children
@@ -128,7 +134,7 @@
       return;
     }
     if (window.location.hash) {
-      const id = window.location.hash.replace(/^#/, '');
+      const id = decodeURIComponent(window.location.hash).replace(/^#/, '');
       document.getElementById(id).scrollIntoView({behavior: 'smooth'});
     }
   };

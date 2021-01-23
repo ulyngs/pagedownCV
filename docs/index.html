@@ -9,31 +9,29 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Ulrik Lyngs" />
 
-<meta name="date" content="2020-06-29" />
 
-<title>Pagedown CVs</title>
+<title>pagedown-cv</title>
 
-<script src="site_libs/header-attrs-2.6.4/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.6.6/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-84972342-6"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-84972342-6');
-</script>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -45,11 +43,6 @@
     </style>
 
 <style type="text/css">code{white-space: pre;}</style>
-<style type="text/css">
-  pre:not([class]) {
-    background-color: white;
-  }
-</style>
 <script type="text/javascript">
 if (window.hljs) {
   hljs.configure({languages: []});
@@ -62,34 +55,9 @@ if (window.hljs) {
 
 
 
-<style type="text/css">
-h1 {
-  font-size: 34px;
-}
-h1.title {
-  font-size: 38px;
-}
-h2 {
-  font-size: 30px;
-}
-h3 {
-  font-size: 24px;
-}
-h4 {
-  font-size: 18px;
-}
-h5 {
-  font-size: 16px;
-}
-h6 {
-  font-size: 12px;
-}
-.table th:not([align]) {
-  text-align: left;
-}
-</style>
 
 
+<link rel="stylesheet" href="css/pagedown_cv_styles.css" type="text/css" />
 
 
 
@@ -98,10 +66,6 @@ h6 {
   max-width: 940px;
   margin-left: auto;
   margin-right: auto;
-}
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
 }
 img {
   max-width:100%;
@@ -122,36 +86,6 @@ summary {
 
 
 <style type="text/css">
-/* padding for bootstrap navbar */
-body {
-  padding-top: 51px;
-  padding-bottom: 40px;
-}
-/* offset scroll position for anchor links (for fixed navbar)  */
-.section h1 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h2 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h3 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h4 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h5 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h6 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
 .dropdown-submenu {
   position: relative;
 }
@@ -179,7 +113,7 @@ body {
   margin-right: -10px;
 }
 .dropdown-submenu:hover>a:after {
-  border-left-color: #ffffff;
+  border-left-color: #adb5bd;
 }
 .dropdown-submenu.pull-left {
   float: none;
@@ -191,7 +125,7 @@ body {
 }
 </style>
 
-<script>
+<script type="text/javascript">
 // manage active state of menu based on current page
 $(document).ready(function () {
   // active menu anchor
@@ -202,10 +136,23 @@ $(document).ready(function () {
   var menuAnchor = $('a[href="' + href + '"]');
 
   // mark it active
-  menuAnchor.parent().addClass('active');
+  menuAnchor.tab('show');
 
   // if it's got a parent navbar menu mark it active as well
   menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
 });
 </script>
 
@@ -217,7 +164,6 @@ $(document).ready(function () {
   max-height: 500px;
   min-height: 44px;
   overflow-y: auto;
-  background: white;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
@@ -280,6 +226,7 @@ $(document).ready(function () {
 
 
 
+
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -288,7 +235,7 @@ $(document).ready(function () {
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="https://ulriklyngs.com">Ulrik Lyngs</a>
+      <a class="navbar-brand" href="index.html">Ulrik Lyngs</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
@@ -305,39 +252,66 @@ $(document).ready(function () {
   <a href="https://ulriklyngs.com/publications">Publications</a>
 </li>
 <li>
-  <a href="cv.html">CV</a>
+  <a href="https://ulriklyngs.com/cv">CV</a>
 </li>
 <li>
-  <a href="https://ulyngs.github.io/blog/">Blog</a>
+  <a href="https://ulriklyngs.com/blog/">Blog</a>
 </li>
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-<div class="fluid-row" id="header">
+<div id="header">
 
 
 
-<h1 class="title toc-ignore">Pagedown CVs</h1>
-<h4 class="author">Ulrik Lyngs</h4>
-<h4 class="date">2020-06-29</h4>
+<h1 class="title toc-ignore">pagedown-cv</h1>
 
 </div>
 
 
-<p>This repository has different versions of my resume, with the paged versions created with <a href="https://rmarkdown.rstudio.com"><code>rmarkdown</code></a> + <a href="https://github.com/rstudio/pagedown"><code>pagedown</code></a> (NOTE: for now 1 and 2 only works properly in Chrome, as some aspects of CSS Paged Media are only supported by this browser):</p>
+<div id="welcome-to-pagedown-cv" class="section level1">
+<h1>Welcome to <code>pagedown-cv</code></h1>
+<p>This repository different examples of building a cv with <a href="https://rmarkdown.rstudio.com"><code>rmarkdown</code></a> and <a href="https://github.com/rstudio/pagedown"><code>pagedown</code></a>, illustrated with my personal resumé.</p>
+<p>(NOTE: for now 1-3 only works properly in Chrome, as some aspects of CSS Paged Media are only supported by this browser):</p>
 <ol style="list-style-type: decimal">
-<li><a href="one-column-paged-academic.html">Paged, academic resume</a></li>
-<li><a href="two-column-paged-brief.html">Paged, 2-column brief resume</a></li>
-<li><a href="one-column-paged.html">Paged, 1-column resume</a></li>
-<li><a href="one-column.html">Ordinary scrolling HTML resume</a></li>
-<li><a href="website-cv.html">Ordinary scrolling HTML resume, formatted in the style of an old version of my personal website</a></li>
+<li><a href="one-column-paged-academic.html">Paged, academic resume (<strong>one-column-paged-academic.Rmd</strong>)</a></li>
+<li><a href="two-column-paged-brief.html">Paged, 2-column brief resume (<strong>two-column-paged-brief.Rmd</strong>)</a></li>
+<li><a href="one-column-paged.html">Paged, 1-column resume (<strong>one-column-paged.Rmd</strong>)</a></li>
+<li><a href="one-column.html">Ordinary scrolling HTML resume (<strong>one-column.Rmd</strong>)</a></li>
+<li><a href="website-cv.html">Ordinary scrolling HTML resume, formatted in the style of an old version of my personal website (<strong>website-cv.Rmd</strong>)</a></li>
+<li>(For an in-practice example of the website cv, <a href="https://ulriklyngs.com/cv/">see the current version on my website</a>)</li>
 </ol>
-<p>The resumés pull in their content from the ‘cv_entries’ and ‘publications’ tabs of <a href="https://docs.google.com/spreadsheets/d/1ta71CAGkcLqm-W1UdVRA_JJSddWV2TsrRZsCnQlmOis/edit?usp=sharing">this google sheet</a> (which holds most of the content for <a href="https://ulriklyngs.com/">my website</a>).</p>
+<div id="but-why" class="section level2">
+<h2>But why?</h2>
+<p>I liked the idea of making a CV easier to maintain by separating the content from the output (see e.g. Nick Strayer’s <a href="http://nickstrayer.me/datadrivencv/">data-driven cv</a>).</p>
+<p>The brilliant <a href="https://github.com/rstudio/pagedown"><code>pagedown</code></a> package makes it possible to output an R Markdown file to paged HTML content which can then be saved as PDF. This means we can easily use R Markdown to programmatically pull out content from some spreadsheet with our CV data, output it to a paged format, and do the styling with CSS. Brilliant!</p>
+<p>However, I didn’t find he base format for resumés provided by <code>pagedown</code> (<code>pagedown::html_resume</code>) particularly aesthetically pleasing, so I developed my own paged formats.</p>
+</div>
+<div id="which-do-you-use" class="section level2">
+<h2>Which do you use?</h2>
+<p>My currently favoured format for academic purposes (example 1) was inspired by, amongst others, the resumé of <a href="http://www.mjskay.com/">Matthew Kay</a>:</p>
+<div class="example-cv">
+<p><img src="examples/cur_cv_pg1.jpg" style="width:40.0%" /> <img src="examples/cur_cv_pg2.jpg" style="width:40.0%" /></p>
+</div>
+<p>The two-column resume layout I mainly use for brief, 2-page resumés. I originally made this layout in Microsoft Word (!). After I became enamoured with R Markdown, I at some point set out to recreate this with <code>pagedown</code> (example 2):</p>
+<div class="example-cv">
+<p><img src="examples/page1_new.png" style="width:40.0%" /> <img src="examples/page2.png" style="width:40.0%" /></p>
+</div>
+</div>
+<div id="how-does-it-work" class="section level2">
+<h2>How does it work?</h2>
+<p>Each resumé is generated by an R Markdown file and pulls in its content from **_content/cv_entries.csv** and **_content/publications.csv**.</p>
+<p>The CSV files with the content are just local copies of the corresponding tabs in <a href="https://docs.google.com/spreadsheets/d/1ta71CAGkcLqm-W1UdVRA_JJSddWV2TsrRZsCnQlmOis/edit?usp=sharing">this google sheet</a>, which holds most of the content for <a href="https://ulriklyngs.com/">my website</a>.</p>
+<p>The R script **_content/sync_w_gsheets.R** grabs the current content of the ‘cv_entries’ and the ‘publications’ tabs in the google sheet and stores it in the **_content** folder.</p>
+</div>
+<div id="how-can-i-use-it" class="section level2">
+<h2>How can I use it?</h2>
 <p>To use this for your own CV, download or clone the GitHub repo: <a href="https://github.com/ulyngs/pagedown-cv/" class="uri">https://github.com/ulyngs/pagedown-cv/</a></p>
-<p>Here is the original resume layout (made in Microsoft Word) that I wanted to recreate with <code>pagedown</code>:</p>
-<p><img src="examples/page1_new.png" style="width:49.0%" /> <img src="examples/page2.png" style="width:49.0%" /></p>
+<p>Then replace the content in the CSV files with your own stuff and tweak the <strong>.Rmd</strong> files accordingly.</p>
+</div>
+</div>
 
 
 
@@ -366,7 +340,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
   $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
+    $(this).parent().toggleClass('nav-tabs-open');
   });
 });
 </script>

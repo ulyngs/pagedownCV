@@ -13,13 +13,22 @@
 
 <title>Ulrik Lyngs   Curriculum vitae</title>
 
-<script src="site_libs/header-attrs-2.6/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.6.6/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
 <script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
@@ -37,11 +46,6 @@
     </style>
 
 <style type="text/css">code{white-space: pre;}</style>
-<style type="text/css">
-  pre:not([class]) {
-    background-color: white;
-  }
-</style>
 <script type="text/javascript">
 if (window.hljs) {
   hljs.configure({languages: []});
@@ -54,32 +58,6 @@ if (window.hljs) {
 
 
 
-<style type="text/css">
-h1 {
-  font-size: 34px;
-}
-h1.title {
-  font-size: 38px;
-}
-h2 {
-  font-size: 30px;
-}
-h3 {
-  font-size: 24px;
-}
-h4 {
-  font-size: 18px;
-}
-h5 {
-  font-size: 16px;
-}
-h6 {
-  font-size: 12px;
-}
-.table th:not([align]) {
-  text-align: left;
-}
-</style>
 
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css" />
@@ -92,10 +70,6 @@ h6 {
   max-width: 940px;
   margin-left: auto;
   margin-right: auto;
-}
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
 }
 img {
   max-width:100%;
@@ -116,36 +90,6 @@ summary {
 
 
 <style type="text/css">
-/* padding for bootstrap navbar */
-body {
-  padding-top: 51px;
-  padding-bottom: 40px;
-}
-/* offset scroll position for anchor links (for fixed navbar)  */
-.section h1 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h2 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h3 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h4 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h5 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h6 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
 .dropdown-submenu {
   position: relative;
 }
@@ -173,7 +117,7 @@ body {
   margin-right: -10px;
 }
 .dropdown-submenu:hover>a:after {
-  border-left-color: #ffffff;
+  border-left-color: #adb5bd;
 }
 .dropdown-submenu.pull-left {
   float: none;
@@ -185,7 +129,7 @@ body {
 }
 </style>
 
-<script>
+<script type="text/javascript">
 // manage active state of menu based on current page
 $(document).ready(function () {
   // active menu anchor
@@ -196,10 +140,23 @@ $(document).ready(function () {
   var menuAnchor = $('a[href="' + href + '"]');
 
   // mark it active
-  menuAnchor.parent().addClass('active');
+  menuAnchor.tab('show');
 
   // if it's got a parent navbar menu mark it active as well
   menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
 });
 </script>
 
@@ -211,7 +168,6 @@ $(document).ready(function () {
   max-height: 500px;
   min-height: 44px;
   overflow-y: auto;
-  background: white;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
@@ -337,13 +293,14 @@ div.tocify {
 
 
 <!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row-fluid">
+<div class="row">
 <div class="col-xs-12 col-sm-4 col-md-3">
 <div id="TOC" class="tocify">
 </div>
 </div>
 
-<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+<div class="toc-content col-sm-12 col-md-8 col-lg-9">
+
 
 
 
@@ -355,7 +312,7 @@ div.tocify {
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="https://ulriklyngs.com">Ulrik Lyngs</a>
+      <a class="navbar-brand" href="index.html">Ulrik Lyngs</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
@@ -372,17 +329,17 @@ div.tocify {
   <a href="https://ulriklyngs.com/publications">Publications</a>
 </li>
 <li>
-  <a href="cv.html">CV</a>
+  <a href="https://ulriklyngs.com/cv">CV</a>
 </li>
 <li>
-  <a href="https://ulyngs.github.io/blog/">Blog</a>
+  <a href="https://ulriklyngs.com/blog/">Blog</a>
 </li>
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-<div class="fluid-row" id="header">
+<div id="header">
 
 
 
@@ -480,7 +437,7 @@ University of Oxford, UK
 </tr>
 <tr class="odd">
 <td align="left">2011 — 2016</td>
-<td align="left">MA in the Study of Religion &amp; Cognitive Psychology, Aarhus University</td>
+<td align="left">MA in the Study of Religion &amp; Psychology, Aarhus University</td>
 </tr>
 <tr class="even">
 <td align="left">2007 — 2011</td>
@@ -648,114 +605,118 @@ University of Oxford, UK
 </thead>
 <tbody>
 <tr class="odd">
+<td align="right">2021</td>
+<td align="left"><em>Reproducible and Replicable Research</em>, <a href="https://hcc.cs.ox.ac.uk">Human Centred Computing</a>, Department of Computer Science, University of Oxford</td>
+</tr>
+<tr class="even">
 <td align="right">2020</td>
 <td align="left"><em>Ulysses in Cyberspace: The Theory and Practice of Digital Self-Control</em>, Guest lecture in <a href="https://hip.cat/emax/teaching">Interaction Design (IDE)</a>, Department of Computer Science, University of Oxford</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">2020</td>
 <td align="left"><em>Self-Control in Cyberspace: Examining Tools of Resistance in the Battle for Online Attention</em>, <a href="https://sodas.ku.dk/projects/distract/">DISTRACT</a>, Copenhagen Center for Social Data Science, University of Copenhagen</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">2020</td>
 <td align="left"><em>Cognitive Control in Cyberspace</em>, <a href="https://psychology.ku.dk/coinact/">COINACT</a>, Institute of Psychology, University of Copenhagen</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">2020</td>
 <td align="left"><em>‘I Just Want to Hack Myself to Not Get Distracted’: Do Design Interventions for Self-Control on Facebook Work?</em>, <a href="https://www.linacre.ox.ac.uk/event-type/linacre-seminar">Seminars at Linacre College</a>, University of Oxford</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">2020</td>
 <td align="left"><em>What Can Digital Humanities Offer Hindu Studies?</em>, Oxford Centre for Hindu Studies, University of Oxford</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">2020</td>
 <td align="left"><em>Deus ex Machina: What Can Digital Humanities Offer Hindu Studies?</em>, <a href="http://saktatraditions.org">Śākta traditions project</a>, Oxford Centre for Hindu Studies, University of Oxford</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">2020</td>
 <td align="left"><em>‘I Just Want to Hack Myself to Not Get Distracted’: Evaluating Design Interventions for Self-Control on Facebook</em>, <a href="https://dub.washington.edu/seminar.html">University of Washington DUB Shorts</a></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">2020</td>
 <td align="left"><em>Digital Wellbeing in Practice: Designing for Digital Self-Control</em>, <a href="https://wellbeing.google">Google Digital Wellbeing</a></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">2020</td>
 <td align="left"><em>Digital Wellbeing in Practice: Examining the Effectiveness of Digital Self-Control Strategies</em>, <a href="https://di.ku.dk/english/research/human-centred-computing/">Human-Centred Computing Section</a>, Dept. of Computer Science, University of Copenhagen</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">2020</td>
 <td align="left"><em>Digital Wellbeing in Practice: Examining the Effectiveness of Digital Self-Control Strategies</em>, <a href="https://www.oii.ox.ac.uk/research/projects/oxdeg/">Digital Ethnography Group (OxDEG)</a>, Oxford Internet Institute, University of Oxford</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">2019</td>
 <td align="left"><em>Reproducible research with R Markdown, featuring article and PhD thesis writing</em>, <a href="https://twitter.com/rusersoxford">R user group Oxford</a>, St. Peter’s College, University of Oxford</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">2019</td>
 <td align="left"><em>Q&amp;A: Self-Control in Cyberspace</em>, Best of CHI2019, IIT Bombay, Mumbai (videolink)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">2019</td>
 <td align="left"><em>Self-Control in Cyberspace: Applying Dual Systems Theory to a Review of Digital Self-Control Tools</em>, <a href="https://oxfordcsc.com">2019 Oxford Computer Science Conference</a>, University of Oxford</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">2019</td>
 <td align="left"><em>“Owning” Your DPhil</em>, Dept. of Computer Science, University of Oxford</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">2019</td>
 <td align="left"><em>Self-Control in Cyberspace: Applying Dual Systems Theory to a Review of Digital Self-Control Tools</em>, <a href="https://chi2019.acm.org">2019 CHI Conference on Human Factors in Computing Systems</a>, Glasgow, UK</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">2019</td>
 <td align="left"><em>Putting Self-Control at the Centre of Digital Wellbeing</em>, Designing for Digital Wellbeing, workshop at the 2019 CHI Conference on Human Factors in Computing Systems, Glasgow, UK</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">2018</td>
 <td align="left"><em>So, Tell Me What Users Want, What They Really, Really Want!</em>, BBC Radio Theatre, New Broadcasting House, London</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">2018</td>
 <td align="left"><em>Hacking the Attention Economy</em>, Hackathon at CodeBase, Edinburgh, organised by the <a href="https://unbias.wp.horizon.ac.uk/">UnBias</a> project, University of Oxford</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">2018</td>
 <td align="left"><em>Evaluating Anti-Distraction Browser Extensions for Facebook</em>, Human Centred Computing research seminar, Dept. of Computer Science, University of Oxford</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">2017</td>
 <td align="left"><em>Ulysses in Cyberspace: How Anti-Distraction Apps Can Guide Digital Design</em>, DOMUS Research Communication Competition, Linacre College, University of Oxford</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">2017</td>
 <td align="left"><em>ICTs and Attention Management: Evaluating the Emerging Anti-Distraction Market</em>, <a href="https://oxfordcsc.com">Oxford Computer Science Conference</a>, University of Oxford</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">2017</td>
 <td align="left"><em>Battle of the Social Machines: Attention Management in the Information Age</em>, Human Centred Computing Group, University of Oxford</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">2017</td>
 <td align="left"><em>Distraction and Self-Regulation in Social Machines</em>, SOCIAM: The Theory and Practice of Social Machines, Jesus College, University of Oxford</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">2017</td>
 <td align="left"><em>How to Build Minimally-Distracting Technology</em>, <a href="http://pubhd.org">PubhD</a>, science communication and pints, St Aldate’s Tavern, Oxford</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">2017</td>
 <td align="left"><em>Attention Management in the Information Age</em>, SOCIAM: The Theory and Practice of Social Machines, all-hands meeting in Brockenhurst, UK</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">2015</td>
 <td align="left"><em>Religion: A Culturally Evolved Tool for Self-Control</em>, ‘Religion, Cognition and Culture’ research unit, Institute of Culture and Society, Aarhus University</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="right">2014</td>
 <td align="left"><em>Fundamental Motivations and Risk-Taking: Loss Aversion in Context</em>, 26th Annual Human Behavior and Evolution Society Conference, Natal, Brazil</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="right">2012</td>
 <td align="left"><em>Effort, Loss Aversion and Religion</em>, Homo Experimentalis: Experimental Approaches in The Study of Religion, Brno, Czech Republic</td>
 </tr>
@@ -1013,7 +974,7 @@ University of Oxford, UK
 <tbody>
 <tr class="odd">
 <td align="left">2019</td>
-<td align="left"><a href="https://github.com/ulyngs/oxforddown"><code>oxforddown</code></a>, for writing reproducible research theses in R Markdown, formatted with a traditional University of Oxford LaTeX template<br></td>
+<td align="left"><a href="https://github.com/ulyngs/oxforddown"><code>oxforddown</code></a>, for reproducible thesis writing in R Markdown, formatted with a traditional University of Oxford LaTeX template<br></td>
 </tr>
 <tr class="even">
 <td align="left">2019</td>
@@ -1089,7 +1050,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
   $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
+    $(this).parent().toggleClass('nav-tabs-open');
   });
 });
 </script>
