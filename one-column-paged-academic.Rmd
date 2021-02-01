@@ -341,7 +341,7 @@ cv_entries %>%
   filter(type == 'volunteering') %>%
   mutate(what = str_c("<span class='cv-entry-title'>", what, "</span>, ", where)) %>%
   mutate(what = ifelse(!is.na(additional_info), str_c(what, "<br>", additional_info), what)) %>%
-  arrange(order, desc(year_end), desc(year)) %>%
+  arrange(desc(date_begin), desc(date_end)) %>% 
   select(year, what) %>%
   kable()
 ```
