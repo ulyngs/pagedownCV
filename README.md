@@ -3,11 +3,11 @@ This repository holds various templates for dynamically generating a cv with the
 
 (NOTE: 1-3 only displays properly in Chrome, as some aspects of CSS Paged Media are only supported by this browser):
 
-1. [Paged, academic resume (**one-column-paged-academic.Rmd**)](one-column-paged-academic.html)
-1. [Paged, 2-column brief resume (**two-column-paged-brief.Rmd**)](two-column-paged-brief.html)
-1. [Paged, 1-column resume (**one-column-paged.Rmd**)](one-column-paged.html)
-1. [Ordinary scrolling HTML resume (**one-column.Rmd**)](one-column.html)
-1. [Ordinary scrolling HTML resume, formatted in the style of an old version of my personal website (**website-cv.Rmd**)](website-cv.html)
+1. [Paged, academic resume (**one-column-paged-academic.Rmd**)](https://ulyngs.github.io/pagedown-cv/one-column-paged-academic.html)
+1. [Paged, 2-column brief resume (**two-column-paged-brief.Rmd**)](https://ulyngs.github.io/pagedown-cv/two-column-paged-brief.html)
+1. [Paged, 1-column resume (**one-column-paged.Rmd**)](https://ulyngs.github.io/pagedown-cv/one-column-paged.html)
+1. [Ordinary scrolling HTML resume (**one-column.Rmd**)](https://ulyngs.github.io/pagedown-cv/one-column.html)
+1. [Ordinary scrolling HTML resume, formatted in the style of an old version of my personal website (**website-cv.Rmd**)](https://ulyngs.github.io/pagedown-cv/website-cv.html)
 1. (For an in-practice example of the website cv, [see the current version on my website](https://ulriklyngs.com/cv/))
 
 ## Why?
