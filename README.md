@@ -25,7 +25,7 @@ My currently favoured format for academic purposes (example 1) was inspired by, 
 
 The two-column resume layout I use for brief, professional 2-page resumés. I originally made this layout in Microsoft Word (!). After I became enamoured with R Markdown, I at some point set out to recreate it with `pagedown` (example 2):
 
-![](examples/page1_new.png)
+<a href="https://ulyngs.github.io/pagedown-cv/two-column-paged-brief.html"><img src="examples/page1_new.png"></a>
 
 
 ## How does it work?
