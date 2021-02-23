@@ -1,7 +1,7 @@
 # Welcome to `pagedown-cv`
-This repository holds various templates for building a cv with [`rmarkdown`](https://rmarkdown.rstudio.com) and [`pagedown`](https://github.com/rstudio/pagedown), illustrated with my personal resumé.
+This repository holds various templates for dynamically generating a cv with the [`rmarkdown`](https://rmarkdown.rstudio.com) and [`pagedown`](https://github.com/rstudio/pagedown) R packages, illustrated with my personal resumé.
 
-(NOTE: for now 1-3 only works properly in Chrome, as some aspects of CSS Paged Media are only supported by this browser):
+(NOTE: 1-3 only works properly in Chrome, as some aspects of CSS Paged Media are only supported by this browser):
 
 1. [Paged, academic resume (**one-column-paged-academic.Rmd**)](one-column-paged-academic.html)
 1. [Paged, 2-column brief resume (**two-column-paged-brief.Rmd**)](two-column-paged-brief.html)
@@ -10,8 +10,8 @@ This repository holds various templates for building a cv with [`rmarkdown`](htt
 1. [Ordinary scrolling HTML resume, formatted in the style of an old version of my personal website (**website-cv.Rmd**)](website-cv.html)
 1. (For an in-practice example of the website cv, [see the current version on my website](https://ulriklyngs.com/cv/))
 
-## But why?
-I liked the idea of making a CV easier to maintain by separating the content from the output (see e.g. Nick Strayer's [data-driven cv](http://nickstrayer.me/datadrivencv/)). 
+## Why?
+I like the idea of making a CV easier to maintain by separating content from output (see e.g. Nick Strayer's [data-driven cv](http://nickstrayer.me/datadrivencv/)). 
 
 The brilliant [`pagedown`](https://github.com/rstudio/pagedown) package makes it possible to output an R Markdown file to paged HTML content which can then be saved as PDF.
 This means we can easily use R Markdown to programmatically pull out content from some spreadsheet with our CV data, output it to a paged format, and do the styling with CSS. Brilliant!
