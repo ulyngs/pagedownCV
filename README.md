@@ -1,5 +1,5 @@
 # Welcome to `pagedown-cv`
-This repository  holds different examples of building a cv with [`rmarkdown`](https://rmarkdown.rstudio.com) and [`pagedown`](https://github.com/rstudio/pagedown), illustrated with my personal resumé.
+This repository holds various templates for building a cv with [`rmarkdown`](https://rmarkdown.rstudio.com) and [`pagedown`](https://github.com/rstudio/pagedown), illustrated with my personal resumé.
 
 (NOTE: for now 1-3 only works properly in Chrome, as some aspects of CSS Paged Media are only supported by this browser):
 
