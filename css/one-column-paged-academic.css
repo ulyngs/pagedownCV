@@ -163,7 +163,8 @@ h3 {
   font-weight: bold;
 }
 
-.cv-entries a {
+.cv-entries a,
+.footnotes a {
   color: #005EA3;
 }
 
@@ -224,7 +225,7 @@ a.footnote-ref {
 
 /* make award texts red */
 .publication-award {
-  color: #E5001C;
+  color: #d33a4d;
 }
 
 
