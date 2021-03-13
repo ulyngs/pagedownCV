@@ -81,7 +81,7 @@ h3 {
     content: none;
   }
   @bottom-right {
-    content: counter(page) " \00a0 \00a0 \00a0 \00a0 Last updated: January 2021";
+    content: counter(page) " \00a0 \00a0 \00a0 \00a0 Last updated: March 2021";
   }
 }
 
@@ -156,21 +156,25 @@ h3 {
   break-inside: avoid;
 }
 
-.cv-entries a {
-  text-decoration: none;
-  color: black;
-}
+
 
 /* make titles bold */
 .cv-entry-title {
   font-weight: bold;
 }
 
+.cv-entries a {
+  color: #005EA3;
+}
+
 /* footnote links */
+a.footnote-ref {
+  text-decoration: none;
+}  
+
 .footnote-ref sup {
   vertical-align: top;
   margin-left: 1px;
-  color: blue;
   font-weight: normal;
 }
 
@@ -225,4 +229,8 @@ h3 {
 /* don't show a horizontal rule before the final links */
 hr {
   display: none;
+}
+
+span.talk-title {
+  padding-top: 0.2em;
 }
