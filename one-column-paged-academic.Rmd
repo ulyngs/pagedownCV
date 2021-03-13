@@ -6,10 +6,12 @@ output:
     number_sections: false
 links-to-footnotes: true
 knit: pagedown::chrome_print
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 library(tidyverse)
 library(knitr)
 library(lubridate)
@@ -110,6 +112,18 @@ Since 2018, I have shared materials, analysis scripts, and data for all my work,
 ::::::
 
 <div class="cv-entries">
+## Research positions
+```{r}
+cv_entries %>% 
+  filter(type == 'research_positions', is.na(exclude)) %>%
+  mutate(what = str_c("<span class='cv-entry-title'>", what, "</span><br>", 
+                      where, "<br>")) %>% 
+  select(year, what) %>% 
+  kable()
+```
+
+
+
 ## Education
 ```{r}
 cv_entries %>% 
@@ -124,6 +138,19 @@ cv_entries %>%
   kable()
 ```
 
+## Major grants and funding
+```{r}
+cv_entries %>%
+  filter(type == 'major_grants') %>%
+  mutate(what = case_when(
+    is.na(additional_info) ~ str_c("<span class='cv-entry-title'>", what, "</span> (", additional_info2, "), ", where),
+    !is.na(additional_info) ~ str_c("<span class='cv-entry-title'>", what, "</span> (", additional_info2, "), ", where, ".<br> ", additional_info),
+  )) %>%
+  blank_year_when_repeated() %>% 
+  select(year, what) %>%
+  kable()
+```
+
 ## Awards & honours
 ```{r}
 cv_entries %>% 
@@ -131,21 +158,6 @@ cv_entries %>%
   mutate(what = str_c("<span class='cv-entry-title'>", what, "</span>, ", where)) %>%  
   blank_year_when_repeated() %>% 
   select(year_begin, what) %>% 
-  kable()
-```
-
-<br class="pageBreak">
-
-## Grants
-```{r}
-cv_entries %>%
-  filter(type == 'minor_grants' | type == 'major_grants') %>%
-  mutate(what = case_when(
-    is.na(additional_info) ~ str_c("<span class='cv-entry-title'>", what, "</span> (", additional_info2, "), ", where),
-    !is.na(additional_info) ~ str_c("<span class='cv-entry-title'>", what, "</span> (", additional_info2, "), ", where, ".<br> ", additional_info),
-  )) %>%
-  blank_year_when_repeated() %>% 
-  select(year, what) %>%
   kable()
 ```
 
@@ -202,20 +214,17 @@ publications %>%
   blank_year_when_repeated() %>%
   select(year_begin, number, citation) %>%
   knitr::kable()
+
 ```
 
-<!-- <br class="pageBreak"> -->
+<br class="pageBreak">
 
-## Poster presentations {.three-split}
+## Press
 ```{r}
 cv_entries %>% 
-  filter(type == 'poster') %>%
-  mutate(what = str_c("<span class='cv-entry-title'>", where, "</span>, ", what)) %>% 
-  mutate(date = date_begin) %>%
-  padding_function(., "P") %>% 
-  blank_year_when_repeated() %>% 
-  select(year_begin, number, what) %>% 
-  knitr::kable()
+  filter(type == 'media') %>%
+  select(year_begin, what) %>% 
+  kable()
 ```
 
 ## Talks and panels {.three-split}
@@ -227,22 +236,37 @@ All first-authored conference publications listed above were also given as prese
 ```{r}
 cv_entries %>% 
   filter(type == 'talk', is.na(exclude)) %>% 
+  replace_na(list(institution = "", department = "", where = "")) %>% 
+  mutate(where = ifelse(where != "" & institution != "", str_c(", ", where), where),
+         department = ifelse(department != "", str_c(", ", department), department),
+         slides = ifelse(!is.na(slides), str_c("<a href=", slides, ">Slides</a>"), ""),
+         video = ifelse(!is.na(video), str_c("<a href=", video, ">Video</a>"), "")) %>%
   mutate(additional_info = if_else(is.na(additional_info), "", str_c(", ", additional_info))) %>% 
-  mutate(what = str_c("<span class='cv-entry-title'>", where, "</span>, ", what, additional_info)) %>% 
+  mutate(what = str_c("<span class='cv-entry-title'>", 
+                      institution,
+                      where,
+                      "</span>",
+                      department,
+                      additional_info,
+                      "<br><span style='display:inline-block;' class='talk-title'>",
+                      what,
+                      "</span>"
+                      )) %>% 
   mutate(date = date_begin) %>% 
   padding_function(., "T") %>% 
   blank_year_when_repeated() %>% 
   select(year_begin, number, what) %>% 
   knitr::kable()
 
+
 ```
 
 ### Discussion panels
 ```{r}
 cv_entries %>% 
-  filter(type == 'talk-panel') %>% 
+  filter(type == 'talk-panel') %>%
   mutate(additional_info = if_else(is.na(additional_info), "", additional_info)) %>% 
-  mutate(what = str_c("<span class='cv-entry-title'>", where, "</span>, ", what, ", ",  additional_info)) %>% 
+  mutate(what = str_c("<span class='cv-entry-title'>", where, "</span>, ", what, ", ",  additional_info)) %>%
   mutate(date = date_begin) %>% 
   padding_function(., "D") %>% 
   blank_year_when_repeated() %>% 
@@ -266,15 +290,62 @@ cv_entries %>%
 
 ```
 
-## Press
+## Poster presentations {.three-split}
 ```{r}
 cv_entries %>% 
-  filter(type == 'media') %>%
-  select(year_begin, what) %>% 
-  kable()
+  filter(type == 'poster') %>%
+  mutate(what = str_c("<span class='cv-entry-title'>", where, "</span>, ", what)) %>% 
+  mutate(date = date_begin) %>%
+  padding_function(., "P") %>% 
+  blank_year_when_repeated() %>% 
+  select(year_begin, number, what) %>% 
+  knitr::kable()
 ```
 
 <!-- <br class="pageBreak"> -->
+
+## R packages
+```{r}
+cv_entries %>% 
+  filter(type == 'programming' & is.na(exclude)) %>% 
+  replace_na(list(where = "", additional_info = "")) %>% 
+  mutate(what = str_c("<span class='cv-entry-title'>", what, "</span>, ", where, "<br>", additional_info)) %>% 
+  arrange(desc(year_begin)) %>% 
+  mutate(row_number = row_number()) %>% 
+  select(year, what) %>% 
+  kable()
+```
+
+## Publicly available research code & data
+```{r}
+pubs_w_number <- publications %>% 
+  select(type, authors_full, date, title, materials) %>% 
+  mutate(inclusive_type = if_else(type == "workshop paper" | type == "extended abstract", "abstract", type)) %>% 
+  group_by(inclusive_type) %>% 
+  arrange(date) %>% 
+  mutate(number = row_number(),
+         number = case_when(
+           inclusive_type == "conference paper" ~ str_c("[C", number, "]"),
+           inclusive_type == "journal article" ~ str_c("[J", number, "]"),
+           inclusive_type == "abstract" ~ str_c("[A", number, "]"),
+           TRUE ~ ""
+         ))
+
+public_code <- cv_entries %>% 
+  filter(type == 'open_research' & is.na(exclude)) %>% 
+  select(what, additional_info) %>% 
+  rename(title = additional_info) %>% 
+  left_join(pubs_w_number)
+
+public_code %>% 
+  mutate(year = year(date)) %>% 
+  mutate(what = str_c("<span class='cv-entry-title'>", what, " ", number, "</span><br>", 
+                      authors_full, "<br>",
+                      materials)) %>% 
+  arrange(desc(date)) %>% 
+  select(year, what) %>% 
+  kable()
+```
 
 ## Teaching experience
 ```{r}
@@ -309,6 +380,18 @@ cv_entries %>%
   kable()
 ```
 
+## Minor grants and funding
+```{r}
+cv_entries %>%
+  filter(type == 'minor_grants') %>%
+  mutate(what = case_when(
+    is.na(additional_info) ~ str_c("<span class='cv-entry-title'>", what, "</span> (", additional_info2, "), ", where),
+    !is.na(additional_info) ~ str_c("<span class='cv-entry-title'>", what, "</span> (", additional_info2, "), ", where, ".<br> ", additional_info),
+  )) %>%
+  blank_year_when_repeated() %>% 
+  select(year, what) %>%
+  kable()
+```
 
 ## Professional development
 ```{r}
@@ -320,18 +403,6 @@ cv_entries %>%
 ```
 
 <!-- <br class="pageBreak"> -->
-
-## R packages
-```{r}
-cv_entries %>% 
-  filter(type == 'programming' & is.na(exclude)) %>% 
-  replace_na(list(where = "", additional_info = "")) %>% 
-  mutate(what = str_c("<span class='cv-entry-title'>", what, "</span>, ", where, "<br>", additional_info)) %>% 
-  arrange(desc(year_begin)) %>% 
-  mutate(row_number = row_number()) %>% 
-  select(year, what) %>% 
-  kable()
-```
 
 <!-- <br class="pageBreak"> -->
 
