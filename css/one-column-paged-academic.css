@@ -183,6 +183,7 @@ a.footnote-ref {
   width: var(--indentation);
   text-align: left;
   color: var(--my-darkgray);
+  font-size: 10.5pt;
 }
 
 /* basic styling for two first columns in three-column cv entries */
@@ -195,6 +196,7 @@ a.footnote-ref {
   width: 9%;
   text-align: left;
   color: var(--my-darkgray);
+  font-size: 10.5pt;
 }
 
 /*** style the publication entries ***/
