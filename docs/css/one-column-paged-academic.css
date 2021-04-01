@@ -14,6 +14,8 @@
   --viewer-shadow-color: #313131; /* this marks the pages */
   --my-darkgray: #929598;
   --indentation: 18%;
+  --last-updated: " \00a0 \00a0 \00a0 \00a0 Last updated: April 2021";
+ 
 }
 
 /* Paged.js viewer */
@@ -59,13 +61,14 @@ p, li {
 /* section headers */
 h2 {
   margin-top: 0.6em;
-  margin-bottom: 0.2em;
+  margin-bottom: 0.4em;
   font-size: 1.5em;
   font-weight: bold;
   margin-left: var(--indentation);
 }
 h3 {
   margin-left: var(--indentation);
+  margin-bottom: 0.6em;
 }
 .conference-presentations-omitted {
   margin-left: var(--indentation);
@@ -81,7 +84,7 @@ h3 {
     content: none;
   }
   @bottom-right {
-    content: counter(page) " \00a0 \00a0 \00a0 \00a0 Last updated: January 2021";
+    content: counter(page) var(--last-updated);
   }
 }
 
@@ -156,21 +159,26 @@ h3 {
   break-inside: avoid;
 }
 
-.cv-entries a {
-  text-decoration: none;
-  color: black;
-}
+
 
 /* make titles bold */
 .cv-entry-title {
   font-weight: bold;
 }
 
+.cv-entries a,
+.footnotes a {
+  color: #005EA3;
+}
+
 /* footnote links */
+a.footnote-ref {
+  text-decoration: none;
+}  
+
 .footnote-ref sup {
   vertical-align: top;
   margin-left: 1px;
-  color: blue;
   font-weight: normal;
 }
 
@@ -179,6 +187,7 @@ h3 {
   width: var(--indentation);
   text-align: left;
   color: var(--my-darkgray);
+  font-size: 10pt;
 }
 
 /* basic styling for two first columns in three-column cv entries */
@@ -191,6 +200,7 @@ h3 {
   width: 9%;
   text-align: left;
   color: var(--my-darkgray);
+  font-size: 10pt;
 }
 
 /*** style the publication entries ***/
@@ -218,11 +228,15 @@ h3 {
 
 /* make award texts red */
 .publication-award {
-  color: #E5001C;
+  color: #b8162b;
 }
 
 
 /* don't show a horizontal rule before the final links */
 hr {
   display: none;
+}
+
+span.talk-title {
+  padding-top: 0.2em;
 }
