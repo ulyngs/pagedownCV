@@ -1,9 +1,7 @@
 ---
 title: "Ulrik Lyngs <br> Curriculum vitae"
-#date: "`r Sys.Date()`"
 output:
   pagedown::html_paged:
-    # offline
     css: ["css/one-column-paged.css", "https://use.fontawesome.com/releases/v5.7.2/css/all.css"]
     number_sections: false
 links-to-footnotes: true
@@ -21,7 +19,7 @@ publications <- read_csv("_content/publications.csv")
 
 #### cv entries #####
 cv_entries <- read_csv("_content/cv_entries.csv") %>% 
-  mutate(year_begin = year(date_begin)) %>%
+  mutate(year_begin = year(date)) %>%
   mutate(year_end = case_when(
     date_end == "present" ~ date_end,
     !is.na(date_end) ~ str_sub(date_end, 1, 4),

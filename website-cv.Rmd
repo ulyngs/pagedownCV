@@ -22,7 +22,7 @@ publications <- read_csv("_content/publications.csv")
 
 #### cv entries #####
 cv_entries <- read_csv("_content/cv_entries.csv") %>% 
-  mutate(year_begin = year(date_begin)) %>%
+  mutate(year_begin = year(date)) %>%
   mutate(year_end = case_when(
     date_end == "present" ~ date_end,
     !is.na(date_end) ~ str_sub(date_end, 1, 4),
@@ -84,7 +84,7 @@ cv_entries %>%
   filter(type == 'talk') %>% 
   mutate(where = str_replace(where, "\\[([^]]*)\\]\\(([^\\s^\\)]*)[\\s\\)]", "<a href='\\2'>\\1</a>")) %>% 
   mutate(what = str_c("<em>", what, "</em>, ", where)) %>% 
-  select(Date = date_begin, Talk = what) %>% 
+  select(Date = date, Talk = what) %>% 
   mutate(Date = as_date(Date)) %>% 
   arrange(desc(Date)) %>% 
   mutate(Date = str_c(year(Date),

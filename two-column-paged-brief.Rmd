@@ -22,7 +22,7 @@ publications <- read_csv("_content/publications.csv")
 
 #### cv entries #####
 cv_entries <- read_csv("_content/cv_entries.csv") %>% 
-  mutate(year_begin = year(date_begin)) %>%
+  mutate(year_begin = year(date)) %>%
   mutate(year_end = case_when(
     date_end == "present" ~ date_end,
     !is.na(date_end) ~ str_sub(date_end, 1, 4),
