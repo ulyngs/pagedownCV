@@ -6,8 +6,6 @@ output:
     number_sections: false
 links-to-footnotes: true
 knit: pagedown::chrome_print
-editor_options: 
-  chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE}
@@ -52,11 +50,11 @@ padding_function <- function(cv_entries_tibble, letter_to_pad){
 blank_year_when_repeated <- function(cv_entry_tibble){
   cv_entry_tibble %>% 
     mutate(row_number = row_number()) %>% 
-    mutate(year_begin = as.character(year_begin),
-           year_begin = case_when(
-             row_number == 1 ~ year_begin,
-             year_begin == lag(year_begin) ~ "",
-             year_begin != lag(year_begin) ~ year_begin
+    mutate(year = as.character(year),
+           year = case_when(
+             row_number == 1 ~ year,
+             year == lag(year) ~ "",
+             year != lag(year) ~ year
            ))
 }
 
@@ -65,20 +63,20 @@ blank_year_when_repeated <- function(cv_entry_tibble){
 #### publications #####
 publications <- read_csv("_content/publications.csv") %>% 
   mutate(authors_full = map_chr(authors_full, replace_first_names_in_list_with_initial_and_dot)) %>% 
-  mutate(authors_full = str_replace(authors_full, "U\\. Lyngs", "*U\\. Lyngs*")) %>%   # make my name italic
-  mutate(year_begin = year(date))
-  
+  mutate(authors_full = str_replace(authors_full, "U\\. Lyngs", "*U\\. Lyngs*")) %>%    # make my name italic
+  mutate(year = year(date))
+
 #### cv entries #####
 cv_entries <- read_csv("_content/cv_entries.csv") %>% 
-  mutate(year_begin = year(date_begin)) %>%
+  mutate(year = year(date)) %>%
   mutate(year_end = case_when(
     date_end == "present" ~ date_end,
     !is.na(date_end) ~ str_sub(date_end, 1, 4),
     is.na(date_end) ~ date_end
   )) %>%
-  mutate(year = ifelse((is.na(year_end) | year_begin == year_end),
-                      year_begin,
-                      str_c(year_begin, " --- ", year_end)))
+  mutate(year = ifelse((is.na(year_end) | year == year_end),
+                      year,
+                      str_c(year, " --- ", year_end)))
 
 ```
 
@@ -146,7 +144,6 @@ cv_entries %>%
     is.na(additional_info) ~ str_c("<span class='cv-entry-title'>", what, "</span> (", additional_info2, "), ", where),
     !is.na(additional_info) ~ str_c("<span class='cv-entry-title'>", what, "</span> (", additional_info2, "), ", where, ".<br> ", additional_info),
   )) %>%
-  blank_year_when_repeated() %>% 
   select(year, what) %>%
   kable()
 ```
@@ -157,7 +154,7 @@ cv_entries %>%
   filter(type == 'awards') %>% 
   mutate(what = str_c("<span class='cv-entry-title'>", what, "</span>, ", where)) %>%  
   blank_year_when_repeated() %>% 
-  select(year_begin, what) %>% 
+  select(year, what) %>% 
   kable()
 ```
 
@@ -185,8 +182,8 @@ publications %>%
     )) %>% 
   # number entries with a prefix
   padding_function(., "C") %>% 
-  blank_year_when_repeated() %>%
-  select(year_begin, number, citation) %>%
+  blank_year_when_repeated() %>% 
+  select(year, number, citation) %>%
   knitr::kable()
 ```
 
@@ -199,7 +196,7 @@ publications %>%
   mutate(citation = str_c("<span class='cv-entry-title'>", title, "</span><br><span class='publication-authors'>", authors_full, "</span><br><span class='publication-venue'>", venue_abbrev, ": ", venue, "</span>")) %>% 
   padding_function(., "J") %>% 
   blank_year_when_repeated() %>%
-  select(year_begin, number, citation) %>%
+  select(year, number, citation) %>%
   knitr::kable()
 ```
 
@@ -212,27 +209,28 @@ publications %>%
   mutate(citation = str_c("<span class='cv-entry-title'>", title, "</span><br><span class='publication-authors'>", authors_full, "</span><br><span class='publication-venue'>", venue_abbrev, ": ", venue, "</span>")) %>%
   padding_function(., "A") %>% 
   blank_year_when_repeated() %>%
-  select(year_begin, number, citation) %>%
+  select(year, number, citation) %>%
   knitr::kable()
 
 ```
 
 <br class="pageBreak">
 
-## Press
+## Research dissemination
+### Press
 ```{r}
 cv_entries %>% 
   filter(type == 'media') %>%
-  select(year_begin, what) %>% 
+  select(year, what) %>% 
   kable()
 ```
 
-## Talks and panels {.three-split}
+### Talks {.three-split}
+
 ::: {.conference-presentations-omitted}
-All first-authored conference publications listed above were also given as presentations at their respective conferences and are not listed again in this section.
+All first-authored conference publications listed above were also presented as talks at their respective conferences and are not listed again in this section.
 :::
 
-### Talks
 ```{r}
 cv_entries %>% 
   filter(type == 'talk', is.na(exclude)) %>% 
@@ -252,57 +250,63 @@ cv_entries %>%
                       what,
                       "</span>"
                       )) %>% 
-  mutate(date = date_begin) %>% 
   padding_function(., "T") %>% 
   blank_year_when_repeated() %>% 
-  select(year_begin, number, what) %>% 
+  select(year, number, what) %>% 
   knitr::kable()
 
 
 ```
 
-### Discussion panels
+### Discussion panels {.three-split}
 ```{r}
 cv_entries %>% 
   filter(type == 'talk-panel') %>%
   mutate(additional_info = if_else(is.na(additional_info), "", additional_info)) %>% 
   mutate(what = str_c("<span class='cv-entry-title'>", where, "</span>, ", what, ", ",  additional_info)) %>%
-  mutate(date = date_begin) %>% 
   padding_function(., "D") %>% 
   blank_year_when_repeated() %>% 
-  select(year_begin, number, what) %>% 
+  select(year, number, what) %>% 
   knitr::kable()
 
 ```
 
 <!-- <br class="pageBreak"> -->
 
-## Podcasts {.three-split}
-```{r}
-cv_entries %>% 
-  filter(type == 'talk-podcast') %>% 
-  mutate(what = str_c("<span class='cv-entry-title'>", where, "</span>, ", what)) %>% 
-  mutate(date = date_begin) %>% 
-  padding_function(., "Pod") %>% 
-  blank_year_when_repeated() %>% 
-  select(year_begin, number, what) %>% 
-  knitr::kable()
-
-```
-
-## Poster presentations {.three-split}
+### Poster presentations {.three-split}
 ```{r}
 cv_entries %>% 
   filter(type == 'poster') %>%
   mutate(what = str_c("<span class='cv-entry-title'>", where, "</span>, ", what)) %>% 
-  mutate(date = date_begin) %>%
   padding_function(., "P") %>% 
   blank_year_when_repeated() %>% 
-  select(year_begin, number, what) %>% 
+  select(year, number, what) %>% 
   knitr::kable()
 ```
 
-<!-- <br class="pageBreak"> -->
+### Podcasts {.three-split}
+```{r}
+cv_entries %>% 
+  filter(type == 'talk-podcast') %>% 
+  mutate(what = str_c("<span class='cv-entry-title'>", where, "</span>, ", what)) %>% 
+  padding_function(., "Pod") %>% 
+  blank_year_when_repeated() %>% 
+  select(year, number, what) %>% 
+  knitr::kable()
+
+```
+
+### Blog posts {.three-split}
+```{r}
+cv_entries %>% 
+  filter(type == 'pop-writing') %>%
+  mutate(what = str_c("<span class='cv-entry-title'>", where, "</span>, ", what)) %>% 
+  padding_function(., "B") %>% 
+  blank_year_when_repeated() %>% 
+  select(year, number, what) %>% 
+  knitr::kable()
+```
+
 
 ## R packages
 ```{r}
@@ -310,7 +314,7 @@ cv_entries %>%
   filter(type == 'programming' & is.na(exclude)) %>% 
   replace_na(list(where = "", additional_info = "")) %>% 
   mutate(what = str_c("<span class='cv-entry-title'>", what, "</span>, ", where, "<br>", additional_info)) %>% 
-  arrange(desc(year_begin)) %>% 
+  arrange(desc(year)) %>% 
   mutate(row_number = row_number()) %>% 
   select(year, what) %>% 
   kable()
@@ -347,6 +351,8 @@ public_code %>%
   kable()
 ```
 
+<br class="pageBreak">
+
 ## Teaching experience
 ```{r}
 cv_entries %>% 
@@ -358,6 +364,8 @@ cv_entries %>%
   kable()
 ```
 
+<!-- <br class="pageBreak"> -->
+
 ## Service
 ```{r}
 cv_entries %>% 
@@ -368,7 +376,7 @@ cv_entries %>%
   kable()
 ```
 
-<!-- <br class="pageBreak"> -->
+
 
 ## Selected work experience
 ```{r}
@@ -376,6 +384,15 @@ cv_entries %>%
   filter(type == 'work', is.na(one_column_paged)) %>% 
   mutate(additional_info = replace_na(additional_info, "")) %>% 
   mutate(what = str_c("<span class='cv-entry-title'>", what, "</span>, ", where, "<br>", additional_info)) %>% 
+  select(year, what) %>% 
+  kable()
+```
+
+## Professional development
+```{r}
+cv_entries %>% 
+  filter(type == 'prof-dev') %>% 
+  mutate(what = str_c("<span class='cv-entry-title'>", what, "</span>, ", where)) %>% 
   select(year, what) %>% 
   kable()
 ```
@@ -393,15 +410,6 @@ cv_entries %>%
   kable()
 ```
 
-## Professional development
-```{r}
-cv_entries %>% 
-  filter(type == 'prof-dev') %>% 
-  mutate(what = str_c("<span class='cv-entry-title'>", what, "</span>, ", where)) %>% 
-  select(year_begin, what) %>% 
-  kable()
-```
-
 <!-- <br class="pageBreak"> -->
 
 <!-- <br class="pageBreak"> -->
@@ -412,12 +420,12 @@ cv_entries %>%
   filter(type == 'volunteering') %>%
   mutate(what = str_c("<span class='cv-entry-title'>", what, "</span>, ", where)) %>%
   mutate(what = ifelse(!is.na(additional_info), str_c(what, "<br>", additional_info), what)) %>%
-  arrange(desc(date_begin), desc(date_end)) %>% 
+  arrange(desc(date), desc(date_end)) %>% 
   select(year, what) %>%
   kable()
 ```
 
-<br class="pageBreak">
+<!-- <br class="pageBreak"> -->
 
 <!-- close 'cv-entries' div -->
 </div>
