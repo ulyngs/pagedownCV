@@ -1,5 +1,4 @@
 ---
-#date: "`r Sys.Date()`"
 output:
   pagedown::html_paged:
     css: ["css/one-column-paged-academic.css",  "https://use.fontawesome.com/releases/v5.7.2/css/all.css"]
