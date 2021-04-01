@@ -1,6 +1,5 @@
 is_sociam,type,authors_full,date,title,abstract,tldr,venue_abbrev,venue,short_title,prof_venue,url,award,pdf,materials,ebook,blog,full_talk,full_talk_embed,teaser_video,teaser_video_embed,bibtex,short_cv,professional_2_page,featured,image,project,doctoral_dissertation,sigchi_description,sigchi_award_description
-yes,thesis,Ulrik Lyngs,2021-03-05,"Ulysses in Cyberspace: Examining the Effectiveness of
-Design Patterns for Digital Self-Control","Instant access to information, entertainment, and connection enabled by smartphones and computers provides innumerable benefits, but also unprecedented opportunity for distraction. 
+yes,thesis,Ulrik Lyngs,2021-03-05,Ulysses in Cyberspace: Examining the Effectiveness of Design Patterns for Digital Self-Control,"Instant access to information, entertainment, and connection enabled by smartphones and computers provides innumerable benefits, but also unprecedented opportunity for distraction. 
 However, while technology companies have devoted enormous resources to keeping users ‘hooked’ on digital systems, little is known about how designers can best support people in regaining control over their digital device use. 
 
 This thesis argues that the emerging research into design patterns for digital self-control, which attempts to address this challenge, will benefit from (i) drawing on established psychological research on self-control, and (ii) using the existing landscape of apps and browser extensions for digital self-control on online stores as a resource for understanding potential design patterns and implementations.
