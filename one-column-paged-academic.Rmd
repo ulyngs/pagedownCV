@@ -275,11 +275,19 @@ cv_entries %>%
 ```{r}
 cv_entries %>% 
   filter(type == 'poster') %>%
-  mutate(what = glue("<span class='cv-entry-title'>{where}</span>, {what}")) %>%
+  mutate(where = if_else(!is.na(where) & !is.na(institution), glue(", {where}"), where),
+         department = if_else(!is.na(department), glue(", {department}"), department)) %>%
+  mutate(additional_info = if_else(!is.na(additional_info), glue(", {additional_info}"), "")) %>% 
+  mutate(what = glue("<span class='cv-entry-title'>{institution}{where}</span>{department}{additional_info}<br>",
+                      "<span style='display:inline-block;' class='talk-title'>{what}</span>", 
+                     .na = "")) %>% 
   padding_function(., "P") %>% 
   blank_year_when_repeated() %>% 
-  select(year, number, what) %>% 
+  select(year, number, what) %>%
   knitr::kable()
+
+
+
 ```
 
 ### Podcasts {.three-split}
