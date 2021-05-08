@@ -357,7 +357,7 @@ public_code %>%
   kable()
 ```
 
-<br class="pageBreak">
+<!-- <br class="pageBreak"> -->
 
 ## Teaching experience
 ```{r}
@@ -382,6 +382,7 @@ cv_entries %>%
 ```
 
 
+<br class="pageBreak">
 
 ## Selected work experience
 ```{r}
@@ -416,9 +417,7 @@ cv_entries %>%
   kable()
 ```
 
-<!-- <br class="pageBreak"> -->
-
-<!-- <br class="pageBreak"> -->
+<br class="pageBreak">
 
 ## Personal skills & volunteering {.packages}
 ```{r}
