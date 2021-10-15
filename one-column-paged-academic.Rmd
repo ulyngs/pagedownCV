@@ -105,7 +105,7 @@ https://ulriklyngs.com
 **Methods---**controlled studies, user surveys, interviews, co-design workshops, web scraping, behaviour logging.
 
 **I am passionate about** open and transparent research. 
-Since 2018, I have shared materials, analysis scripts, and data for all my work, and written my papers as reproducible documents in [R Markdown](https://rmarkdown.rstudio.com).
+Since 2018, I have shared materials, analysis scripts, and data for all my first-authored work, and written my papers as reproducible documents in [R Markdown](https://rmarkdown.rstudio.com).
 :::
 ::::::
 
@@ -203,6 +203,20 @@ publications %>%
   knitr::kable()
 ```
 
+<h3>Book chapters</h3>
+
+```{r}
+publications %>% 
+  filter(type == "book chapter") %>% 
+  mutate(citation = glue("<span class='cv-entry-title'>{title}</span><br>",
+                         "<span class='publication-authors'>{authors_full}</span><br>",
+                         "<span class='publication-venue'>{venue_abbrev}: {venue}</span>")) %>%
+  padding_function(., "B") %>% 
+  blank_year_when_repeated() %>%
+  select(year, number, citation) %>%
+  knitr::kable()
+
+```
 
 <h3>Extended abstracts and workshop papers <br><span class="review-note">(lightly reviewed)</span></h3>
 
@@ -219,7 +233,7 @@ publications %>%
 
 ```
 
-<br class="pageBreak">
+<!-- <br class="pageBreak"> -->
 
 ## Research dissemination
 ### Press
@@ -228,6 +242,20 @@ cv_entries %>%
   filter(type == 'media') %>%
   select(year, what) %>% 
   kable()
+```
+
+### Podcasts {.three-split}
+```{r}
+cv_entries %>% 
+  filter(type == 'talk-podcast') %>% 
+  mutate(what_translation = ifelse(!is.na(what_translation), str_c("(", what_translation, ")"), what_translation)) %>% 
+  replace_na(list(what_translation = "")) %>% 
+  mutate(what = glue("<span class='cv-entry-title'>{where}</span>, {what} <span class='cv-entry-translation'>{what_translation}</span>")) %>%
+  padding_function(., "Pod") %>% 
+  blank_year_when_repeated() %>% 
+  select(year, number, what) %>% 
+  knitr::kable()
+
 ```
 
 ### Talks {.three-split}
@@ -245,8 +273,10 @@ cv_entries %>%
          slides = if_else(!is.na(slides), glue("<a href={slides}>Slides</a>"), ""),
          video = if_else(!is.na(video), glue("<a href={video}>Video</a>"), "")) %>%
   mutate(additional_info = if_else(!is.na(additional_info), glue(", {additional_info}"), "")) %>% 
+  mutate(what_translation = ifelse(!is.na(what_translation), str_c("(", what_translation, ")"), what_translation)) %>% 
+  replace_na(list(what_translation = "")) %>% 
   mutate(what = glue("<span class='cv-entry-title'>{institution}{where}</span>{department}{additional_info}<br>",
-                      "<span style='display:inline-block;' class='talk-title'>{what}</span>", 
+                      "<span style='display:inline-block;' class='talk-title'>{what}</span> <span class='cv-entry-translation'>{what_translation}</span>", 
                      .na = "")) %>% 
   padding_function(., "T") %>% 
   blank_year_when_repeated() %>% 
@@ -269,7 +299,7 @@ cv_entries %>%
 
 ```
 
-<!-- <br class="pageBreak"> -->
+<br class="pageBreak">
 
 ### Poster presentations {.three-split}
 ```{r}
@@ -287,18 +317,6 @@ cv_entries %>%
   knitr::kable()
 
 
-
-```
-
-### Podcasts {.three-split}
-```{r}
-cv_entries %>% 
-  filter(type == 'talk-podcast') %>% 
-  mutate(what = glue("<span class='cv-entry-title'>{where}</span>, {what}")) %>%
-  padding_function(., "Pod") %>% 
-  blank_year_when_repeated() %>% 
-  select(year, number, what) %>% 
-  knitr::kable()
 
 ```
 
@@ -382,7 +400,7 @@ cv_entries %>%
 ```
 
 
-<br class="pageBreak">
+<!-- <br class="pageBreak"> -->
 
 ## Selected work experience
 ```{r}
@@ -417,7 +435,7 @@ cv_entries %>%
   kable()
 ```
 
-<br class="pageBreak">
+<!-- <br class="pageBreak"> -->
 
 ## Personal skills & volunteering {.packages}
 ```{r}
