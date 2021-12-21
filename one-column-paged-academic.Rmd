@@ -234,7 +234,36 @@ publications %>%
 
 ```
 
-<!-- <br class="pageBreak"> -->
+## Publicly available research code & data
+```{r}
+pubs_w_number <- publications %>% 
+  select(type, authors_full, date, title, materials) %>% 
+  mutate(inclusive_type = if_else(type == "workshop paper" | type == "extended abstract", "abstract", type)) %>% 
+  group_by(inclusive_type) %>% 
+  arrange(date) %>% 
+  mutate(number = row_number(),
+         number = case_when(
+           inclusive_type == "conference paper" ~ glue("[C{number}]"),
+           inclusive_type == "journal article" ~ glue("[J{number}]"),
+           inclusive_type == "abstract" ~ glue("[A{number}]"),
+           TRUE ~ ""
+         ))
+
+public_code <- cv_entries %>% 
+  filter(type == 'open_research' & is.na(exclude)) %>% 
+  select(what, additional_info) %>% 
+  rename(title = additional_info) %>% 
+  left_join(pubs_w_number)
+
+public_code %>% 
+  mutate(year = year(date)) %>% 
+  mutate(what = glue("<span class='cv-entry-title'>{what} {number}</span><br>", 
+                      "{authors_full}<br>",
+                      "{materials}")) %>% 
+  arrange(desc(date)) %>% 
+  select(year, what) %>% 
+  kable()
+```
 
 ## Research dissemination
 ### Press
@@ -258,6 +287,8 @@ cv_entries %>%
   knitr::kable()
 
 ```
+
+<br class="pageBreak">
 
 ### Talks {.three-split}
 
@@ -331,50 +362,6 @@ cv_entries %>%
 ```
 
 
-## R packages
-```{r}
-cv_entries %>% 
-  filter(type == 'programming' & is.na(exclude)) %>% 
-  replace_na(list(where = "", additional_info = "")) %>% 
-  mutate(what = glue("<span class='cv-entry-title'>{what}</span>, {where}")) %>%
-  arrange(desc(year)) %>% 
-  mutate(row_number = row_number()) %>% 
-  select(year, what) %>% 
-  kable()
-```
-
-## Publicly available research code & data
-```{r}
-pubs_w_number <- publications %>% 
-  select(type, authors_full, date, title, materials) %>% 
-  mutate(inclusive_type = if_else(type == "workshop paper" | type == "extended abstract", "abstract", type)) %>% 
-  group_by(inclusive_type) %>% 
-  arrange(date) %>% 
-  mutate(number = row_number(),
-         number = case_when(
-           inclusive_type == "conference paper" ~ glue("[C{number}]"),
-           inclusive_type == "journal article" ~ glue("[J{number}]"),
-           inclusive_type == "abstract" ~ glue("[A{number}]"),
-           TRUE ~ ""
-         ))
-
-public_code <- cv_entries %>% 
-  filter(type == 'open_research' & is.na(exclude)) %>% 
-  select(what, additional_info) %>% 
-  rename(title = additional_info) %>% 
-  left_join(pubs_w_number)
-
-public_code %>% 
-  mutate(year = year(date)) %>% 
-  mutate(what = glue("<span class='cv-entry-title'>{what} {number}</span><br>", 
-                      "{authors_full}<br>",
-                      "{materials}")) %>% 
-  arrange(desc(date)) %>% 
-  select(year, what) %>% 
-  kable()
-```
-
-<!-- <br class="pageBreak"> -->
 
 ## Teaching experience
 ```{r}
@@ -387,6 +374,19 @@ cv_entries %>%
 ```
 
 <!-- <br class="pageBreak"> -->
+
+## R packages
+```{r}
+cv_entries %>% 
+  filter(type == 'programming' & is.na(exclude)) %>% 
+  replace_na(list(where = "", additional_info = "")) %>% 
+  mutate(what = glue("<span class='cv-entry-title'>{what}</span>, {where}")) %>%
+  arrange(desc(year)) %>% 
+  mutate(row_number = row_number()) %>% 
+  select(year, what) %>% 
+  kable()
+```
+
 
 ## Service
 ```{r}
