@@ -64,7 +64,8 @@ blank_year_when_repeated <- function(cv_entry_tibble){
 publications <- read_csv("_content/publications.csv") %>% 
   mutate(authors_full = map_chr(authors_full, replace_first_names_in_list_with_initial_and_dot)) %>% 
   mutate(authors_full = str_replace(authors_full, "U\\. Lyngs", "*U\\. Lyngs*")) %>%    # make my name italic
-  mutate(year = year(date))
+  mutate(year = year(date)) %>% 
+  mutate(venue_abbrev = if_else(!is.na(venue_abbrev), str_c(venue_abbrev, ": "), "")) # make the abbrevation an empty string if NA; add a colon and a space after if it if there is one
 
 #### cv entries #####
 cv_entries <- read_csv("_content/cv_entries.csv") %>% 
@@ -180,7 +181,7 @@ publications %>%
   # create citations
   mutate(citation = glue("<span class='cv-entry-title'>{title}</span><br>",
                          "<span class='publication-authors'>{authors_full}</span><br>",
-                         "<span class='publication-venue'>{venue_abbrev}: {venue}</span>{award}")) %>% 
+                         "<span class='publication-venue'>{venue_abbrev}{venue}</span>{award}")) %>% 
   # number entries with a prefix
   padding_function(., "C") %>% 
   blank_year_when_repeated() %>% 
@@ -196,7 +197,7 @@ publications %>%
   filter(type == "journal article") %>% 
   mutate(citation = glue("<span class='cv-entry-title'>{title}</span><br>",
                          "<span class='publication-authors'>{authors_full}</span><br>",
-                         "<span class='publication-venue'>{venue_abbrev}: {venue}</span>")) %>% 
+                         "<span class='publication-venue'>{venue_abbrev}{venue}</span>")) %>% 
   padding_function(., "J") %>% 
   blank_year_when_repeated() %>%
   select(year, number, citation) %>%
@@ -225,7 +226,7 @@ publications %>%
   filter(type == "extended abstract" | type == "workshop paper") %>% 
   mutate(citation = glue("<span class='cv-entry-title'>{title}</span><br>",
                          "<span class='publication-authors'>{authors_full}</span><br>",
-                         "<span class='publication-venue'>{venue_abbrev}: {venue}</span>")) %>%
+                         "<span class='publication-venue'>{venue_abbrev} {venue}</span>")) %>%
   padding_function(., "A") %>% 
   blank_year_when_repeated() %>%
   select(year, number, citation) %>%
@@ -298,8 +299,6 @@ cv_entries %>%
   knitr::kable()
 
 ```
-
-<br class="pageBreak">
 
 ### Poster presentations {.three-split}
 ```{r}
