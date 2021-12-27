@@ -288,7 +288,6 @@ cv_entries %>%
 
 ```
 
-<br class="pageBreak">
 
 ### Talks {.three-split}
 
@@ -375,10 +374,23 @@ cv_entries %>%
 
 <!-- <br class="pageBreak"> -->
 
-## R packages
+## Software
+### R packages
 ```{r}
 cv_entries %>% 
-  filter(type == 'programming' & is.na(exclude)) %>% 
+  filter(type == 'software-rstats' & is.na(exclude)) %>% 
+  replace_na(list(where = "", additional_info = "")) %>% 
+  mutate(what = glue("<span class='cv-entry-title'>{what}</span>, {where}")) %>%
+  arrange(desc(year)) %>% 
+  mutate(row_number = row_number()) %>% 
+  select(year, what) %>% 
+  kable()
+```
+
+### Apps
+```{r}
+cv_entries %>% 
+  filter(type == 'software-browser-extensions' & is.na(exclude)) %>% 
   replace_na(list(where = "", additional_info = "")) %>% 
   mutate(what = glue("<span class='cv-entry-title'>{what}</span>, {where}")) %>%
   arrange(desc(year)) %>% 
@@ -394,6 +406,7 @@ cv_entries %>%
   filter(type == 'service') %>% 
   mutate(where = if_else(!is.na(url), glue("[{where}]({url})"), where)) %>% 
   mutate(what = glue("<span class='cv-entry-title'>{what}</span> {where}")) %>%
+  arrange(desc(date_end), desc(date)) %>% 
   select(year, what) %>% 
   kable()
 ```
