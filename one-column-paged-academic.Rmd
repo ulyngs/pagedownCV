@@ -262,6 +262,7 @@ public_code %>%
                       "{materials}")) %>% 
   arrange(desc(date)) %>% 
   select(year, what) %>% 
+  blank_year_when_repeated() %>% 
   kable()
 ```
 
