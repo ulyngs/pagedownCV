@@ -14,8 +14,6 @@
   --viewer-shadow-color: #313131; /* this marks the pages */
   --my-darkgray: #929598;
   --indentation: 18%;
-  --last-updated: " \00a0 \00a0 \00a0 \00a0 Last updated: April 2021";
- 
 }
 
 /* Paged.js viewer */
@@ -239,4 +237,8 @@ hr {
 
 span.talk-title {
   padding-top: 0.2em;
+}
+
+.cv-entry-translation {
+  font-style: italic;
 }
