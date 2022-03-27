@@ -81,6 +81,15 @@ cv_entries <- read_csv("_content/cv_entries.csv") %>%
 
 ```
 
+
+```{css}
+:root{
+  --last-updated: " \00a0 \00a0 \00a0 \00a0 Last updated: March 2022";
+}
+```
+
+
+
 :::::: {.title-and-contact}
 
 ::: {.title}
@@ -101,7 +110,7 @@ https://ulriklyngs.com
 :::
 
 ::: {.interests}
-**Aims---**to develop and evaluate design patterns that help people exercise self-control over their use of smartphones and laptops.
+**Aims---**to develop and evaluate design patterns that help people self-regulate their use of smartphones and laptops.
 <br>
 **Methods---**controlled studies, user surveys, interviews, co-design workshops, web scraping, behaviour logging.
 
@@ -331,6 +340,8 @@ cv_entries %>%
 
 ```
 
+<br class="pageBreak">
+
 ### Poster presentations {.three-split}
 ```{r}
 cv_entries %>% 
@@ -362,6 +373,7 @@ cv_entries %>%
 ```
 
 
+<br class="pageBreak">
 
 ## Teaching experience
 ```{r}
@@ -426,6 +438,8 @@ cv_entries %>%
   kable()
 ```
 
+<br class="pageBreak">
+
 ## Professional development
 ```{r}
 cv_entries %>% 
@@ -465,4 +479,7 @@ cv_entries %>%
 
 <!-- close 'cv-entries' div -->
 </div>
+
+<br class="pageBreak">
+
 # Links
