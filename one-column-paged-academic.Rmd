@@ -55,7 +55,8 @@ blank_year_when_repeated <- function(cv_entry_tibble){
              row_number == 1 ~ year,
              year == lag(year) ~ "",
              year != lag(year) ~ year
-           ))
+           )) %>% 
+    select(-row_number)
 }
 
 
