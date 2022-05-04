@@ -1,5 +1,5 @@
 # Welcome to `pagedown-cv`
-This repository holds various templates for dynamically generating a cv with the [`rmarkdown`](https://rmarkdown.rstudio.com) and [`pagedown`](https://github.com/rstudio/pagedown) R packages, illustrated with my personal resumé.
+This repository holds templates for dynamically generating a cv with the [`rmarkdown`](https://rmarkdown.rstudio.com) and [`pagedown`](https://github.com/rstudio/pagedown) R packages, illustrated with my personal resumé.
 
 (NOTE: 1-3 only displays properly in Chrome, as some aspects of CSS Paged Media are only supported by this browser):
 
