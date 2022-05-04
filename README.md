@@ -19,7 +19,7 @@ Nick Strayer's excellent [data-driven cv](http://nickstrayer.me/datadrivencv/)) 
 However, their available layouts don't really suit my tastes (especially for an academic CV), so I developed my own paged formats.
 
 ## Which format do you use?
-My currently favoured format for academic purposes (example 1) was inspired by, amongst others, the resumé of [Matthew Kay](http://www.mjskay.com/):
+My currently favoured format for academic purposes (example 1) was inspired by, amongst others, the resumés of [Matthew Kay](http://www.mjskay.com/) and [Elena Agapie](https://eagapie.com/pubs/cv.pdf):
 
 <a href="https://ulriklyngs.com/pdfs/2021_jan_academic_cv.pdf"><img src="examples/cur_cv_pg1.jpg"></a>
 
