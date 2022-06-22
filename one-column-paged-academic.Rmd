@@ -341,7 +341,7 @@ cv_entries %>%
 
 ```
 
-<br class="pageBreak">
+<!-- <br class="pageBreak"> -->
 
 ### Poster presentations {.three-split}
 ```{r}
@@ -374,7 +374,7 @@ cv_entries %>%
 ```
 
 
-<br class="pageBreak">
+<!-- <br class="pageBreak"> -->
 
 ## Teaching experience
 ```{r}
@@ -439,7 +439,7 @@ cv_entries %>%
   kable()
 ```
 
-<br class="pageBreak">
+<!-- <br class="pageBreak"> -->
 
 ## Professional development
 ```{r}
@@ -481,6 +481,6 @@ cv_entries %>%
 <!-- close 'cv-entries' div -->
 </div>
 
-<br class="pageBreak">
+<!-- <br class="pageBreak"> -->
 
 # Links
