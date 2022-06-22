@@ -23,7 +23,8 @@ My favored format for academic purposes (example 1) is inspired by the resumés 
 
 <a href="https://ulriklyngs.com/pdfs/2021_jan_academic_cv.pdf"><img src="examples/cur_cv_pg1.jpg"></a>
 
-The two-column resume layout I use for brief, professional 2-page resumés. I originally made this layout in Microsoft Word (!). After I became enamoured with R Markdown, I at some point set out to recreate it with `pagedown` (example 2):
+The two-column resume layout I use for brief, professional 2-page resumés. I originally made this layout in Microsoft Word. 
+After I became enamoured with R Markdown, I at some point set out to recreate it with `pagedown` (example 2):
 
 <a href="https://ulyngs.github.io/pagedown-cv/two-column-paged-brief.html"><img src="examples/page1_new.png"></a>
 
