@@ -82,13 +82,11 @@ cv_entries <- read_csv("_content/cv_entries.csv") %>%
 
 ```
 
-
-```{css}
+<style>
 :root{
-  --last-updated: " \00a0 \00a0 \00a0 \00a0 Last updated: March 2022";
+  --last-updated: "\00a0 \00a0 \00a0 \00a0 Last updated: `r format(Sys.Date(), '%B, %Y')`";
 }
-```
-
+</style>
 
 
 :::::: {.title-and-contact}
