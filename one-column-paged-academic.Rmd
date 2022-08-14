@@ -1,7 +1,7 @@
 ---
 output:
   pagedown::html_paged:
-    css: ["css/one-column-paged-academic.css",  "https://use.fontawesome.com/releases/v5.7.2/css/all.css"]
+    css: ["css/one-column-paged-academic.css"]
     number_sections: false
 links-to-footnotes: true
 knit: pagedown::chrome_print
@@ -13,6 +13,7 @@ library(tidyverse)
 library(knitr)
 library(lubridate)
 library(glue)
+library(fontawesome)
 
 ######## CREATE HELPER FUNCTIONS
 # function which takes a name and replaces the first name with initial and dot
@@ -184,10 +185,10 @@ publications %>%
   filter(type == "conference paper") %>% 
   # insert appropriate icon for paper awards (and start with a line break)
   mutate(award = case_when(
-    !is.na(award) & str_detect(award, "honourable") ~ glue("<br><i class='fas fa-award'></i> <span class='publication-award'>{award}</span>"),
-    !is.na(award) ~ glue("<br><i class='fa fa-trophy'></i> <span class='publication-award'>{award}</span>"),
+    !is.na(award) & str_detect(award, "honourable") ~ glue("<br>", fa("award"), " <span class='publication-award'>{award}</span>"),
+    !is.na(award) ~ glue("<br>", fa("trophy"), " <span class='publication-award'>{award}</span>"),
     TRUE ~ ""
-  )) %>% 
+  )) %>%
   # create citations
   mutate(citation = glue("<span class='cv-entry-title'>{title}</span><br>",
                          "<span class='publication-authors'>{authors_full}</span><br>",
