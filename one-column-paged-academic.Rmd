@@ -7,6 +7,12 @@ links-to-footnotes: true
 knit: pagedown::chrome_print
 ---
 
+```{css, echo=FALSE}
+:root{
+  --last-updated: " \00a0 \00a0 \00a0 \00a0 Last updated: August 2022";
+}
+```
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 library(tidyverse)
@@ -81,13 +87,6 @@ cv_entries <- read_csv("_content/cv_entries.csv") %>%
                       year,
                       str_c(year, " --- ", year_end)))
 
-```
-
-
-```{css}
-:root{
-  --last-updated: " \00a0 \00a0 \00a0 \00a0 Last updated: March 2022";
-}
 ```
 
 
@@ -363,6 +362,8 @@ cv_entries %>%
 
 ```
 
+<br class="pageBreak">
+
 ### Blog posts {.three-split}
 ```{r}
 cv_entries %>% 
@@ -375,7 +376,7 @@ cv_entries %>%
 ```
 
 
-<!-- <br class="pageBreak"> -->
+
 
 ## Teaching experience
 ```{r}
@@ -464,7 +465,7 @@ cv_entries %>%
   kable()
 ```
 
-<!-- <br class="pageBreak"> -->
+<br class="pageBreak">
 
 ## Personal skills & volunteering {.packages}
 ```{r}
