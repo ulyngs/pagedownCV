@@ -1,5 +1,5 @@
 # Welcome to `pagedown-cv`
-This repository holds various templates for dynamically generating a cv with the [`rmarkdown`](https://rmarkdown.rstudio.com) and [`pagedown`](https://github.com/rstudio/pagedown) R packages, illustrated with my personal resumé.
+This repository holds templates for dynamically generating a cv with the [`rmarkdown`](https://rmarkdown.rstudio.com) and [`pagedown`](https://github.com/rstudio/pagedown) R packages, illustrated with my personal resumé.
 
 (NOTE: 1-3 only displays properly in Chrome, as some aspects of CSS Paged Media are only supported by this browser):
 
@@ -19,11 +19,12 @@ Nick Strayer's excellent [data-driven cv](http://nickstrayer.me/datadrivencv/)) 
 However, their available layouts don't really suit my tastes (especially for an academic CV), so I developed my own paged formats.
 
 ## Which format do you use?
-My currently favoured format for academic purposes (example 1) was inspired by, amongst others, the resumé of [Matthew Kay](http://www.mjskay.com/):
+My favored format for academic purposes (example 1) is inspired by the resumés of [Matthew Kay](http://www.mjskay.com/) and [Elena Agapie](https://eagapie.com/pubs/cv.pdf):
 
 <a href="https://ulriklyngs.com/pdfs/2021_jan_academic_cv.pdf"><img src="examples/cur_cv_pg1.jpg"></a>
 
-The two-column resume layout I use for brief, professional 2-page resumés. I originally made this layout in Microsoft Word (!). After I became enamoured with R Markdown, I at some point set out to recreate it with `pagedown` (example 2):
+The two-column resume layout I use for brief, professional 2-page resumés. I originally made this layout in Microsoft Word. 
+After I became enamoured with R Markdown, I at some point set out to recreate it with `pagedown` (example 2):
 
 <a href="https://ulyngs.github.io/pagedown-cv/two-column-paged-brief.html"><img src="examples/page1_new.png"></a>
 
