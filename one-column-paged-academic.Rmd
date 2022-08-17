@@ -1,11 +1,17 @@
 ---
 output:
   pagedown::html_paged:
-    css: ["css/one-column-paged-academic.css",  "https://use.fontawesome.com/releases/v5.7.2/css/all.css"]
+    css: ["css/one-column-paged-academic.css"]
     number_sections: false
 links-to-footnotes: true
 knit: pagedown::chrome_print
 ---
+
+<style>
+:root{
+  --last-updated: "\00a0 \00a0 \00a0 \00a0 Last updated: `r format(Sys.Date(), '%B, %Y')`";
+}
+</style>
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
@@ -13,6 +19,7 @@ library(tidyverse)
 library(knitr)
 library(lubridate)
 library(glue)
+library(fontawesome)
 
 ######## CREATE HELPER FUNCTIONS
 # function which takes a name and replaces the first name with initial and dot
@@ -81,13 +88,6 @@ cv_entries <- read_csv("_content/cv_entries.csv") %>%
                       str_c(year, " --- ", year_end)))
 
 ```
-
-<style>
-:root{
-  --last-updated: "\00a0 \00a0 \00a0 \00a0 Last updated: `r format(Sys.Date(), '%B, %Y')`";
-}
-</style>
-
 
 :::::: {.title-and-contact}
 
@@ -182,10 +182,10 @@ publications %>%
   filter(type == "conference paper") %>% 
   # insert appropriate icon for paper awards (and start with a line break)
   mutate(award = case_when(
-    !is.na(award) & str_detect(award, "honourable") ~ glue("<br><i class='fas fa-award'></i> <span class='publication-award'>{award}</span>"),
-    !is.na(award) ~ glue("<br><i class='fa fa-trophy'></i> <span class='publication-award'>{award}</span>"),
+    !is.na(award) & str_detect(award, "honourable") ~ glue("<br>", fa("award"), " <span class='publication-award'>{award}</span>"),
+    !is.na(award) ~ glue("<br>", fa("trophy"), " <span class='publication-award'>{award}</span>"),
     TRUE ~ ""
-  )) %>% 
+  )) %>%
   # create citations
   mutate(citation = glue("<span class='cv-entry-title'>{title}</span><br>",
                          "<span class='publication-authors'>{authors_full}</span><br>",
@@ -339,7 +339,7 @@ cv_entries %>%
 
 ```
 
-<br class="pageBreak">
+<!-- <br class="pageBreak"> -->
 
 ### Poster presentations {.three-split}
 ```{r}
@@ -360,6 +360,8 @@ cv_entries %>%
 
 ```
 
+<br class="pageBreak">
+
 ### Blog posts {.three-split}
 ```{r}
 cv_entries %>% 
@@ -372,7 +374,7 @@ cv_entries %>%
 ```
 
 
-<br class="pageBreak">
+
 
 ## Teaching experience
 ```{r}
@@ -437,7 +439,7 @@ cv_entries %>%
   kable()
 ```
 
-<br class="pageBreak">
+<!-- <br class="pageBreak"> -->
 
 ## Professional development
 ```{r}
@@ -461,7 +463,7 @@ cv_entries %>%
   kable()
 ```
 
-<!-- <br class="pageBreak"> -->
+<br class="pageBreak">
 
 ## Personal skills & volunteering {.packages}
 ```{r}
@@ -479,6 +481,6 @@ cv_entries %>%
 <!-- close 'cv-entries' div -->
 </div>
 
-<br class="pageBreak">
+<!-- <br class="pageBreak"> -->
 
 # Links
