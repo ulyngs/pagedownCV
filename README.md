@@ -15,15 +15,15 @@ the two paged versions.
 
 ## Formats
 
-### [Academic CV (paged)](reference/figures/one-column-academic.pdf)
+### [Academic CV (paged)](man/figures/README-one-column-academic.pdf)
 
-<embed src="reference/figures/one-column-academic.pdf" width="600" height="375" type="application/pdf">
+<embed src="reference/figures/README-one-column-academic.pdf" width="600" height="375" type="application/pdf">
 
 <br>
 
-### [2-column CV (paged)](reference/figures/two-column.pdf)
+### [2-column CV (paged)](man/figures/README-two-column.pdf)
 
-<embed src="reference/figures/two-column.pdf" width="600" height="375" type="application/pdf">
+<embed src="reference/figures/README-two-column.pdf" width="600" height="375" type="application/pdf">
 
 <br>
 
@@ -36,7 +36,7 @@ the two paged versions.
 Install the package with
 
 ``` r
-remotes::install_github("ulyngs/pagedownCV")
+remotes::install_github("ulyngs/pagedown-cv")
 ```
 
 Then, in RStudio, go to File \> New File \> R Markdown… \> From
