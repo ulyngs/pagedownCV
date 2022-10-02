@@ -27,11 +27,11 @@ A tibble with a page break added by the end of specified
 Adds a page break after a row that contains a specified text
 }
 \examples{
-# add page break after the Minecraft paper
+# add page break after the GDPR paper
 publications |>
  filter(type == "journal article") |>
- mutate(citation = glue::glue("{title}, {authors}")) |>
+ mutate(citation = glue::glue("{title}, {year}")) |>
  select(year, citation) |>
- manual_page_break_after_row("citation", "Community Governance in Minecraft")
+ manual_page_break_after_row("citation", "Before and after GDPR")
 
 }

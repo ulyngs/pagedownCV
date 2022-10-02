@@ -18,6 +18,7 @@ A tibble with an added 'number' column
 Add a column 'number' that counts entries in order of date -- adds leading zero, and optional a letter
 }
 \examples{
+library(dplyr)
 publications |>
   filter(type == "journal article") |>
   add_leading_zeroes_and_letter("J")
