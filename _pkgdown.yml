@@ -1,4 +1,6 @@
 url: https://ulyngs.github.io/pagedownCV/
 template:
   bootstrap: 5
-
+navbar:
+  structure:
+    right: [search, github]
