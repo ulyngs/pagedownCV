@@ -11,6 +11,7 @@
 #' @export
 #'
 #' @examples
+#' library(dplyr)
 #' publications |>
 #'   filter(type == "journal article") |>
 #'   add_leading_zeroes_and_letter("J")
