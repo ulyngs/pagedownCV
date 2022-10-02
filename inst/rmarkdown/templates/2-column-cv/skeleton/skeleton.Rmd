@@ -1,0 +1,175 @@
+---
+title: "Ulrik Lyngs <br> Curriculum vitae"
+output:
+  pagedown::html_paged:
+    css: ["css/bootstrap-5.2.1.min.css", "css/two-col-cv.css"]
+    number_sections: false
+knit: pagedown::chrome_print
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+library(tidyverse)
+library(knitr)
+library(lubridate)
+library(glue)
+library(fontawesome)
+library(pagedownCV)
+
+# this example uses the tibbles 'cv_entries' and 'publications' which are sample content from my own CV that is automatically loaded when you library(pagedownCV)
+
+### if you want to download your own cv content from a Google sheet, you can create a publicly viewable link 
+### and use this convenience function to download it (here an example using my own 'publications' tab)
+# save_gsheet_as_csv("publications", gsheet_url = "https://docs.google.com/spreadsheets/d/1ta71CAGkcLqm-W1UdVRA_JJSddWV2TsrRZsCnQlmOis/edit?usp=sharing")
+# publications <- read_csv("publications.csv")
+
+```
+
+
+::: {.row}
+
+:::::: {.col-8 .summary}
+
+# Research summary
+**Aims**---to develop and evaluate design patterns that help people self-regulate their use of smartphones and laptops.\
+**Methods**---controlled studies, user surveys, interviews, co-design workshops, web scraping, behaviour logging.
+
+**I am passionate about** open and transparent research. Since 2018, I have shared materials, analysis scripts, and data for all my first-authored work, and written my papers as reproducible documents in [R Markdown](https://rmarkdown.rstudio.com).
+
+::::::
+
+:::::: {.col-4}
+
+# Contact {.box}
+
+::::::::: {.info-box}
+
+| Center | Left |
+|:------:|:-----|
+| `r fa("map-marker-alt")`| Dept. of Computer Science, University of Oxford |
+| `r fa("envelope")` | ulrik.lyngs@cs.ox.ac.uk |
+| `r fa("globe")` | [ulriklyngs.com](https://ulriklyngs.com) |
+| `r fa("github")` | [ulyngs](https://github.com/ulyngs) |
+ 
+:::::::::
+
+::::::
+
+:::
+
+::: {.row}
+
+:::::: {.col-6 .left}
+
+# Awards and honours
+ 
+```{r}
+cv_entries |> 
+  filter(type == 'awards') |> 
+  mutate(what = glue("<span class='cv-entry-title'>{what}</span>, {where}")) |>  
+  select(year, what) |> 
+  kable()
+```
+
+# Selected major grants
+ 
+```{r}
+cv_entries |>
+  filter(type == 'major_grants', carlsberg == "y") |>
+  mutate(what = if_else(is.na(additional_info),
+                        glue("<span class='cv-entry-title'>{what}</span> ({additional_info2}), {where}"),
+                        glue("<span class='cv-entry-title'>{what}</span> ({additional_info2}), {where}"))) |>
+  select(year, what) |>
+  kable()
+```
+
+::::::
+
+:::::: {.col-6 .right}
+
+# Education
+
+```{r}
+cv_entries |> 
+  filter(type == 'education') |> 
+  mutate(what = glue("<span class='cv-entry-title'>{what}</span>, {where}")) |> 
+  select(year, what) |> 
+  kable()
+```
+
+# Selected teaching experience
+```{r}
+cv_entries |> 
+  filter(type == 'teaching', carlsberg == "y") |> 
+  mutate(what = glue("<span class='cv-entry-title'>{what}</span>, {where}<br>",
+         "{additional_info}")) |> 
+  select(year, what) |> 
+  kable()
+```
+
+::::::
+
+:::
+
+<!-- you might want to manually insert page breaks -->
+<br class="pageBreak" />
+
+::: {.row .pagetwo}
+
+:::::: {.col-6 .left}
+
+# Selected talks {.talks}
+```{r}
+cv_entries  |>  
+  filter(type == 'talk', carlsberg == "y") |> 
+  # add commas as appropriate
+  mutate(where = if_else(!is.na(where) & !is.na(institution), glue(", {where}"), where),
+         department = if_else(!is.na(department), glue(", {department}"), department),
+         slides = if_else(!is.na(slides), glue("<a href={slides}>Slides</a>"), ""),
+         video = if_else(!is.na(video), glue("<a href={video}>Video</a>"), "")) |>
+  mutate(additional_info = if_else(!is.na(additional_info), glue(", {additional_info}"), "")) |> 
+  mutate(what_translation = ifelse(!is.na(what_translation), str_c("(", what_translation, ")"), what_translation)) |> 
+  replace_na(list(what_translation = "")) |> 
+  mutate(what = glue("<span class='cv-entry-title'>{institution}{where}</span>{department}{additional_info}<br>",
+                      "<span style='display:inline-block;' class='talk-title'>{what}</span> <span class='cv-entry-translation'>{what_translation}</span>", 
+                     .na = "")) |> 
+  select(year, what) |> 
+  knitr::kable()
+```
+
+::::::
+
+:::::: {.col-6 .right}
+
+# Selected media & panels
+```{r}
+cv_entries |> 
+  filter(type == 'media' | type == 'talk-podcast' | type == 'talk-panel') |>
+  mutate(what = glue("<span class='cv-entry-title'>{where}</span>, {what}")) |>
+  select(year, what) |> 
+  knitr::kable()
+
+```
+
+# Professional development {.prof-dev}
+```{r}
+cv_entries |> 
+  filter(type == 'prof-dev') |> 
+  mutate(what = glue("<span class='cv-entry-title'>{what}</span>, {where}")) |> 
+  select(year, what) |> 
+  kable()
+```
+
+# Selected service
+```{r}
+cv_entries |> 
+  filter(type == 'service', carlsberg == "y") |> 
+  mutate(where = if_else(!is.na(url), glue("[{where}]({url})"), where)) |> 
+  mutate(what = glue("<span class='cv-entry-title'>{what}</span> {where}")) |>
+  arrange(desc(date_end), desc(date)) |> 
+  select(year, what) |> 
+  kable()
+```
+
+::::::
+:::
