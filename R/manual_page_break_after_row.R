@@ -12,17 +12,17 @@
 #' @export
 #'
 #' @examples
-#' # add page break after the Minecraft paper
+#' # add page break after the GDPR paper
 #' publications |>
 #'  filter(type == "journal article") |>
-#'  mutate(citation = glue::glue("{title}, {authors}")) |>
+#'  mutate(citation = glue::glue("{title}, {year}")) |>
 #'  select(year, citation) |>
-#'  manual_page_break_after_row("citation", "Community Governance in Minecraft")
+#'  manual_page_break_after_row("citation", "Before and after GDPR")
 #'
 manual_page_break_after_row <- function(some_tibble, a_column_name, text_to_detect, use_glue = TRUE){
   if(use_glue){
     some_tibble |>
-      dplyr::mutate({{a_column_name}} := if_else(str_detect(.data[[a_column_name]], text_to_detect),
+      dplyr::mutate({{a_column_name}} := if_else(stringr::str_detect(.data[[a_column_name]], text_to_detect),
                                           glue::glue("{.data[[a_column_name]]} <br class='pageBreak'>"),
                                           glue::glue("{.data[[a_column_name]]}")
       ))
