@@ -36,7 +36,7 @@ the two paged versions.
 Install the package with
 
 ``` r
-remotes::install_github("ulyngs/pagedown-cv")
+remotes::install_github("ulyngs/pagedownCV")
 ```
 
 Then, in RStudio, go to File \> New File \> R Markdown… \> From
