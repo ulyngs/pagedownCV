@@ -30,7 +30,7 @@ The package uses [`pagedown`](https://github.com/rstudio/pagedown) for the two p
 <embed src="reference/figures/README-two-column.pdf" width="600" height="375" type="application/pdf">
 <br>
 
-### [Website CV (with sidebar and tabsets)](reference/figures/website-cv.html)
+### [Website CV (with sidebar and tabsets)](reference/figures/README-website-cv.html)
 <br>
 
 ## How do I use it?

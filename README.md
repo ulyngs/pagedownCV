@@ -25,7 +25,7 @@ the two paged versions.
 
 <br>
 
-### [Website CV (with sidebar and tabsets)](reference/figures/website-cv.html)
+### [Website CV (with sidebar and tabsets)](reference/figures/README-website-cv.html)
 
 <br>
 
