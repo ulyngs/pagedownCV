@@ -18,7 +18,9 @@ LazyData: true
 Depends: 
     R (>= 2.10)
 RoxygenNote: 7.2.1
+https: //ulyngs.github.io/pagedownCV/, https://github.com/ulyngs/pagedownCV
 Imports: 
     dplyr,
     googlesheets4,
     tibble
+URL: https://ulyngs.github.io/pagedownCV/

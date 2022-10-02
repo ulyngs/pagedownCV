@@ -1,48 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>/404.html</loc>
+    <loc>https://ulyngs.github.io/pagedownCV/404.html</loc>
   </url>
   <url>
-    <loc>/LICENSE.html</loc>
+    <loc>https://ulyngs.github.io/pagedownCV/LICENSE.html</loc>
   </url>
   <url>
-    <loc>/authors.html</loc>
+    <loc>https://ulyngs.github.io/pagedownCV/authors.html</loc>
   </url>
   <url>
-    <loc>/index.html</loc>
+    <loc>https://ulyngs.github.io/pagedownCV/index.html</loc>
   </url>
   <url>
-    <loc>/reference/add_leading_zeroes_and_letter.html</loc>
+    <loc>https://ulyngs.github.io/pagedownCV/reference/add_leading_zeroes_and_letter.html</loc>
   </url>
   <url>
-    <loc>/reference/blank_year_when_repeated.html</loc>
+    <loc>https://ulyngs.github.io/pagedownCV/reference/blank_year_when_repeated.html</loc>
   </url>
   <url>
-    <loc>/reference/cv_entries.html</loc>
+    <loc>https://ulyngs.github.io/pagedownCV/reference/cv_entries.html</loc>
   </url>
   <url>
-    <loc>/reference/figures/website-cv.html</loc>
+    <loc>https://ulyngs.github.io/pagedownCV/reference/figures/website-cv.html</loc>
   </url>
   <url>
-    <loc>/reference/hello.html</loc>
+    <loc>https://ulyngs.github.io/pagedownCV/reference/hello.html</loc>
   </url>
   <url>
-    <loc>/reference/index.html</loc>
+    <loc>https://ulyngs.github.io/pagedownCV/reference/index.html</loc>
   </url>
   <url>
-    <loc>/reference/manual_page_break_after_row.html</loc>
+    <loc>https://ulyngs.github.io/pagedownCV/reference/manual_page_break_after_row.html</loc>
   </url>
   <url>
-    <loc>/reference/pagedownCV-package.html</loc>
+    <loc>https://ulyngs.github.io/pagedownCV/reference/pagedownCV-package.html</loc>
   </url>
   <url>
-    <loc>/reference/publications.html</loc>
+    <loc>https://ulyngs.github.io/pagedownCV/reference/publications.html</loc>
   </url>
   <url>
-    <loc>/reference/replace_first_name_with_initial_and_dot.html</loc>
+    <loc>https://ulyngs.github.io/pagedownCV/reference/replace_first_name_with_initial_and_dot.html</loc>
   </url>
   <url>
-    <loc>/reference/save_gsheet_as_csv.html</loc>
+    <loc>https://ulyngs.github.io/pagedownCV/reference/save_gsheet_as_csv.html</loc>
   </url>
 </urlset>
