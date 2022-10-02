@@ -1,12 +1,10 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# pagedownCV
+# Welcome to `pagedownCV`
 
 <!-- badges: start -->
 <!-- badges: end -->
-
-# Welcome to `pagedownCV`
 
 This package provides three R Markdown templates for creating a
 dynamically generated, academic CV, illustrated with my personal resumé.

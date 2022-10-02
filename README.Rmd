@@ -13,12 +13,10 @@ knitr::opts_chunk$set(
 )
 ```
 
-# pagedownCV
+# Welcome to `pagedownCV`
 
 <!-- badges: start -->
 <!-- badges: end -->
-
-# Welcome to `pagedownCV`
 
 This package provides three R Markdown templates for creating a dynamically generated, academic CV, illustrated with my personal resumé.
 The package uses [`pagedown`](https://github.com/rstudio/pagedown) for the two paged versions.
