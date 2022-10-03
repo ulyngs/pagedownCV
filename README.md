@@ -13,19 +13,21 @@ the two paged versions.
 
 ## Formats
 
-### [Academic CV (paged)](man/figures/README-one-column-academic.pdf)
+### [Academic CV (paged)](https://github.com/ulyngs/personal-website/raw/master/static/images/for-r-packages/pagedownCV/README-one-column-academic.pdf)
 
-<embed src="reference/figures/README-one-column-academic.pdf" width="600" height="375" type="application/pdf">
+<img src="https://raw.githubusercontent.com/ulyngs/personal-website/master/static/images/for-r-packages/pagedownCV/README-academic-cv.png" width="80%" />
 
 <br>
 
 ### [2-column CV (paged)](man/figures/README-two-column.pdf)
 
-<embed src="reference/figures/README-two-column.pdf" width="600" height="375" type="application/pdf">
+<img src="https://github.com/ulyngs/personal-website/blob/master/static/images/for-r-packages/pagedownCV/README-2-col-cv.png?raw=true" width="80%" />
 
 <br>
 
 ### [Website CV (with sidebar and tabsets)](reference/figures/README-website-cv.html)
+
+<img src="https://github.com/ulyngs/personal-website/blob/master/static/images/for-r-packages/pagedownCV/README-website-cv.png?raw=true" width="80%" />
 
 <br>
 

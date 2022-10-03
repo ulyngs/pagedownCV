@@ -2,7 +2,7 @@ pandoc: '2.18'
 pkgdown: 2.0.6
 pkgdown_sha: ~
 articles: {}
-last_built: 2022-10-03T15:11Z
+last_built: 2022-10-03T16:52Z
 urls:
   reference: https://ulyngs.github.io/pagedownCV/reference
   article: https://ulyngs.github.io/pagedownCV/articles

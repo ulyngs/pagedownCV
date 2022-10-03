@@ -22,15 +22,26 @@ This package provides three R Markdown templates for creating a dynamically gene
 The package uses [`pagedown`](https://github.com/rstudio/pagedown) for the two paged versions.
 
 ## Formats
-### [Academic CV (paged)](man/figures/README-one-column-academic.pdf)
-<embed src="reference/figures/README-one-column-academic.pdf" width="600" height="375" type="application/pdf">
+### [Academic CV (paged)](https://github.com/ulyngs/personal-website/raw/master/static/images/for-r-packages/pagedownCV/README-one-column-academic.pdf)
+```{r, echo=FALSE, out.width='80%'}
+knitr::include_graphics("https://raw.githubusercontent.com/ulyngs/personal-website/master/static/images/for-r-packages/pagedownCV/README-academic-cv.png")
+```
+
 <br>
 
 ### [2-column CV (paged)](man/figures/README-two-column.pdf)
-<embed src="reference/figures/README-two-column.pdf" width="600" height="375" type="application/pdf">
+```{r, echo=FALSE, out.width='80%'}
+knitr::include_graphics("https://github.com/ulyngs/personal-website/blob/master/static/images/for-r-packages/pagedownCV/README-2-col-cv.png?raw=true")
+```
+
 <br>
 
 ### [Website CV (with sidebar and tabsets)](reference/figures/README-website-cv.html)
+```{r, echo=FALSE, out.width='80%'}
+knitr::include_graphics("https://github.com/ulyngs/personal-website/blob/master/static/images/for-r-packages/pagedownCV/README-website-cv.png?raw=true")
+```
+
+
 <br>
 
 ## How do I use it?
