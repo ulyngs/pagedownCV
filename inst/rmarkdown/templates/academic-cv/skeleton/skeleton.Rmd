@@ -15,19 +15,16 @@ knit: pagedown::chrome_print
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
-library(pagedownCV)
 library(tidyverse)
 library(knitr)
-library(lubridate)
 library(glue)
 library(fontawesome)
+library(readxl)
+library(pagedownCV)
 
-# this example uses the tibbles 'cv_entries' and 'publications' which are sample content from my own CV that is automatically loaded when you library(pagedownCV)
-
-### if you want to download your own cv content from a Google sheet, you can create a publicly viewable link 
-### and use this convenience function to download it (here an example using my own 'publications' tab)
-# save_gsheet_as_csv("publications", gsheet_url = "https://docs.google.com/spreadsheets/d/1ta71CAGkcLqm-W1UdVRA_JJSddWV2TsrRZsCnQlmOis/edit?usp=sharing")
-# publications <- read_csv("publications.csv")
+# read in CV data from e.g. an Excel spreadsheet --- the sample CV data is from this google sheet https://docs.google.com/spreadsheets/d/1ta71CAGkcLqm-W1UdVRA_JJSddWV2TsrRZsCnQlmOis/edit?usp=sharing
+cv_entries <- read_excel("cv_data.xlsx", sheet = "cv_entries")
+publications <- read_excel("cv_data.xlsx", sheet = "publications")
 
 ```
 
@@ -193,7 +190,7 @@ publications_formatted |>
 ## Publicly available research code & data
 ```{r}
 pubs_w_number <- publications |> 
-  select(type, authors, date, title, materials) |> 
+  select(type, authors, date, year, title, materials) |> 
   mutate(inclusive_type = if_else(type == "workshop paper" | type == "extended abstract", "abstract", type)) |> 
   group_by(inclusive_type) |> 
   arrange(date) |> 
@@ -212,7 +209,6 @@ public_code <- cv_entries |>
   left_join(pubs_w_number)
 
 public_code |> 
-  mutate(year = year(date)) |> 
   mutate(what = glue("<span class='cv-entry-title'>{what} {number}</span><br>", 
                       "{authors}<br>",
                       "{materials}")) |> 

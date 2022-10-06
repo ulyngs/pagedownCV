@@ -11,17 +11,14 @@ knit: pagedown::chrome_print
 knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 library(tidyverse)
 library(knitr)
-library(lubridate)
 library(glue)
 library(fontawesome)
+library(readxl)
 library(pagedownCV)
 
-# this example uses the tibbles 'cv_entries' and 'publications' which are sample content from my own CV that is automatically loaded when you library(pagedownCV)
-
-### if you want to download your own cv content from a Google sheet, you can create a publicly viewable link 
-### and use this convenience function to download it (here an example using my own 'publications' tab)
-# save_gsheet_as_csv("publications", gsheet_url = "https://docs.google.com/spreadsheets/d/1ta71CAGkcLqm-W1UdVRA_JJSddWV2TsrRZsCnQlmOis/edit?usp=sharing")
-# publications <- read_csv("publications.csv")
+# read in CV data from e.g. an Excel spreadsheet --- the sample CV data is from this google sheet https://docs.google.com/spreadsheets/d/1ta71CAGkcLqm-W1UdVRA_JJSddWV2TsrRZsCnQlmOis/edit?usp=sharing
+cv_entries <- read_excel("cv_data.xlsx", sheet = "cv_entries")
+publications <- read_excel("cv_data.xlsx", sheet = "publications")
 
 ```
 
@@ -125,16 +122,16 @@ cv_entries  |>
   # add commas as appropriate
   mutate(where = if_else(!is.na(where) & !is.na(institution), glue(", {where}"), where),
          department = if_else(!is.na(department), glue(", {department}"), department),
-         slides = if_else(!is.na(slides), glue("<a href={slides}>Slides</a>"), ""),
-         video = if_else(!is.na(video), glue("<a href={video}>Video</a>"), "")) |>
-  mutate(additional_info = if_else(!is.na(additional_info), glue(", {additional_info}"), "")) |> 
-  mutate(what_translation = ifelse(!is.na(what_translation), str_c("(", what_translation, ")"), what_translation)) |> 
-  replace_na(list(what_translation = "")) |> 
+         additional_info = if_else(!is.na(additional_info), glue(", {additional_info}"), "")) |> 
+  # add slide and video links
+  mutate(slides = if_else(!is.na(slides), glue("<a href={slides}>Slides</a>"), ""),
+         video = if_else(!is.na(video), glue("<a href={video}>Video</a>"), "")) |> 
+  # put it all together
   mutate(what = glue("<span class='cv-entry-title'>{institution}{where}</span>{department}{additional_info}<br>",
-                      "<span style='display:inline-block;' class='talk-title'>{what}</span> <span class='cv-entry-translation'>{what_translation}</span>", 
+                      "<span style='display:inline-block;' class='talk-title'>{what}</span>", 
                      .na = "")) |> 
   select(year, what) |> 
-  knitr::kable()
+  kable()
 ```
 
 ::::::
@@ -145,9 +142,13 @@ cv_entries  |>
 ```{r}
 cv_entries |> 
   filter(type == 'media' | type == 'talk-podcast' | type == 'talk-panel') |>
-  mutate(what = glue("<span class='cv-entry-title'>{where}</span>, {what}")) |>
+  # format the translation
+  mutate(what_translation = if_else(!is.na(what_translation), glue("({what_translation})"), what_translation)) |> 
+  replace_na(list(what_translation = "")) |> 
+  # put it all together
+  mutate(what = glue("<span class='cv-entry-title'>{where}</span>, {what} *{what_translation}*")) |>
   select(year, what) |> 
-  knitr::kable()
+  kable()
 
 ```
 

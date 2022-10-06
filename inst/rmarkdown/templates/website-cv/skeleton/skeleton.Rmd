@@ -7,22 +7,19 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 library(tidyverse)
 library(knitr)
-library(here)
-library(DT)
-library(lubridate)
-library(pagedownCV)
 library(glue)
 library(fontawesome)
+library(DT)
+library(lubridate)
+library(readxl)
+library(pagedownCV)
 
-# this example uses the tibble 'cv_entries' which contains sample content from my own CV that is automatically loaded when you library(pagedownCV)
-
-### if you want to download your own cv content from a Google sheet, you can create a publicly viewable link 
-### and use this convenience function to download it (here an example using my own 'publications' tab)
-# save_gsheet_as_csv("cv_entries", gsheet_url = "https://docs.google.com/spreadsheets/d/1ta71CAGkcLqm-W1UdVRA_JJSddWV2TsrRZsCnQlmOis/edit?usp=sharing")
-# cv_entries <- read_csv("cv_entries.csv")
+# read in CV data from e.g. an Excel spreadsheet --- the sample CV data is from this google sheet https://docs.google.com/spreadsheets/d/1ta71CAGkcLqm-W1UdVRA_JJSddWV2TsrRZsCnQlmOis/edit?usp=sharing
+cv_entries <- read_excel("cv_data.xlsx", sheet = "cv_entries")
+publications <- read_excel("cv_data.xlsx", sheet = "publications")
 ```
 
 # Summary
@@ -101,7 +98,6 @@ cv_entries |>
   mutate(where = str_replace(where, "\\[([^]]*)\\]\\(([^\\s^\\)]*)[\\s\\)]", "<a href='\\2'>\\1</a>")) |> 
   mutate(what = str_c("<em>", what, "</em>, ", where)) |> 
   select(Date = date, Talk = what) |> 
-  mutate(Date = as_date(Date)) |> 
   arrange(desc(Date)) |> 
   mutate(Date = str_c(year(Date),
                       ", ",
