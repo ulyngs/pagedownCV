@@ -8,6 +8,13 @@
 \description{
 This package provides an R Markdown template that lets you programmatically pull out content from a CSV (or other file) with our CV data, and output it to a paged HTML format that styled like an academic CV. You can save this as PDF, and/or host the HTML version online.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://ulyngs.github.io/pagedownCV/}
+}
+
+}
 \author{
 \strong{Maintainer}: Ulrik Lyngs \email{ulrik.lyngs@gmail.com} (\href{https://orcid.org/0000-0001-9960-1436}{ORCID})
 
