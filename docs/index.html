@@ -32,7 +32,7 @@
     
     <a class="navbar-brand me-2" href="index.html">pagedownCV</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -70,14 +70,31 @@
 </nav><div class="container template-home">
 <div class="row">
   <main id="main" class="col-md-9"><div class="section level1">
-<div class="page-header"><h1 id="welcome-to-pagedowncv">Welcome to <code>pagedownCV</code>
-<a class="anchor" aria-label="anchor" href="#welcome-to-pagedowncv"></a>
+<div class="page-header"><h1 id="pagedowncv">
+<code>pagedownCV</code><a class="anchor" aria-label="anchor" href="#pagedowncv"></a>
 </h1></div>
 <!-- badges: start -->
 <!-- badges: end -->
-<p>This package provides three R Markdown templates for creating a dynamically generated, academic CV, illustrated with my personal resumé. The package uses <a href="https://github.com/rstudio/pagedown" class="external-link"><code>pagedown</code></a> for the two paged versions.</p>
+<p>This package provides three R Markdown templates for creating a dynamically generated, academic CV using <code>R markdown</code> and <a href="https://github.com/rstudio/pagedown" class="external-link"><code>pagedown</code></a> for paged versions.</p>
 <div class="section level2">
-<h2 id="formats">Formats<a class="anchor" aria-label="anchor" href="#formats"></a>
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#install.packages("remotes")</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"ulyngs/pagedownCV"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="getting-started">Getting started<a class="anchor" aria-label="anchor" href="#getting-started"></a>
+</h2>
+<p>In RStudio, go to File &gt; New File &gt; R Markdown… &gt; From Template<br>
+Then, choose either <strong>Academic CV</strong>, <strong>2-column CV</strong>, or <strong>Website CV</strong>.</p>
+<p>Academic CV, and 2-column CV generates a PDF when you knit it (as well as the source HTML) – the Website CV generates just an HTML file.</p>
+<p>Like so:</p>
+<p><img src="reference/figures/README-1_open_rmd.png" width="60%"><img src="reference/figures/README-2_select_template.png" width="60%"></p>
+<p><img src="reference/figures/README-3_small_generated.jpg" width="80%"></p>
+</div>
+<div class="section level2">
+<h2 id="formats-included">Formats included<a class="anchor" aria-label="anchor" href="#formats-included"></a>
 </h2>
 <div class="section level3">
 <h3 id="academic-cv-paged">
@@ -102,26 +119,13 @@
 </div>
 </div>
 <div class="section level2">
-<h2 id="how-do-i-use-it">How do I use it?<a class="anchor" aria-label="anchor" href="#how-do-i-use-it"></a>
-</h2>
-<p>Install the package with</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"ulyngs/pagedownCV"</span><span class="op">)</span></span></code></pre></div>
-<p>Then, in RStudio, go to File &gt; New File &gt; R Markdown… &gt; From Template<br>
-Then, choose either <strong>Academic CV</strong>, <strong>2-column CV</strong>, or <strong>Website CV</strong>.</p>
-<p>Academic CV, and 2-column CV generates a PDF when you knit it (as well as the source HTML) – the Website CV generates just an HTML file.</p>
-<p>Like so:</p>
-<p><img src="reference/figures/README-1_open_rmd.png" width="60%"><img src="reference/figures/README-2_select_template.png" width="60%"></p>
-<p><img src="reference/figures/README-3_small_generated.jpg" width="80%"></p>
-</div>
-<div class="section level2">
-<h2 id="a-note-on-page-breaks">A note on page breaks<a class="anchor" aria-label="anchor" href="#a-note-on-page-breaks"></a>
+<h2 id="fiddling-with-page-breaks">Fiddling with page breaks<a class="anchor" aria-label="anchor" href="#fiddling-with-page-breaks"></a>
 </h2>
 <p>In both the Academic CV and the 2-column CV, you can write <code>&lt;br class="pageBreak" /&gt;</code> in your R Markdown source file, which will add a page break at this location.</p>
 <p>In the Academic CV, you might find that cell content that’s overflowing to the next page gets placed in the wrong column on the subsequent page (I’ve flagged it in <a href="https://github.com/rstudio/pagedown/issues/299" class="external-link">this issue</a> for <code>pagedown</code> — hopefully there’s a solution soon). If you encounter this, you can work around it by manually inserting a page break in the row before. There’s a convenience function for this, that’s described <a href="reference/manual_page_break_after_row.html">here</a>.</p>
 </div>
 <div class="section level2">
-<h2 id="why">Why?<a class="anchor" aria-label="anchor" href="#why"></a>
+<h2 id="motivation">Motivation<a class="anchor" aria-label="anchor" href="#motivation"></a>
 </h2>
 <p>The <a href="https://github.com/rstudio/pagedown" class="external-link"><code>pagedown</code></a> package lets you output an R Markdown file to paged HTML content which can then be saved as PDF. This means you can use R Markdown to programmatically pull out content from some spreadsheet with our CV data, output it to a paged format, do the styling with CSS, then save as PDF and/or host it online. Brilliant!</p>
 <p>Nick Strayer’s excellent <a href="http://nickstrayer.me/datadrivencv/" class="external-link">data-driven cv</a>) package, as well as the base format for resumés provided by <code>pagedown</code> (<code><a href="https://rdrr.io/pkg/pagedown/man/html_resume.html" class="external-link">pagedown::html_resume</a></code>), make this easy to do.</p>
@@ -136,9 +140,8 @@ Then, choose either <strong>Academic CV</strong>, <strong>2-column CV</strong>, 
 <div class="section level2">
 <h2 id="how-does-it-work">How does it work?<a class="anchor" aria-label="anchor" href="#how-does-it-work"></a>
 </h2>
-<p>Each resumé is generated by an R Markdown file that pulls in content from the included data files <strong>publications</strong> and <strong>cv_entries</strong>.</p>
-<p>These are samples of the corresponding tabs in <a href="https://docs.google.com/spreadsheets/d/1ta71CAGkcLqm-W1UdVRA_JJSddWV2TsrRZsCnQlmOis/edit?usp=sharing" class="external-link">this google sheet</a>, which holds my CV information along with most of the content for <a href="https://ulriklyngs.com/" class="external-link">my website</a>.</p>
-<p>Replace these with your own data – I added <a href="reference/save_gsheet_as_csv.html">another convenience function</a> that you can use to download data from a google sheet and save it as CSVs locally. You could, for example, make a copy of my Google sheet, then replace with your own content.</p>
+<p>Each resumé is generated by an R Markdown file that pulls in content from the included excel file <strong>cv_data.xlsx</strong>.</p>
+<p>The sample content comes from <a href="https://docs.google.com/spreadsheets/d/1ta71CAGkcLqm-W1UdVRA_JJSddWV2TsrRZsCnQlmOis/edit?usp=sharing" class="external-link">this google sheet</a>, which holds my CV information along with most of the content for <a href="https://ulriklyngs.com/" class="external-link">my website</a>.</p>
 <p>Enjoy!!</p>
 </div>
 </div>
