@@ -8,7 +8,8 @@ save_gsheet_as_csv(
   sheet_name,
   gsheet_url =
     "https://docs.google.com/spreadsheets/d/1ta71CAGkcLqm-W1UdVRA_JJSddWV2TsrRZsCnQlmOis/edit?usp=sharing",
-  store_path = paste0(sheet_name, ".csv")
+  store_path = paste0(sheet_name, ".csv"),
+  publicly_viewable = TRUE
 )
 }
 \arguments{
