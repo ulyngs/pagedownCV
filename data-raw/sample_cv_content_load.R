@@ -1,6 +1,7 @@
 library(tidyverse)
 library(pagedownCV)
 library(lubridate)
+library(openxlsx)
 
 ## uncomment these lines to grab the latest version
 # library(googlesheets4)
@@ -14,6 +15,7 @@ library(lubridate)
 #
 # walk(c("cv_entries", "publications"), store_sheet_in_csv)
 
+# create selected CSVs
 cv_entries <- read_csv("data-raw/cv_entries.csv") |>
   mutate(year = year(date)) %>%
   mutate(year_end = case_when(
@@ -34,4 +36,15 @@ publications <- read_csv("data-raw/publications.csv") |>
          venue_abbrev = if_else(is.na(venue_abbrev), "", str_c(venue_abbrev, ": "))) |>  # make the abbrevation an empty string if NA; add a colon and a space after if it if there is one
   relocate(type, authors, year, date)
 
-usethis::use_data(cv_entries, publications, overwrite = TRUE)
+# create an excel workbook where the CSVs are sheets
+options("openxlsx.dateFormat" = "yyyy/mm/dd")
+list("cv_entries" = cv_entries, "publications" = publications) |>
+  write.xlsx(file = "data-raw/cv_data.xlsx", headerStyle = createStyle(textDecoration = "Bold"))
+
+# place the excel file in the templates
+template_skeletons <- str_c(list.dirs(path = "inst/rmarkdown/templates", recursive = FALSE), "/skeleton/")
+
+template_skeletons |>
+  walk(~ file.copy(from = "data-raw/cv_data.xlsx", to = .x, overwrite = TRUE))
+
+#usethis::use_data(cv_entries, publications, overwrite = TRUE)
