@@ -13,8 +13,10 @@
 #' my_gsheet <- "https://docs.google.com/spreadsheets/d/1ta71CAGkcLqm-W1UdVRA_JJSddWV2TsrRZsCnQlmOis/edit?usp=sharing"
 #' save_gsheet_as_csv("cv_entries", my_gsheet)
 #'
-save_gsheet_as_csv <- function(sheet_name, gsheet_url = "https://docs.google.com/spreadsheets/d/1ta71CAGkcLqm-W1UdVRA_JJSddWV2TsrRZsCnQlmOis/edit?usp=sharing", store_path = paste0(sheet_name, ".csv")){
-  googlesheets4::gs4_deauth()
+save_gsheet_as_csv <- function(sheet_name, gsheet_url = "https://docs.google.com/spreadsheets/d/1ta71CAGkcLqm-W1UdVRA_JJSddWV2TsrRZsCnQlmOis/edit?usp=sharing", store_path = paste0(sheet_name, ".csv"), publicly_viewable = TRUE){
+  if(publicly_viewable){
+    googlesheets4::gs4_deauth()
+  }
   googlesheets4::read_sheet(gsheet_url,
              sheet = sheet_name,
              col_types = c("c")) |>
