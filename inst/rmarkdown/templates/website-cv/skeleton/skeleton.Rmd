@@ -82,8 +82,7 @@ cv_entries |>
     str_c("<span class='cv-entry-title'>", what, "</span>, ", where, "<br>", additional_info),
     str_c("<span class='cv-entry-title'>", what, "</span>, ", where))
   ) |> 
-  mutate(year_end = if_else(is.na(year_end), as.character(year), year_end)) |> 
-  arrange(desc(year_end)) |> 
+  arrange(date_end) |> 
   blank_year_when_repeated() |> 
   select(year, what) |> 
   kable(align = c("l", "l"), escape = FALSE) 

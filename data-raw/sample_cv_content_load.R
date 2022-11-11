@@ -26,8 +26,8 @@ cv_entries <- read_csv("data-raw/cv_entries.csv") |>
   mutate(year = ifelse((is.na(year_end) | year == year_end),
                        year,
                        str_c(year, " --- ", year_end))) |>
-  select(-c(short_cv, order, academic, professional_2_page, brief_no_pubs, humanities, humanities_description)) |>
-  relocate(type, year, date, year_end, date_end) |>
+  select(-c(short_cv, order, academic, professional_2_page, brief_no_pubs, humanities, humanities_description, year_end)) |>
+  relocate(type, year, date, date_end) |>
   relocate(carlsberg, exclude, .after = last_col())
 
 publications <- read_csv("data-raw/publications.csv") |>
@@ -47,4 +47,5 @@ template_skeletons <- str_c(list.dirs(path = "inst/rmarkdown/templates", recursi
 template_skeletons |>
   walk(~ file.copy(from = "data-raw/cv_data.xlsx", to = .x, overwrite = TRUE))
 
-#usethis::use_data(cv_entries, publications, overwrite = TRUE)
+# also load it in the package
+usethis::use_data(cv_entries, publications, overwrite = TRUE)
