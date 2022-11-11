@@ -64,7 +64,7 @@ issue](https://github.com/rstudio/pagedown/issues/299) for `pagedown` —
 hopefully there’s a solution soon). If you encounter this, you can work
 around it by manually inserting a page break in the row before. There’s
 a convenience function for this, that’s described
-[here](reference/manual_page_break_after_row.html).
+[here](https://ulyngs.github.io/pagedownCV/reference/manual_page_break_after_row.html).
 
 ## Motivation
 
