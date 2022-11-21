@@ -16,7 +16,7 @@
 #' publications |>
 #'  filter(type == "journal article") |>
 #'  mutate(citation = glue::glue("{title}, {year}")) |>
-#'  select(year, citation) |>
+#'  select(citation) |>
 #'  manual_page_break_after_row("citation", "Before and after GDPR")
 #'
 manual_page_break_after_row <- function(some_tibble, a_column_name, text_to_detect, use_glue = TRUE){

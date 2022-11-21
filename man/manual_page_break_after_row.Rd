@@ -31,7 +31,7 @@ Adds a page break after a row that contains a specified text
 publications |>
  filter(type == "journal article") |>
  mutate(citation = glue::glue("{title}, {year}")) |>
- select(year, citation) |>
+ select(citation) |>
  manual_page_break_after_row("citation", "Before and after GDPR")
 
 }
