@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">pagedownCV</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,17 +59,50 @@
 
     <div class="section level2">
     <h2 id="format">Format<a class="anchor" aria-label="anchor" href="#format"></a></h2>
-    <p>A tibble with 129 rows and 24 variables:</p><dl><dt>type</dt>
-<dd><p>chr The type of entry, research_positions, education, awards, etc.</p></dd>
+    <p>A tibble with 129 rows and 18 variables:</p><dl><dt>type</dt>
+<dd><p>chr The type of entry. E.g., research_positions, education, awards, ...</p></dd>
+
+  <dt>year</dt>
+<dd><p>chr A string of the year (e.g. "2020"), or year span (e.g., "2021 --- present") for the entry</p></dd>
 
   <dt>date</dt>
 <dd><p>date The (start) date of the entry</p></dd>
 
   <dt>date_end</dt>
-<dd><p>chr The end date of the entry, if relevant. This a characted because the end date might be 'present'</p></dd>
+<dd><p>chr The end date of the entry, if relevant. The end date might be "present"</p></dd>
 
   <dt>what</dt>
 <dd><p>chr A description of what the entry is</p></dd>
+
+  <dt>what_translation</dt>
+<dd><p>chr An optional translation of the 'what' into English</p></dd>
+
+  <dt>institution</dt>
+<dd><p>chr The institution where the entry took place</p></dd>
+
+  <dt>department</dt>
+<dd><p>chr The department where the entry took place</p></dd>
+
+  <dt>where</dt>
+<dd><p>chr Generic 'where' the entry took place</p></dd>
+
+  <dt>additional_info</dt>
+<dd><p>chr Any other potentially relevant information</p></dd>
+
+  <dt>additional_info2</dt>
+<dd><p>chr Any other potentially relevant information</p></dd>
+
+  <dt>url</dt>
+<dd><p>chr Relevant hyperlink for the entry</p></dd>
+
+  <dt>slides</dt>
+<dd><p>chr URL to slides for the entry (e.g., presentation slides)</p></dd>
+
+  <dt>video</dt>
+<dd><p>chr URL to video for the entry</p></dd>
+
+  <dt>one_column_paged, carlsberg, exclude</dt>
+<dd><p>chr Columns used to include or exclude particular entries for the use of specific CV versions</p></dd>
 
 
 </dl></div>
