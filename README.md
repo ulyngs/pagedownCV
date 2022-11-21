@@ -7,7 +7,7 @@
 <!-- badges: end -->
 
 This package provides three R Markdown templates for creating a
-dynamically generated, academic CV using `R markdown` and
+dynamically generated CV using `R markdown` and
 [`pagedown`](https://github.com/rstudio/pagedown) for paged versions.
 
 ## Installation
