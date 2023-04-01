@@ -1,0 +1,436 @@
+---
+output:
+  pagedown::html_paged:
+    number_sections: false
+    css: ["css/academic_cv.css"]
+links-to-footnotes: true
+knit: pagedown::chrome_print
+---
+
+<style>
+:root{
+  --last-updated: "\00a0 \00a0 \00a0 \00a0 Last updated: `r format(Sys.Date(), '%B, %Y')`";
+}
+</style>
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+library(tidyverse)
+library(knitr)
+library(glue)
+library(fontawesome)
+library(readxl)
+library(lubridate)
+source("R/utility-functions.R")
+
+cv_entries <- read_excel("cv_data.xlsx", sheet = "cv_entries") |> 
+  mutate(year = year(date))
+publications <- read_excel("cv_data.xlsx", sheet = "publications") |> 
+  mutate(year = year(date))
+```
+
+::: {.title-and-contact}
+
+:::::: {.title}
+<h1 class="title">Ulrik Lyngs</h1>
+::::::
+
+:::::: {.contact-info}
+ulrik.lyngs@cs.ox.ac.uk  \
+https://ulriklyngs.com
+::::::
+
+:::
+
+## Research summary
+::: {.research-interests}
+
+:::::: {.spacer}
+::::::
+
+:::::: {.interests}
+**Aims---**to develop and evaluate design patterns that help people self-regulate their use of smartphones and laptops.
+<br>
+**Methods---**controlled studies, user surveys, interviews, co-design workshops, web scraping, behaviour logging.
+
+**I am passionate about** open and transparent research. 
+Since 2018, I have shared materials, analysis scripts, and data for all my first-authored work, and written my papers as reproducible documents in [R Markdown](https://rmarkdown.rstudio.com).
+::::::
+:::
+
+::: {.cv-entries}
+## Research positions
+```{r}
+cv_entries |>  
+  filter(type == 'research_positions', is.na(exclude)) |> 
+  mutate(what = glue("<span class='cv-entry-title'>{what}</span><br>",
+                     "{where}"
+                     )) |>  
+  select(year, what) |> 
+  kable()
+```
+
+
+
+## Education
+```{r}
+cv_entries |> 
+  filter(type == 'education') |> 
+  mutate(what = glue("<span class='cv-entry-title'>{what}</span>, {where}<br>", 
+                      "{additional_info}<br>",
+                      "<span class='thesis-title'>{additional_info2}</span>")) |> 
+  select(year, what) |> 
+  kable()
+```
+
+## Major grants and funding
+```{r}
+cv_entries |>
+  filter(type == 'major_grants') |>
+  mutate(what = if_else(is.na(additional_info),
+                        glue("<span class='cv-entry-title'>{what}</span> ({additional_info2}), {where}"),
+                        glue("<span class='cv-entry-title'>{what}</span> ({additional_info2}), {where}.<br>{additional_info}"))) |>
+  select(year, what) |>
+  manual_page_break_after_row("what", "Maureen Freed") |> 
+  kable()
+```
+
+## Awards & honours
+```{r}
+cv_entries |> 
+  filter(type == 'awards') |> 
+  mutate(what = glue("<span class='cv-entry-title'>{what}</span>, {where}")) |>  
+  blank_year_when_repeated() |> 
+  select(year, what) |> 
+  kable()
+```
+
+
+## Publications {.three-split}
+
+:::::: {.grid-container-publications}
+::::::::: {.conference-publication-heading}
+<h3>Conference publications <br><span class="review-note">(fully reviewed, archival)</span></h3>
+:::::::::
+
+::::::::: {.conference-note}
+<h3>In computer science, top-tier conferences (<30% acceptance rate) are as, or more impactful than journals, see doi.org/fgjt2h</h3>
+:::::::::
+::::::
+
+
+```{r}
+publications_formatted <- publications |> 
+  mutate(authors = map_chr(authors, replace_first_names_in_author_list_with_initial_and_dot), # e.g. U. Lyngs instead of Ulrik Lyngs
+         authors = str_replace(authors, "U\\. Lyngs", "*U\\. Lyngs*"))    # make my name italic
+
+publications_formatted |>
+  filter(type == "conference paper") |> 
+  # insert appropriate icon for paper awards (and start with a line break)
+  mutate(award = case_when(
+    !is.na(award) & str_detect(award, "honourable") ~ glue("<br>", fa("award"), " <span class='publication-award'>{award}</span>"),
+    !is.na(award) ~ glue("<br>", fa("trophy"), " <span class='publication-award'>{award}</span>"),
+    TRUE ~ ""
+  )) |>
+  # create citations
+  mutate(citation = glue("<span class='cv-entry-title'>{title}</span><br>",
+                         "<span class='publication-authors'>{authors}</span><br>",
+                         "<span class='publication-venue'>{venue_abbrev}{venue}</span>{award}")) |> 
+  # number entries with a prefix
+  add_leading_zeroes_and_letter("C") |> 
+  blank_year_when_repeated() |> 
+  select(year, number, citation) |>
+  manual_page_break_after_row("citation", "Applying Dual Systems Theory") |> 
+  knitr::kable()
+```
+
+<!-- <br class="pageBreak"> -->
+<h3>Journal articles <span class="review-note">(fully reviewed, archival)</span></h3>
+
+```{r}
+publications_formatted |>
+  filter(type == "journal article") |> 
+  mutate(citation = glue("<span class='cv-entry-title'>{title}</span><br>",
+                         "<span class='publication-authors'>{authors}</span><br>",
+                         "<span class='publication-venue'>{venue_abbrev}{venue}</span>")) |> 
+  add_leading_zeroes_and_letter("J") |> 
+  blank_year_when_repeated() |>
+  select(year, number, citation) |>
+  knitr::kable()
+```
+
+### Book chapters
+
+```{r}
+publications_formatted |> 
+  filter(type == "book chapter") |> 
+  mutate(citation = glue("<span class='cv-entry-title'>{title}</span><br>",
+                         "<span class='publication-authors'>{authors}</span><br>",
+                         "<span class='publication-venue'>{venue_abbrev}: {venue}</span>")) |>
+  add_leading_zeroes_and_letter("B") |> 
+  blank_year_when_repeated() |>
+  select(year, number, citation) |>
+  knitr::kable()
+
+```
+
+<h3>Extended abstracts and workshop papers <br><span class="review-note">(lightly reviewed)</span></h3>
+
+```{r}
+publications_formatted |>
+  filter(type == "extended abstract" | type == "workshop paper") |> 
+  mutate(citation = glue("<span class='cv-entry-title'>{title}</span><br>",
+                         "<span class='publication-authors'>{authors}</span><br>",
+                         "<span class='publication-venue'>{venue_abbrev} {venue}</span>")) |>
+  add_leading_zeroes_and_letter("A") |> 
+  blank_year_when_repeated() |>
+  select(year, number, citation) |>
+  manual_page_break_after_row("citation", "Reduce Psychological Reactance") |> 
+  knitr::kable()
+```
+
+## Publicly available research code & data
+```{r}
+pubs_w_number <- publications |> 
+  select(type, authors, date, year, title, materials) |> 
+  mutate(inclusive_type = if_else(type == "workshop paper" | type == "extended abstract", "abstract", type)) |> 
+  group_by(inclusive_type) |> 
+  arrange(date) |> 
+  mutate(number = row_number(),
+         number = case_when(
+           inclusive_type == "conference paper" ~ glue("[C{number}]"),
+           inclusive_type == "journal article" ~ glue("[J{number}]"),
+           inclusive_type == "abstract" ~ glue("[A{number}]"),
+           TRUE ~ ""
+         ))
+
+public_code <- cv_entries |> 
+  filter(type == 'open_research' & is.na(exclude)) |> 
+  select(what, additional_info) |> 
+  rename(title = additional_info) |> 
+  left_join(pubs_w_number)
+
+public_code |> 
+  mutate(what = glue("<span class='cv-entry-title'>{what} {number}</span><br>", 
+                      "{authors}<br>",
+                      "{materials}")) |> 
+  arrange(desc(date)) |> 
+  select(year, what) |> 
+  blank_year_when_repeated() |> 
+  manual_page_break_after_row("what", "Ulysses") |> 
+  kable()
+```
+
+## Research dissemination
+### Press
+```{r}
+cv_entries |> 
+  filter(type == 'media') |>
+  mutate(what = glue("<span class='cv-entry-title'>{where}</span>, {what}")) |>
+  select(year, what) |> 
+  kable()
+```
+
+### Podcasts {.three-split}
+```{r}
+cv_entries |> 
+  filter(type == 'talk-podcast') |> 
+  mutate(what_translation = ifelse(!is.na(what_translation), str_c("(", what_translation, ")"), what_translation)) |> 
+  replace_na(list(what_translation = "")) |> 
+  mutate(what = glue("<span class='cv-entry-title'>{where}</span>, {what} <span class='cv-entry-translation'>{what_translation}</span>")) |>
+  add_leading_zeroes_and_letter("Pod") |> 
+  blank_year_when_repeated() |> 
+  select(year, number, what) |> 
+  knitr::kable()
+
+```
+
+
+### Talks {.three-split}
+
+:::::: {.conference-presentations-omitted}
+All first-authored conference publications listed above were also presented as talks at their respective conferences and are not listed again in this section.
+::::::
+
+```{r}
+cv_entries |> 
+  filter(type == 'talk', is.na(exclude)) |> 
+  # add commas as appropriate
+  mutate(where = if_else(!is.na(where) & !is.na(institution), glue(", {where}"), where),
+         department = if_else(!is.na(department), glue(", {department}"), department),
+         slides = if_else(!is.na(slides), glue("<a href={slides}>Slides</a>"), ""),
+         video = if_else(!is.na(video), glue("<a href={video}>Video</a>"), "")) |>
+  mutate(additional_info = if_else(!is.na(additional_info), glue(", {additional_info}"), "")) |> 
+  mutate(what_translation = ifelse(!is.na(what_translation), str_c("(", what_translation, ")"), what_translation)) |> 
+  replace_na(list(what_translation = "")) |> 
+  mutate(what = glue("<span class='cv-entry-title'>{institution}{where}</span>{department}{additional_info}<br>",
+                      "<span style='display:inline-block;' class='talk-title'>{what}</span> <span class='cv-entry-translation'>{what_translation}</span>", 
+                     .na = "")) |> 
+  add_leading_zeroes_and_letter("T") |> 
+  blank_year_when_repeated() |> 
+  select(year, number, what) |> 
+  manual_page_break_after_row("what", "Kynapse") |> 
+  manual_page_break_after_row("what", "Seminars at Linacre College") |> 
+  manual_page_break_after_row("what", "Minimally-Distracting") |> 
+  knitr::kable()
+
+```
+
+### Discussion panels {.three-split}
+```{r}
+cv_entries |> 
+  filter(type == 'talk-panel') |>
+  mutate(additional_info = if_else(is.na(additional_info), "", additional_info)) |> 
+  mutate(what = glue("<span class='cv-entry-title'>{where}</span>, {what},  {additional_info}")) |>
+  add_leading_zeroes_and_letter("D") |> 
+  blank_year_when_repeated() |> 
+  select(year, number, what) |> 
+  knitr::kable()
+
+```
+
+<!-- <br class="pageBreak"> -->
+
+### Poster presentations {.three-split}
+```{r}
+cv_entries |> 
+  filter(type == 'poster') |>
+  mutate(where = if_else(!is.na(where) & !is.na(institution), glue(", {where}"), where),
+         department = if_else(!is.na(department), glue(", {department}"), department)) |>
+  mutate(additional_info = if_else(!is.na(additional_info), glue(", {additional_info}"), "")) |> 
+  mutate(what = glue("<span class='cv-entry-title'>{institution}{where}</span>{department}{additional_info}<br>",
+                      "<span style='display:inline-block;' class='talk-title'>{what}</span>", 
+                     .na = "")) |> 
+  add_leading_zeroes_and_letter("P") |> 
+  blank_year_when_repeated() |> 
+  select(year, number, what) |>
+  knitr::kable()
+
+```
+
+<!-- <br class="pageBreak"> -->
+
+### Blog posts {.three-split}
+```{r}
+cv_entries |> 
+  filter(type == 'pop-writing') |>
+  mutate(what = glue("<span class='cv-entry-title'>{where}</span>, {what}")) |>
+  add_leading_zeroes_and_letter("B") |> 
+  blank_year_when_repeated() |> 
+  select(year, number, what) |> 
+  knitr::kable()
+```
+
+
+
+
+## Teaching experience
+```{r}
+cv_entries |> 
+  filter(type == 'teaching') |> 
+  mutate(what = glue("<span class='cv-entry-title'>{what}</span>, {where}<br>",
+         "{additional_info}")) |> 
+  select(year, what) |> 
+  manual_page_break_after_row("what", "2-day master class in reproducible research") |> 
+  kable()
+```
+
+<!-- <br class="pageBreak"> -->
+
+## Software
+### R packages
+```{r}
+cv_entries |> 
+  filter(type == 'software-rstats' & is.na(exclude)) |> 
+  replace_na(list(where = "", additional_info = "")) |> 
+  mutate(what = glue("<span class='cv-entry-title'>{what}</span>, {where}")) |>
+  arrange(desc(year)) |> 
+  mutate(row_number = row_number()) |> 
+  select(year, what) |> 
+  kable()
+```
+
+<!-- <br class="pageBreak"> -->
+
+### Apps
+```{r}
+cv_entries |> 
+  filter(type == 'software-browser-extensions' & is.na(exclude)) |> 
+  replace_na(list(where = "", additional_info = "")) |> 
+  mutate(what = glue("<span class='cv-entry-title'>{what}</span>, {where}")) |>
+  arrange(desc(year)) |> 
+  mutate(row_number = row_number()) |> 
+  select(year, what) |> 
+  kable()
+```
+
+
+## Service
+```{r}
+cv_entries |> 
+  filter(type == 'service') |> 
+  mutate(where = if_else(!is.na(url), glue("[{where}]({url})"), where)) |> 
+  mutate(what = glue("<span class='cv-entry-title'>{what}</span> {where}")) |>
+  arrange(desc(date_end), desc(date)) |> 
+  select(year, what) |> 
+  manual_page_break_after_row("what", "DPhil representative in the Computer Science Graduate Society") |> 
+  kable()
+```
+
+
+<!-- <br class="pageBreak"> -->
+
+## Selected work experience
+```{r}
+cv_entries |> 
+  filter(type == 'work', is.na(one_column_paged)) |> 
+  mutate(additional_info = replace_na(additional_info, "")) |> 
+  mutate(what = glue("<span class='cv-entry-title'>{what}</span>, {where}<br>",
+                     "{additional_info}")) |> 
+  select(year, what) |>
+  kable()
+```
+
+<!-- <br class="pageBreak"> -->
+
+## Professional development
+```{r}
+cv_entries |> 
+  filter(type == 'prof-dev') |> 
+  mutate(what = glue("<span class='cv-entry-title'>{what}</span>, {where}")) |>
+  select(year, what) |> 
+  kable()
+```
+
+## Minor grants and funding
+```{r}
+cv_entries |>
+  filter(type == 'minor_grants') |>
+  mutate(what = if_else(!is.na(additional_info),
+                        glue("<span class='cv-entry-title'>{what}</span> ({additional_info2}), {where}.<br> ", 
+                             "{additional_info}"),
+                        glue("<span class='cv-entry-title'>{what}</span> ({additional_info2}), {where}"))) |>
+  blank_year_when_repeated() |> 
+  select(year, what) |>
+  manual_page_break_after_row("what", "US research travel") |>
+  kable()
+```
+
+<!-- <br class="pageBreak"> -->
+
+## Personal skills & volunteering {.packages}
+```{r}
+cv_entries |>
+  filter(type == 'volunteering') |>
+  mutate(what = glue("<span class='cv-entry-title'>{what}</span>, {where}")) |>
+  mutate(what = if_else(!is.na(additional_info), glue("{what}<br>{additional_info}"), what)) |>
+  arrange(desc(date), desc(date_end)) |> 
+  select(year, what) |>
+  kable()
+```
+
+:::
+
+<!-- <br class="pageBreak"> -->
+
+# Links

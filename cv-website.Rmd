@@ -1,0 +1,235 @@
+---
+output:
+  html_document:
+    css: css/website-cv.css
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+library(tidyverse)
+library(knitr)
+library(glue)
+library(fontawesome)
+library(DT)
+library(lubridate)
+library(readxl)
+source("R/utility-functions.R")
+
+cv_entries <- read_excel("cv_data.xlsx", sheet = "cv_entries") |> 
+  mutate(year = year(date))
+publications <- read_excel("cv_data.xlsx", sheet = "publications") |> 
+  mutate(year = year(date))
+```
+
+# Summary
+
+I am passionate about using insights from the behavioural neurosciences to **design digital technology that is sensitive to human limitations and biases**, particularly in relation to attention and self-regulation.
+
+My **academic and professional background** is highly interdisciplinary, and I try to integrate best practices from many work spheres, such as using tools from large-scale event management to structure academic projects.
+
+My **personal interests** include backpacking, samatha meditation, dancing (Cuban salsa and swing), surfing, and playing music (often with my concept band the [Karaoke Collective](https://karaokecollective.com)).
+
+[`r fa("download")` CV as PDF](https://ulriklyngs.com/pdfs/academic_cv.pdf)
+
+# Academia {.domain-header}
+##  Research positions
+```{r}
+cv_entries |>  
+  filter(type == 'research_positions', is.na(exclude)) |>
+  mutate(what = str_c("<span class='cv-entry-title'>", what, "</span><br>", 
+                      where)) |> 
+  select(year, what) |> 
+  kable(escape = FALSE)
+```
+
+## Education
+```{r}
+cv_entries |> 
+  filter(type == 'education') |> 
+  mutate(what = str_c("<span class='cv-entry-title'>", what, "</span>, ", where,
+                      "<br>", additional_info,
+                      "<br>", additional_info2)) |> 
+  select(year, what) |> 
+  kable(escape = FALSE)
+
+```
+
+## Awards and honours
+```{r}
+cv_entries |> 
+  filter(type == 'awards') |>
+  filter(!(website == "n") | is.na(website)) |> 
+  mutate(what = if_else(
+    !is.na(where),
+    str_c("<span class='cv-entry-title'>", what, "</span>, ", where),
+    str_c("<span class='cv-entry-title'>", what, "</span>"))
+  ) |> 
+  blank_year_when_repeated() |> 
+  select(year, what) |> 
+  kable(align = c("l", "l"), escape = FALSE)
+```
+ 
+## Grants and funding
+```{r}
+cv_entries |> 
+  filter(type == 'minor_grants' | type == 'major_grants',
+         is.na(exclude)) |>
+  filter(!(website == "n") | is.na(website)) |> 
+  mutate(what = if_else(
+    !is.na(additional_info),
+    str_c("<span class='cv-entry-title'>", what, "</span>, ", where, "<br>", additional_info),
+    str_c("<span class='cv-entry-title'>", what, "</span>, ", where))
+  ) |> 
+  arrange(date_end) |> 
+  blank_year_when_repeated() |> 
+  select(year, what) |> 
+  kable(align = c("l", "l"), escape = FALSE) 
+```
+
+
+## Research dissemination {.tabset .output-header}
+### Talks
+```{r}
+cv_entries |> 
+  filter(type == 'talk') |> 
+  mutate(where = str_replace(where, "\\[([^]]*)\\]\\(([^\\s^\\)]*)[\\s\\)]", "<a href='\\2'>\\1</a>")) |> 
+  mutate(what = glue::glue("<em>{what}</em>, {where}", .na = "")) |> 
+  select(date, what) |> 
+  arrange(desc(date)) |> 
+  mutate(date = str_c(year(date),
+                      ", ",
+                      month(date, label = TRUE))) |> 
+  datatable(rownames = FALSE, escape = FALSE, class = 'row-border', options = list(
+  pageLength = 10
+))
+
+```
+
+### Posters {.posters}
+```{r}
+cv_entries |> 
+  filter(type == 'poster') |>
+  mutate(what = str_c("*", what, "*, ", where)) |> 
+  select(year, what) |> 
+  arrange(desc(year)) |> 
+  kable()
+```
+
+### Media {.media}
+```{r}
+cv_entries |> 
+  filter(type == 'media') |>
+  select(year, what) |> 
+  kable()
+```
+
+
+
+## Teaching experience
+
+```{r}
+cv_entries |> 
+  filter(type == 'teaching') |> 
+  mutate(what = ifelse(!is.na(additional_info), 
+    str_c("<span class='cv-entry-title'>", what, "</span><br class='work-break'>", where, "<br>", additional_info),
+    str_c("<span class='cv-entry-title'>", what, "</span><br class='work-break'>", where))) |> 
+  select(year, what) |> 
+  kable(escape = FALSE)
+  
+```
+
+## Service
+```{r}
+cv_entries |> 
+  filter(type == 'service') |> 
+  mutate(where = ifelse(!is.na(url), str_c("[", where, "](", url, ")"), where)) |> 
+  mutate(what = ifelse(!is.na(additional_info),
+                       str_c("<span class='cv-entry-title'>", what,
+                      "</span><br class='work-break'>", 
+                      where),
+                      str_c("<span class='cv-entry-title'>", what,
+                      "</span><br class='work-break'>", 
+                      where))) |> 
+  arrange(desc(date_end), desc(date)) |> 
+  select(year, what) |> 
+  kable(escape = FALSE)
+
+```
+
+
+# Work
+## Selected employments
+```{r}
+cv_entries |> 
+  filter(type == 'work', is.na(website)) |> 
+  mutate(additional_info = replace_na(additional_info, "")) |> 
+  mutate(what = str_c("<span class='cv-entry-title'>", what, "</span><br class='work-break'>", where, "<br>", additional_info)) |> 
+  arrange(desc(date)) |> 
+  select(year, what) |> 
+  kable(escape = FALSE)
+```
+
+## Professional development
+```{r}
+cv_entries |> 
+  filter(type == 'prof-dev') |> 
+  mutate(what = str_c("<span class='cv-entry-title'>", what, "</span>, ", where)) |> 
+  select(year, what) |> 
+  kable(align = c("l", "l"), escape = FALSE)
+```
+
+# Technical
+## Skills
+```{r}
+cv_entries |> 
+  filter(type == 'technical') |> 
+  mutate(icon = case_when(
+    str_detect(what, "data analysis") ~ "chart-bar",
+    str_detect(what, "research") ~ "flask",
+    str_detect(what, "Web") ~ "laptop"
+  )) |> 
+  rowwise() |> 
+  mutate(what = str_c(fa(icon), "&nbsp;<span class='cv-entry-title'>", what, "</span> ", additional_info)) |> 
+  select(type, what) |> 
+  mutate(type = "") |> 
+  kable(escape=FALSE)
+```
+
+## R packages
+```{r}
+cv_entries |> 
+  filter(type == 'software-rstats' & is.na(exclude)) |> 
+  replace_na(list(where = "", additional_info = "")) |> 
+  mutate(what = glue("<span class='cv-entry-title'>{what}</span>, {where}")) |>
+  arrange(desc(year)) |> 
+  mutate(row_number = row_number()) |> 
+  select(year, what) |> 
+  kable(escape=FALSE)
+```
+
+## Apps
+```{r}
+cv_entries |> 
+  filter(type == 'software-browser-extensions' & is.na(exclude)) |> 
+  replace_na(list(where = "", additional_info = "")) |> 
+  mutate(what = glue("<span class='cv-entry-title'>{what}</span>, {where}")) |>
+  arrange(desc(year)) |> 
+  mutate(row_number = row_number()) |> 
+  select(year, what) |> 
+  kable(escape=FALSE)
+```
+
+
+# Personal
+## Skills & volunteering
+```{r}
+cv_entries |>
+  filter(type == 'volunteering') |>
+  mutate(what = str_c("<span class='cv-entry-title'>", what, "</span><br class='work-break'>", where)) |>
+  mutate(what = ifelse(!is.na(additional_info), str_c(what, "<br>", additional_info), what)) |>
+  arrange(desc(date_end)) |> 
+  select(year, what) |>
+  kable(escape = FALSE) 
+```

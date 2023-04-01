@@ -1,35 +1,22 @@
-
-<!-- README.md is generated from README.Rmd. Please edit that file -->
-
 # `pagedownCV`
-
-<!-- badges: start -->
-<!-- badges: end -->
 
 This package provides three R Markdown templates for creating a
 dynamically generated CV using `R markdown` and
 [`pagedown`](https://github.com/rstudio/pagedown) for paged versions.
 
-## Installation
+## How to use
+### Knitting
+Download or clone this repo. Open and knit one of the .Rmd files:
 
-``` r
-#install.packages("remotes")
-remotes::install_github("ulyngs/pagedownCV")
-```
-
-## Getting started
-
-In RStudio, go to File \> New File \> R Markdown… \> From Template  
-Then, choose either **Academic CV**, **2-column CV**, or **Website CV**.
-
-Academic CV, and 2-column CV generates a PDF when you knit it (as well
-as the source HTML) – the Website CV generates just an HTML file.
+- **cv-2-column.Rmd** (creates a PDF when knit)
+- **cv-academic.Rmd** (creates a PDF when knit; traditional one-column format, appropriate for a traditionally laid out academic CV)
+- **cv-website.Rmd** (creates an HTML file when knit; example of a CV laid out as it might be used on a website)
 
 Like so:
 
-<img src="man/figures/README-1_open_rmd.png" width="60%" /><img src="man/figures/README-2_select_template.png" width="60%" />
-
-<img src="man/figures/README-3_small_generated.jpg" width="80%" />
+<img src="examples/cv-2-column.jpg" width="60%"/>
+<img src="examples/cv-academic.jpg" width="60%"/>
+<img src="examples/cv-website.jpg" width="60%"/>
 
 ## Formats included
 
@@ -63,8 +50,19 @@ to the next page gets placed in the wrong column on the subsequent page
 issue](https://github.com/rstudio/pagedown/issues/299) for `pagedown` —
 hopefully there’s a solution soon). If you encounter this, you can work
 around it by manually inserting a page break in the row before. There’s
-a convenience function for this, that’s described
-[here](https://ulyngs.github.io/pagedownCV/reference/manual_page_break_after_row.html).
+a convenience function for this:
+
+```r
+# Adds a page break after a row that contains a specified text in a specified column
+a_data_frame |>
+  manual_page_break_after_row("name-of-a-column", "Text in that column")
+```
+
+If you look through **cv-academic.Rmd** then you'll see examples of this throughout.
+
+Similarly, you'll find convenience functions for replacing authors' first names with an initial followed by a dot, and for replacing a repeated year with an empty string.
+
+The convenience functions live in **R/utility-functions.R**
 
 ## Motivation
 

@@ -1,0 +1,177 @@
+---
+title: "Ulrik Lyngs <br> Curriculum vitae"
+output:
+  pagedown::html_paged:
+    css: ["css/bootstrap-5.2.1.min.css", "css/two-col-cv.css"]
+    number_sections: false
+knit: pagedown::chrome_print
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+library(tidyverse)
+library(knitr)
+library(glue)
+library(fontawesome)
+library(readxl)
+library(lubridate)
+source("R/utility-functions.R")
+
+cv_entries <- read_excel("cv_data.xlsx", sheet = "cv_entries") |> 
+  mutate(year = year(date))
+publications <- read_excel("cv_data.xlsx", sheet = "publications") |> 
+  mutate(year = year(date))
+```
+
+
+::: {.row}
+
+:::::: {.col-8 .summary}
+
+# Research summary
+**Aims**---to develop and evaluate design patterns that help people self-regulate their use of smartphones and laptops.\
+**Methods**---controlled studies, user surveys, interviews, co-design workshops, web scraping, behaviour logging.
+
+**I am passionate about** open and transparent research. Since 2018, I have shared materials, analysis scripts, and data for all my first-authored work, and written my papers as reproducible documents in [R Markdown](https://rmarkdown.rstudio.com).
+
+::::::
+
+:::::: {.col-4}
+
+# Contact {.box}
+
+::::::::: {.info-box}
+
+| Center | Left |
+|:------:|:-----|
+| `r fa("map-marker-alt")`| Dept. of Computer Science, University of Oxford |
+| `r fa("envelope")` | ulrik.lyngs@cs.ox.ac.uk |
+| `r fa("globe")` | [ulriklyngs.com](https://ulriklyngs.com) |
+| `r fa("github")` | [ulyngs](https://github.com/ulyngs) |
+ 
+:::::::::
+
+::::::
+
+:::
+
+::: {.row}
+
+:::::: {.col-6 .left}
+
+# Awards and honours
+ 
+```{r}
+cv_entries |> 
+  filter(type == 'awards', short_cv == "y") |> 
+  mutate(what = glue("<span class='cv-entry-title'>{what}</span>, {where}")) |>  
+  select(year, what) |> 
+  kable()
+```
+
+# Selected major grants
+ 
+```{r}
+cv_entries |>
+  filter(type == 'major_grants', short_cv == "y") |>
+  mutate(what = if_else(is.na(additional_info),
+                        glue("<span class='cv-entry-title'>{what}</span> ({additional_info2}), {where}"),
+                        glue("<span class='cv-entry-title'>{what}</span> ({additional_info2}), {where}"))) |>
+  select(year, what) |>
+  kable()
+```
+
+::::::
+
+:::::: {.col-6 .right}
+
+# Education
+
+```{r}
+cv_entries |> 
+  filter(type == 'education') |> 
+  mutate(what = glue("<span class='cv-entry-title'>{what}</span>, {where}")) |> 
+  select(year, what) |> 
+  kable()
+```
+
+# Selected teaching experience
+```{r}
+cv_entries |> 
+  filter(type == 'teaching', short_cv == "y") |> 
+  mutate(what = glue("<span class='cv-entry-title'>{what}</span>, {where}<br>",
+         "{additional_info}")) |> 
+  select(year, what) |> 
+  kable()
+```
+
+::::::
+
+:::
+
+<!-- you might want to manually insert page breaks -->
+<br class="pageBreak" />
+
+::: {.row .pagetwo}
+
+:::::: {.col-6 .left}
+
+# Selected talks {.talks}
+```{r}
+cv_entries  |>  
+  filter(type == 'talk', short_cv == "y") |> 
+  # add commas as appropriate
+  mutate(where = if_else(!is.na(where) & !is.na(institution), glue(", {where}"), where),
+         department = if_else(!is.na(department), glue(", {department}"), department),
+         additional_info = if_else(!is.na(additional_info), glue(", {additional_info}"), "")) |> 
+  # add slide and video links
+  mutate(slides = if_else(!is.na(slides), glue("<a href={slides}>Slides</a>"), ""),
+         video = if_else(!is.na(video), glue("<a href={video}>Video</a>"), "")) |> 
+  # put it all together
+  mutate(what = glue("<span class='cv-entry-title'>{institution}{where}</span>{department}{additional_info}<br>",
+                      "<span style='display:inline-block;' class='talk-title'>{what}</span>", 
+                     .na = "")) |> 
+  select(year, what) |> 
+  kable()
+```
+
+::::::
+
+:::::: {.col-6 .right}
+
+# Selected media & panels
+```{r}
+cv_entries |> 
+  filter(type == 'media' | type == 'talk-podcast' | type == 'talk-panel') |>
+  filter(short_cv == "y") |> 
+  # format the translation
+  mutate(what_translation = if_else(!is.na(what_translation), glue("({what_translation})"), what_translation)) |> 
+  replace_na(list(what_translation = "")) |> 
+  # put it all together
+  mutate(what = glue("<span class='cv-entry-title'>{where}</span>, {what} *{what_translation}*")) |>
+  select(year, what) |> 
+  kable()
+```
+
+# Professional development {.prof-dev}
+```{r}
+cv_entries |> 
+  filter(type == 'prof-dev') |> 
+  mutate(what = glue("<span class='cv-entry-title'>{what}</span>, {where}")) |> 
+  select(year, what) |> 
+  kable()
+```
+
+# Selected service
+```{r}
+cv_entries |> 
+  filter(type == 'service', short_cv == "y") |> 
+  mutate(where = if_else(!is.na(url), glue("[{where}]({url})"), where)) |> 
+  mutate(what = glue("<span class='cv-entry-title'>{what}</span> {where}")) |>
+  arrange(desc(date_end), desc(date)) |> 
+  select(year, what) |> 
+  kable()
+```
+
+::::::
+:::
