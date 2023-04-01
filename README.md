@@ -8,13 +8,13 @@ dynamically generated CV using `R markdown`. The templates use the
 ### Knitting
 Download or clone this repo. Open and knit one of the .Rmd files:
 
-- **cv-2-column.Rmd** (creates a PDF when knit) \
+- [**cv-2-column.Rmd**](examples/cv-2-column.pdf) (creates a PDF when knit) \
   <img src="examples/cv-2-column.jpg" width="60%"/>
   
-- **cv-academic.Rmd** (creates a PDF when knit; traditional one-column format, appropriate for a traditionally laid out academic CV)
+- **cv-academic.Rmd** (creates a PDF when knit; traditional one-column format, appropriate for a traditionally laid out academic CV) \
   <img src="examples/cv-academic.jpg" width="60%"/>
 
-- **cv-website.Rmd** (creates an HTML file when knit; example of a CV laid out as it might be used on a website)
+- **cv-website.Rmd** (creates an HTML file when knit; example of a CV laid out as it might be used on a website) \
   <img src="examples/cv-website.jpg" width="60%"/>
 
 ## Formats included
