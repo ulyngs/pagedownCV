@@ -14,7 +14,7 @@ Download or clone this repo. Open and knit one of the .Rmd files:
 - [**cv-academic.Rmd**](https://ulyngs.github.io/pagedownCV/examples/cv-academic.pdf) (creates a PDF when knit; traditional one-column format, appropriate for a traditionally laid out academic CV) \
   <img src="examples/cv-academic.jpg" width="60%"/>
 
-- [**cv-website.Rmd**](https://ulyngs.github.io/pagedownCV/examples/cv-website.pdf) (creates an HTML file when knit; example of a CV laid out as it might be used on a website) \
+- [**cv-website.Rmd**](https://ulyngs.github.io/pagedownCV/examples/cv-website.html) (creates an HTML file when knit; example of a CV laid out as it might be used on a website) \
   <img src="examples/cv-website.jpg" width="60%"/>
 
 ## Fiddling with page breaks
