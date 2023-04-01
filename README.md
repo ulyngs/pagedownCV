@@ -17,26 +17,6 @@ Download or clone this repo. Open and knit one of the .Rmd files:
 - **cv-website.Rmd** (creates an HTML file when knit; example of a CV laid out as it might be used on a website) \
   <img src="examples/cv-website.jpg" width="60%"/>
 
-## Formats included
-
-### [Academic CV (paged)](https://github.com/ulyngs/personal-website/raw/master/static/images/for-r-packages/pagedownCV/README-one-column-academic.pdf)
-
-<img src="https://raw.githubusercontent.com/ulyngs/personal-website/master/static/images/for-r-packages/pagedownCV/README-academic-cv.png" width="80%" />
-
-<br>
-
-### [2-column CV (paged)](man/figures/README-two-column.pdf)
-
-<img src="https://github.com/ulyngs/personal-website/blob/master/static/images/for-r-packages/pagedownCV/README-2-col-cv.png?raw=true" width="80%" />
-
-<br>
-
-### [Website CV (with sidebar and tabsets)](reference/figures/README-website-cv.html)
-
-<img src="https://github.com/ulyngs/personal-website/blob/master/static/images/for-r-packages/pagedownCV/README-website-cv.png?raw=true" width="80%" />
-
-<br>
-
 ## Fiddling with page breaks
 
 In both the Academic CV and the 2-column CV, you can write
