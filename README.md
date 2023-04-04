@@ -1,7 +1,7 @@
 # `pagedownCV`
 
 This repo provides three R Markdown templates for creating a
-dynamically generated CV using `R markdown`. The templates use the
+dynamically generated CV using `R Markdown`. The templates use the
 [`pagedown`](https://github.com/rstudio/pagedown) library for the paged versions.
 
 ## How to use
