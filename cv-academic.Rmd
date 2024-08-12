@@ -24,8 +24,11 @@ library(lubridate)
 source("R/utility-functions.R")
 
 cv_entries <- read_excel("cv_data.xlsx", sheet = "cv_entries")  |> 
+  # provide range for entries with a year_end (e.g. '2013-2016')
   mutate(year_end = if_else(date_end == "present", "present", str_sub(date_end, start = 1, end = 4)),
-         year = if_else(!is.na(year_end), str_c(year(date), " --- ", year_end), as.character(year(date))))
+         year = if_else(!is.na(year_end) & year(date) != year_end,
+                        str_c(year(date), " --- ", year_end),
+                        as.character(year(date))))
 
 publications <- read_excel("cv_data.xlsx", sheet = "publications")  |> 
   mutate(year = year(date),
