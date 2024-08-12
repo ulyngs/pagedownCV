@@ -5,8 +5,10 @@ dynamically generated CV using `R Markdown`. The templates use the
 [`pagedown`](https://github.com/rstudio/pagedown) library for the paged versions.
 
 ## How to use
+First, download or clone this repo.
+
 ### Knitting
-Download or clone this repo. Open and knit one of the .Rmd files:
+Open and knit one of the .Rmd files:
 
 - [**cv-2-column.Rmd**](https://ulyngs.github.io/pagedownCV/examples/cv-2-column.pdf) (creates a PDF when knit) \
   <img src="examples/cv-2-column.jpg" width="60%"/>
